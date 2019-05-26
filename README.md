@@ -9,7 +9,6 @@ git clone https://github.com/rdamarapati/rig.git
 cd rig
 Set up a virtual environment
 pip install -r requirements.txt
-python -m spacy download en_core_web_sm
 python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser
