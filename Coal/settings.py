@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'uploadFiles.urls'
+ROOT_URLCONF = 'Coal.urls'
 
 TEMPLATES = [
     {
@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'uploadFiles.wsgi.application'
+WSGI_APPLICATION = 'Coal.wsgi.application'
 
 
 # Database
