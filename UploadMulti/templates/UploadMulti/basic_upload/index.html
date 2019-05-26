@@ -1,0 +1,114 @@
+{% extends 'UploadMulti/base.html' %}
+
+{% load static %}
+
+{% block title %}CO-AL{% endblock %}
+
+{% block javascript %}
+    {# JQUERY FILE UPLOAD SCRIPTS #}
+    <script src="{% static 'js/jquery-file-upload/vendor/jquery.ui.widget.js' %}"></script>
+    <script src="{% static 'js/jquery-file-upload/jquery.iframe-transport.js' %}"></script>
+    <script src="{% static 'js/jquery-file-upload/jquery.fileupload.js' %}"></script>
+    <!-- <script src="{% static 'js/basic-upload.js' %}"></script> -->
+    <script type="text/javascript">
+    var redNow = 1;
+    function toggleBorderColor(c) {
+    cells = c.parentElement.parentElement.getElementsByTagName('td');
+    for (var i in cells) {
+       var cell = cells.item(i);
+       cell.style.backgroundColor = (cell != c) ? "" : "#f7e6ff";
+    }
+}
+
+$(document).ready(function() {
+         $('td a').click(function(e) {
+          e.preventDefault();
+          $('#content').load($(this).attr('href'));
+         });
+        });
+
+  </script>
+
+
+
+    {# PHOTOS PAGE SCRIPTS #}
+    <script src="{% static 'UploadMulti/js/basic-upload.js' %}"></script>
+{% endblock %}
+
+<style type="text/css">
+    td {
+        cursor: pointer;
+      }
+    a {   
+    color: black;   
+}
+
+
+
+
+
+  </style>
+
+
+
+
+{% block document_content %}
+<div style="margin-bottom: 20px;">
+    {# 1. BUTTON TO TRIGGER THE ACTION #}
+    <button type="button" class="btn btn-primary js-upload-photos">
+        <span class="glyphicon glyphicon-cloud-upload"></span> Upload
+    </button>
+
+    {# 2. FILE INPUT TO BE USED BY THE PLUG-IN #}
+    <input id="fileupload" type="file" name="file" multiple
+           style="display: none;"
+           data-url="{% url 'UploadMulti:basic_upload' %}"
+           data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+</div>
+
+ <a href="{% url 'UploadMulti:process' %}"><button class="btn btn-primary">Process Documents</button>
+ </a> 
+
+
+<div class="row"style="margin-top:50px;">
+ 
+  <div class="col-md-5">
+    <div class="well text-muted text-center" style="padding-top: 4rem; padding-bottom: 4rem;">
+        <span class="glyphicon glyphicon-arrow-down" style="font-size: 4rem;"></span>
+        <h3>Drop Folder Here to Upload</h3>
+</div>
+ </div>   
+<input id="fileupload" type="file" name="file" multiple
+             style="display: none;"
+             data-url="{% url 'UploadMulti:basic_upload' %}"
+             data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+             
+<div class="col-md-7">
+
+    {# 3. TABLE TO DISPLAY THE UPLOADED DOCUMENTS #}
+<div style="height:200px; width:700px; overflow:hidden; overflow-y:scroll;">
+<table id="gallery" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th><h4>Uploaded Documents</h4></th>
+        </tr>
+    </thead>
+    <tbody>
+         {% for document in documents %}
+            <tr>
+                <td onmousedown="toggleBorderColor(this);"><a href="{% url 'UploadMulti:analysis' pk=document.pk %}" >{{ document.file.name }}</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="content">
+    {% if pk %}
+    
+    {% endif %}
+  </div>
+
+{% endblock %}

@@ -1,0 +1,111 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>CO-AL</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.7/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    <!-- <style>
+      tbody div {
+      overflow:scroll;
+      height:200px;
+      }
+    </style> -->
+  </head>
+  <body>
+
+    
+      <div class="row">
+          
+          <div class="col-md-6" >
+            <div style="margin-top: 15px; margin-right: 20px;">
+                <h3>Document</h3>
+            
+    
+              
+                <object >
+                  <iframe src= "{% static File_Name %}" width="550px" height="500px"  > </iframe>
+              
+                </object>
+                    
+            </div>
+      
+            </div>
+              
+          
+          <div class="col-md-6">
+            <div style="margin-left: 50px; margin-top: 20px;">
+                <h3>Extracted Features</h3>
+                <div style=" height:510px; width:520px; overflow:hidden; overflow-y:scroll; " >
+                    
+                    <table class="table table-hover  .h-auto" align="left" border="5">
+                        <thead>
+                          <tr height=10 width=10>
+                            <th ><font size="5"><b><u>Feature</u></b></font></th>
+                                  
+                            <th><font size="5"><b><u>Feature Values</u></b></font></th>
+                          </tr>
+                        </thead>
+                  
+                        <tbody>
+                          <div class="scrollit">
+                            {% for key, values in Entity.items %}
+                              <tr bgcolor={{ color|get_item:key }}>
+                              <td ><b>{{key}}</b></td>
+                                {% for key2,v in values.items %}
+                              
+                                        <td><b>{{v}}</b></td>
+                                    
+                                {% endfor %}
+                              </tr>
+                            {% endfor %}
+                          </div>
+                        </tbody>
+                
+                      </table>        
+                </div>
+      
+      
+      
+      
+              </div>
+          
+          
+            
+          </div>
+            
+            </div>
+              
+
+
+
+    
+    
+  </body>
+</html>
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+

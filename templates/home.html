@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<label for="name">Name:</label>
+<input type="text" name='name'>
+<label for="password">Password:</label>
+<input type="password" name='password'>
+
+<form action="{% url 'UploadMulti:basic_upload'%}">
+    <input type="submit">
+</form>
+
+
+{% endblock %}
