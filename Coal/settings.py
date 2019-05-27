@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import django_heroku
 
 
 
@@ -132,3 +133,6 @@ STATIC_ROOT = os.path.join(BASE_DIR,'staticRoot')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+
+django_heroku.settings(locals())
