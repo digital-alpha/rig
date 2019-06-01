@@ -137,7 +137,7 @@ class Entities:
                 for item in start_date_list:
                     matches = datefinder.find_dates(item)
                     for match in matches:
-                        final_start_date.append(match.strftime("%d-%m-%Y"))
+                        final_start_date.append(match.strftime("%m-%d-%Y"))
                 if len(final_start_date)!=0:
                     return(final_start_date[0])
                 else:
@@ -194,7 +194,7 @@ class Entities:
                             for item in ents[i]:
                                 matches = datefinder.find_dates(self.format_string(item))
                                 for match in matches:
-                                    final_start_date.append(match.strftime("%d-%m-%Y"))
+                                    final_start_date.append(match.strftime("%m-%d-%Y"))
                     return(final_start_date)
             except AssertionError as error:
                 print(error)
@@ -696,7 +696,7 @@ class Entities:
                 if len(date_list)==1:
                     matches = datefinder.find_dates(date_list[0])
                     for match in matches:
-                        return(match.strftime("%d-%m-%Y"))
+                        return(match.strftime("%m-%d-%Y"))
 
                 elif len(date_list)==0:
                     return(None)
