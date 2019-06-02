@@ -68,10 +68,10 @@ class Entities:
         return(p.replace('\xa0',' '))
 
     def reference(self,p):
-        ref={'annum':['year','annum','annual'],'month':['monthly','month'],'week':['week','weekly'],'bi-weeek':['bi-week','bi-weekly']}
+        ref={'year':['year','annum','annual'],'month':['monthly','month'],'week':['week','weekly'],'bi-week':['bi-week','bi-weekly'],'days':['day','days']}
         for main,word in ref.items(): 
             for i in range(len(word)): 
-                if word[i] in [x.lower() for x in p.split()]: 
+                if word[i] in [re.sub("[^a-z]", "",x.lower()) for x in p.split()]: 
                     return(main)
 
     def Base_Salary(self,doc,val={}):
@@ -462,7 +462,9 @@ class Entities:
                 text = nlp2(notice_list[0])
                 for ent in text.ents:
                     if(ent.label_=="CARDINAL"):
-                        return(ent.text)
+                        suffix=self.reference(notice_list[0])
+                        if(suffix):
+                            return(ent.text+ " " + suffix)
             else:
                 return ("None")
         else:
