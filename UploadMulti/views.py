@@ -102,7 +102,6 @@ def analysis(request, pk):
     with open('media/'+doc_obj.file.name, 'r', encoding='UTF-8') as f:
         data2=f.read()
     data2 = data2.lstrip()
-    data2 = data2.rstrip()
     doc=nlp(data2)
 
     obj = Entities()
