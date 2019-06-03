@@ -68,7 +68,7 @@ class Entities:
         return(p.replace('\xa0',' '))
 
     def reference(self,p):
-        ref={'year':['year','annum','annual'],'month':['monthly','month'],'week':['week','weekly'],'bi-week':['bi-week','bi-weekly'],'days':['day','days']}
+        ref={'year':['year','annum','annual'],'month':['monthly','month'],'week':['week','weekly','weeks'],'bi-week':['bi-week','bi-weekly'],'days':['day','days']}
         for main,word in ref.items(): 
             for i in range(len(word)): 
                 if word[i] in [re.sub("[^a-z]", "",x.lower()) for x in p.split()]: 
@@ -91,7 +91,7 @@ class Entities:
                     if(len(money)):
                         suffix=self.reference(salary)
                         if(suffix):
-                            final_base_salary.append('{} {}'.format(money[0],suffix))
+                            final_base_salary.append('{} {}'.format(money[0],"per " + suffix))
                         else:
                             final_base_salary.append('{}'.format(money[0]))
                 return(final_base_salary[0])
@@ -212,9 +212,9 @@ class Entities:
                     if (len(address) != 1):
                         address_set = set(address)
                         address_list = list(address_set)
-                        return address_list[0]
+                        return address_list[0].title()
                     else:
-                        return address[0]
+                        return address[0].title()
                 else:
                     return ("None")
         else:
@@ -246,9 +246,9 @@ class Entities:
                     if (len(address) != 1):
                         address_set = set(address)
                         address_list = list(address_set)
-                        return address_list[0]
+                        return address_list[0].title()
                     else:
-                        return address[0]
+                        return address[0].title()
                 else:
                     return ("None")
         else:
@@ -404,20 +404,19 @@ class Entities:
                     if ent.label_=="Bonus":
                         bonus.append(ent.text)
             if(len(bonus)!=0):
-                bonus=[((" ".join(x.split())).lower()).title() for x in bonus]
+                bonus=[((" ".join(x.split())).lower()) for x in bonus]
                 bonus_set=set(bonus)
                 bonus_list=list(bonus_set)
                 if "bonus" or "bonuses" in bonus_list:
-                    flag = True
-                    if len(bonus_list)==1:
+    
+                    if len(bonus_list)==1 and len(bonus_list[0])==1:
                         return("Yes")
-                    
-                        
-                for ix in bonus_list:
-                  #if ix == "bonus" or "bonuses":
-                  #    continue 
-                    text = ix.replace("\xa0", " ")
-        
+                    else:
+                        if bonus_list[0]!="bonus" and bonus_list[0]!="bonuses" :
+                            return(bonus_list[0].title())
+                        else:
+                            return("Yes")
+    
             else:
                 return("No")
         else:
@@ -531,8 +530,9 @@ class Entities:
                 will=[(" ".join(x.split())).lower() for x in will]
                 will_set=set(will)
                 will_list=list(will_set)
-                if(len(will_list)==1 and will_list[0] in possible):
-                    return("yes")
+                for x in will_list:
+                    if(x in possible):
+                        return("Yes")
             else:
                 return("No")
         else:
@@ -755,7 +755,7 @@ class Entities:
                 for ix in vacation_list:
                     if ix == "vacation":
                         continue
-                    return ix
+                    return ix.title()
         else:
             
             try:
@@ -765,7 +765,7 @@ class Entities:
                     for i in range(len(ents)):
                         if ents[i]:
                        # print("Sup.{}".format(i))
-                            vacation.append(self.format_string(ents[i][0]))
+                            vacation.append((self.format_string(ents[i][0])).title())
                     return(vacation)
             
             except AssertionError as error:
