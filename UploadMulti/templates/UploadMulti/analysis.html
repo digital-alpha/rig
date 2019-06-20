@@ -49,7 +49,7 @@
                 <h3>Extracted Features</h3>
                 <div style=" height:510px; width:520px; overflow:hidden; overflow-y:scroll; " >
                     
-                    <table class="table table-hover  .h-auto" align="left" border="5">
+                    <!-- <table class="table table-hover  .h-auto" align="left" border="5">
                         <thead>
                           <tr height=10 width=10>
                             <th ><font size="5"><b><u>Feature</u></b></font></th>
@@ -73,7 +73,20 @@
                           </div>
                         </tbody>
                 
-                      </table>        
+                      </table>         -->
+
+                      <form action="{% url 'UploadMulti:save_info' %}" method="POST">
+                        {% csrf_token %}
+                        {% for key, values in Entity.items %}
+                          <b><input name="title" value="{{key}}" readonly></b>
+                          
+                          {% for key2, v in values.items %}
+                            <input type="text" id="input" name="input" value="{{v}}">
+                          {%endfor%}
+                          <br>
+                        {%endfor%}
+                        <input type="submit">
+                      </form>
                 </div>
       
       

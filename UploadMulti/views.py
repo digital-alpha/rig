@@ -177,3 +177,13 @@ def csv(request):
 def process(request):
     documents = Document.objects.all()
     return render(request, 'UploadMulti/basic_upload/index.html', {'documents':documents})
+
+def save_info(request):
+    documents = Document.objects.all()
+    if request.method == "POST":
+        p_dict = {}
+        p_dict.update( {request.POST.get('title') : request.POST.get('input')} )
+        print(p_dict.items())
+        return render(request, 'UploadMulti/basic_upload/index.html', {'documents':documents})
+    else:
+        return render(request, 'UploadMulti/basic_upload/index.html', {'documents':documents})
