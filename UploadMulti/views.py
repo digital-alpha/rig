@@ -11,7 +11,7 @@ from django.views import View
 from django.http import HttpResponse
 
 
-
+from .forms import AddressForm
 import time
 from Entity import Entities,convert_dataturks_to_spacy,Validate,check_validity,display_attributes
 import spacy
@@ -134,7 +134,7 @@ def analysis(request, pk):
     # if this doesnt work add the file and proceed.
     #
 
-    return render(request, 'UploadMulti/analysis.html', context={'Entity':entities,'File_Name':'doc{}.html'.format(pk),'color':color_scheme,'pk':pk})
+    return render(request, 'UploadMulti/analysis.html', context={'Entity':entities,'File_Name':'doc{}.html'.format(pk),'color':color_scheme,'pk':pk,'form':AddressForm(dynamic_placeholder=tup)})
    # return render(request, 'analysis.html', {'doc_obj':doc_obj})
 
 
@@ -187,3 +187,11 @@ def save_info(request):
         return render(request, 'UploadMulti/basic_upload/index.html', {'documents':documents})
     else:
         return render(request, 'UploadMulti/basic_upload/index.html', {'documents':documents})
+
+def form_post(request):
+
+    if request.method == 'POST':
+        form = AddressForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render_to_response("UploadMulti/basic_upload/index.html", RequestContext(request))
