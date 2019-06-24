@@ -191,9 +191,11 @@ def save_info(request):
 def form_post(request):
 
     if request.method == 'POST':
+
         # this is the problem since we have already initialised 
         # and form already exist but the instance is again needs 
         # to be created in order to save the form.
+
         form = AddressForm(request.POST)
         if form.is_valid():
             form.save()

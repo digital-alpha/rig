@@ -122,6 +122,7 @@ class AddressForm(forms.Form):
 		placeholder1 = kwargs.pop("dynamic_placeholder")
 		super(AddressForm, self).__init__(*args, **kwargs)
 		for field in entities:
+
 			
 			#self.fields[field].widget.attrs['placeholder'] = placeholder1[entities.index(field)
 			self.fields[field].initial = placeholder1[entities.index(field)]
