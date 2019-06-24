@@ -7,9 +7,11 @@ from .models import Document
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.views import View
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
 from django.http import HttpResponse
-
+from django.http import HttpResponseRedirect
 
 from .forms import DetailForm
 import time
@@ -118,6 +120,11 @@ def analysis(request, pk):
             tup.append(j[0])
         list_values.append(tuple(tup))
 
+
+    # check here whether the file is already in db
+    # if so take values from it and insert into form_ent
+    # Changes to be made here.
+    
     for j in entities.values():
         form_ent.append(j[0])
     #print(files)
@@ -213,6 +220,6 @@ def form_post(request):
             print("done")
             return render_to_response("UploadMulti/basic_upload/index.html", RequestContext(request))
         else:
-            print(p)
-            form - DetailForm(dynamic_placeholder=p)
-            return render_to_response("UploadMulti/basic_upload/index.html", RequestContext(request))
+      
+            form = DetailForm(dynamic_placeholder=p)
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
