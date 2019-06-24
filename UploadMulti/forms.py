@@ -117,12 +117,13 @@ class AddressForm(forms.Form):
 	
 
 	def __init__(self, *args, **kwargs):
+
 		entities=['Employee_Name', 'Address_of_Employee', 'Company_Name', 'Address_of_Company', 'Role', 'Base_Salary', 'Date_of_Agreement', 'Start_Date', 'End_Date', 'Supervisor_Information', 'Bonus', 'Notice_Period', 'Other_Compensation', 'Non_Monetary_Benefits', 'Health_Insurance', '_401k', 'At_will', 'Stock', 'Vacation']
 		placeholder1 = kwargs.pop("dynamic_placeholder")
 		super(AddressForm, self).__init__(*args, **kwargs)
 		for field in entities:
+
 			
 			#self.fields[field].widget.attrs['placeholder'] = placeholder1[entities.index(field)
 			self.fields[field].initial = placeholder1[entities.index(field)]
-	
 	

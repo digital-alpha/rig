@@ -137,6 +137,11 @@ def analysis(request, pk):
 
     # if this doesnt work add the file and proceed.SSS
     return render(request, 'UploadMulti/analysis.html', context={'Entity':entities,'File_Name':'doc{}.html'.format(pk),'color':color_scheme,'pk':pk,'form':AddressForm(dynamic_placeholder=form_ent)})
+
+    # if this doesnt work add the file and proceed.
+    #
+
+
    # return render(request, 'analysis.html', {'doc_obj':doc_obj})
 
 
@@ -193,9 +198,17 @@ def save_info(request):
 def form_post(request):
 
     if request.method == 'POST':
+<<<<<<< HEAD
         # this is the problem since we have already initialised 
         # and form already exist but the instance is again needs 
         # to be created in order to save the form.
+=======
+
+        # this is the problem since we have already initialised 
+        # and form already exist but the instance is again needs 
+        # to be created in order to save the form.
+
+>>>>>>> 7fcf97e9f8e077f5d6832f606e344ecb67128cee
         form = AddressForm(request.POST)
         if form.is_valid():
             form.save()
