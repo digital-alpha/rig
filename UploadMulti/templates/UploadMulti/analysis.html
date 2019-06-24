@@ -82,7 +82,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-  <form method="post" action="{% url 'UploadMulti:form_post' %}">
+  <form method="POST" action="{% url 'UploadMulti:form_post' %}">
     {% csrf_token %}
     {{ form|crispy }}
     <input type="hidden" name="next" value="{{ request.path }}">
