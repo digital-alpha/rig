@@ -1,5 +1,6 @@
 
 {% load static %}
+{% load crispy_forms_tags %}
 
 <!DOCTYPE html>
 
@@ -14,6 +15,7 @@
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.7/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 
 
     <!-- <style>
@@ -75,18 +77,18 @@
                 
                       </table>         -->
 
-                      <form action="{% url 'UploadMulti:save_info' %}" method="POST">
-                        {% csrf_token %}
-                        {% for key, values in Entity.items %}
-                          <b><input name="title" value="{{key}}" readonly></b>
-                          
-                          {% for key2, v in values.items %}
-                            <input type="text" id="input" name="input" value="{{v}}">
-                          {%endfor%}
-                          <br>
-                        {%endfor%}
-                        <input type="submit">
-                      </form>
+   
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <form method="post" action="{% url 'UploadMulti:form_post' %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="hidden" name="next" value="{{ request.path }}">
+    <button type="submit" class="btn btn-primary" >Submit</button>
+  </form>
+{% endblock %}
                 </div>
       
       

@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^drag-and-drop-upload/$', views.DragAndDropUploadView.as_view(), name='drag_and_drop_upload'),
     path('analysis/<int:pk>', views.analysis, name='analysis'),
     url(r'^csv/$', views.csv, name='csv'),
+    url(r'^form_post/$', views.form_post, name='form_post'),
     path('process/', views.process, name='process'),
     path('save/', views.save_info, name='save_info'),
 ]

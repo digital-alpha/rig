@@ -11,7 +11,7 @@ from django.views import View
 from django.http import HttpResponse
 
 
-
+from .forms import AddressForm
 import time
 from Entity import Entities,convert_dataturks_to_spacy,Validate,check_validity,display_attributes
 import spacy
@@ -99,6 +99,7 @@ def clear_database(request):
 def analysis(request, pk):
     doc_obj = get_object_or_404(Document, pk=pk)
     tup=[]
+    form_ent=[]
     with open('media/'+doc_obj.file.name, 'r', encoding='UTF-8') as f:
         data2=f.read()
     data2 = data2.lstrip()
@@ -116,6 +117,9 @@ def analysis(request, pk):
         for j in entities.values():
             tup.append(j[0])
         list_values.append(tuple(tup))
+
+    for j in entities.values():
+        form_ent.append(j[0])
     #print(files)
     #print(entities)
     d=display_attributes()
@@ -131,10 +135,8 @@ def analysis(request, pk):
         myfile.write(html)
 
 
-    # if this doesnt work add the file and proceed.
-    #
-
-    return render(request, 'UploadMulti/analysis.html', context={'Entity':entities,'File_Name':'doc{}.html'.format(pk),'color':color_scheme,'pk':pk})
+    # if this doesnt work add the file and proceed.SSS
+    return render(request, 'UploadMulti/analysis.html', context={'Entity':entities,'File_Name':'doc{}.html'.format(pk),'color':color_scheme,'pk':pk,'form':AddressForm(dynamic_placeholder=form_ent)})
    # return render(request, 'analysis.html', {'doc_obj':doc_obj})
 
 
@@ -187,3 +189,14 @@ def save_info(request):
         return render(request, 'UploadMulti/basic_upload/index.html', {'documents':documents})
     else:
         return render(request, 'UploadMulti/basic_upload/index.html', {'documents':documents})
+
+def form_post(request):
+
+    if request.method == 'POST':
+        # this is the problem since we have already initialised 
+        # and form already exist but the instance is again needs 
+        # to be created in order to save the form.
+        form = AddressForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render_to_response("UploadMulti/basic_upload/index.html", RequestContext(request))
