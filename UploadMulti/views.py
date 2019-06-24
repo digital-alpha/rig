@@ -11,7 +11,7 @@ from django.views import View
 from django.http import HttpResponse
 
 
-from .forms import AddressForm
+from .forms import DetailForm
 import time
 from Entity import Entities,convert_dataturks_to_spacy,Validate,check_validity,display_attributes
 import spacy
@@ -136,7 +136,7 @@ def analysis(request, pk):
 
 
     # if this doesnt work add the file and proceed.SSS
-    return render(request, 'UploadMulti/analysis.html', context={'Entity':entities,'File_Name':'doc{}.html'.format(pk),'color':color_scheme,'pk':pk,'form':AddressForm(dynamic_placeholder=form_ent)})
+    return render(request, 'UploadMulti/analysis.html', context={'Entity':entities,'File_Name':'doc{}.html'.format(pk),'color':color_scheme,'pk':pk,'form':DetailForm(dynamic_placeholder=form_ent)})
 
     # if this doesnt work add the file and proceed.
     #
@@ -197,12 +197,22 @@ def save_info(request):
 
 def form_post(request):
 
-    if request.method == 'POST':
+    if request.method == "POST":
 
         # this is the problem since we have already initialised 
         # and form already exist but the instance is again needs 
         # to be created in order to save the form.
-        form = AddressForm(request.POST)
+        # print(request)
+        p = list(request.POST.values())
+        p = p[1:-1]
+        
+        form = DetailForm(dynamic_placeholder=p)
+       
         if form.is_valid():
             form.save()
+            print("done")
+            return render_to_response("UploadMulti/basic_upload/index.html", RequestContext(request))
+        else:
+            print(p)
+            form - DetailForm(dynamic_placeholder=p)
             return render_to_response("UploadMulti/basic_upload/index.html", RequestContext(request))
