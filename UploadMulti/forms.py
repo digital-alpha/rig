@@ -18,7 +18,7 @@ class DocumentForm(forms.ModelForm):
 
 class DetailForm(forms.ModelForm):
 	
-<<<<<<< HEAD
+
     """
     Employee_Name = forms.CharField(
         label='Employee Name',
@@ -218,9 +218,9 @@ class DetailForm(forms.ModelForm):
     #     widget=forms.TextInput()
     # )
     
-    class Meta():
-        model = Detail
-        fields = "__all__"
+   # class Meta():
+    #    model = Detail
+     #   fields = "__all__"
         
     def __init__(self, *args, **kwargs):
 
@@ -233,4 +233,6 @@ class DetailForm(forms.ModelForm):
             
             #self.fields[field].widget.attrs['placeholder'] = placeholder1[entities.index(field)
             self.fields[field].initial = placeholder1[entities.index(field)]
-	
+
+        for field_name, field in self.fields.items():
+            field.required = True

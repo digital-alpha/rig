@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from django.views import View
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.contrib import messages
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -208,30 +209,19 @@ def form_post(request):
 
     if request.method == "POST":
 
-        # this is the problem since we have already initialised 
-        # and form already exist but the instance is again needs 
-        # to be created in order to save the form.
-        # print(request)
         p = list(request.POST.values())
         p = p[1:]
         
-        form = DetailForm(dynamic_placeholder=p)
+        form = DetailForm(request.POST,dynamic_placeholder=p)
+        #print(form)
        
         if form.is_valid():
             form.save()
             print("done")
-<<<<<<< HEAD
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-        #else:
-      
-         #   form = DetailForm(dynamic_placeholder=p)
-          #  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-=======
-            return render_to_response("UploadMulti/basic_upload/index.html", RequestContext(request))
+        
+          
         else:
-            print(form.errors)
-            print("ERRORRRRRRRRRRRR")
+            messages.error(request, 'The form is invalid.')
     
-    
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
->>>>>>> 2c896756091d0edfbc9d560988915b0e70b7a7bd
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
