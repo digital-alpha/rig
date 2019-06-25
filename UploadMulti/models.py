@@ -10,7 +10,7 @@ class Document(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
 class Detail(models.Model):
-
+    Document_Name = models.CharField(max_length=200, verbose_name='Document Name')
     Employee_Name = models.CharField(max_length=200, verbose_name='Employee Name')
     Address_of_Employee = models.CharField(max_length=200, verbose_name='Address of Employee')
     Company_Name = models.CharField(max_length=200, verbose_name='Company Name')
@@ -30,3 +30,7 @@ class Detail(models.Model):
     At_will = models.CharField(max_length=200, verbose_name='At will')
     Stock = models.CharField(max_length=200, verbose_name='Stock')
     Vacation = models.CharField(max_length=200, verbose_name='Vacation')
+
+    def __str__(self):
+        return self.Document_Name
+    

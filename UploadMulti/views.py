@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.views import View
 import time
 from .forms import DocumentForm
-from .models import Document
+from .models import Document, Detail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.views import View
@@ -146,7 +146,7 @@ def analysis(request, pk):
 
 
     # if this doesnt work add the file and proceed.SSS
-    return render(request, 'UploadMulti/analysis.html', context={'Entity':entities,'File_Name':'doc{}.html'.format(pk),'color':color_scheme,'pk':pk,'form':DetailForm(dynamic_placeholder=form_ent)})
+    return render(request, 'UploadMulti/analysis.html', context={'Entity':entities,'File_Name':'doc{}.html'.format(pk),'color':color_scheme,'pk':pk,'form':DetailForm(dynamic_placeholder=form_ent,doc_key=str(pk))})
 
     # if this doesnt work add the file and proceed.
     #
@@ -210,14 +210,18 @@ def form_post(request):
     if request.method == "POST":
 
         p = list(request.POST.values())
-        p = p[1:]
-        
-        form = DetailForm(request.POST,dynamic_placeholder=p)
+        p = p[1:-1]
+        name = p[-1]
+        # detail = Detail()
+        # detail.Document_Name = name
+        # detail.save()
+        form = DetailForm(request.POST,dynamic_placeholder=p, doc_key=name)
+        # form.fields['Document_Name'] = name
         #print(form)
        
         if form.is_valid():
             form.save()
-            print("done")
+            print(p, name)
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         
           
