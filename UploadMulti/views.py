@@ -124,7 +124,7 @@ def analysis(request, pk):
     # check here whether the file is already in db
     # if so take values from it and insert into form_ent
     # Changes to be made here.
-    
+
     for j in entities.values():
         form_ent.append(j[0])
     #print(files)
@@ -218,8 +218,8 @@ def form_post(request):
         if form.is_valid():
             form.save()
             print("done")
-            return render_to_response("UploadMulti/basic_upload/index.html", RequestContext(request))
-        else:
-      
-            form = DetailForm(dynamic_placeholder=p)
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        #else:
+      
+         #   form = DetailForm(dynamic_placeholder=p)
+          #  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

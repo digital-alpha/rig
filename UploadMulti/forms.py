@@ -18,7 +18,7 @@ class DocumentForm(forms.ModelForm):
 
 class DetailForm(forms.ModelForm):
 	
-
+    """
     Employee_Name = forms.CharField(
         label='Employee Name',
         widget=forms.TextInput()
@@ -113,10 +113,12 @@ class DetailForm(forms.ModelForm):
         label='Vacation',
         widget=forms.TextInput()
     )
-    
+
+    """
+
     class Meta():
         model = Detail
-        fields = '__all__'
+        fields = ('Employee_Name', 'Address_of_Employee', 'Company_Name', 'Address_of_Company', 'Role', 'Base_Salary', 'Date_of_Agreement', 'Start_Date', 'End_Date', 'Supervisor_Information', 'Bonus', 'Notice_Period', 'Other_Compensation', 'Non_Monetary_Benefits', 'Health_Insurance', '_401k', 'At_will', 'Stock', 'Vacation')
 
     def __init__(self, *args, **kwargs):
 
