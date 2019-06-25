@@ -82,10 +82,18 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+  <!-- {% if form.errors %}
+  {{ form.non_field_errors }}
+  <ul>
+    {% for field in form %}
+      {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+    {% endfor %}
+  </ul> -->
+  <!-- {% endif %} -->
   <form method="POST" action="{% url 'UploadMulti:form_post' %}">
     {% csrf_token %}
     {{ form|crispy }}
-    <input type="hidden" name="next" value="{{ request.path }}">
+    <!-- <input type="hidden" name="next" value="{{ request.path }}"> -->
     <button type="submit" class="btn btn-primary" >Submit</button>
   </form>
 {% endblock %}

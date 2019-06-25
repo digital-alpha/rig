@@ -126,6 +126,8 @@ def analysis(request, pk):
     # Changes to be made here.
     
     for j in entities.values():
+        j[0] = str(j[0])
+        print(type(j[0]))
         form_ent.append(j[0])
     #print(files)
     #print(entities)
@@ -211,7 +213,7 @@ def form_post(request):
         # to be created in order to save the form.
         # print(request)
         p = list(request.POST.values())
-        p = p[1:-1]
+        p = p[1:]
         
         form = DetailForm(dynamic_placeholder=p)
        
@@ -220,6 +222,8 @@ def form_post(request):
             print("done")
             return render_to_response("UploadMulti/basic_upload/index.html", RequestContext(request))
         else:
-      
-            form = DetailForm(dynamic_placeholder=p)
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            print(form.errors)
+            print("ERRORRRRRRRRRRRR")
+    
+    
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
