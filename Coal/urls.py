@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
     url(r'^UploadMulti/',include('UploadMulti.urls',namespace='UploadMulti')),
+    url(r'api/', include('UploadMulti.api_urls')),
 ]
 
 # if settings.DEBUG:

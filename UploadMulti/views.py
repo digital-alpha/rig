@@ -210,18 +210,22 @@ def form_post(request):
     if request.method == "POST":
 
         p = list(request.POST.values())
-        p = p[1:-1]
-        name = p[-1]
+        p = p[1:]
+        name = p[0]
+        
+
+        print(p)
+        print(name)
         # detail = Detail()
         # detail.Document_Name = name
         # detail.save()
-        form = DetailForm(request.POST,dynamic_placeholder=p, doc_key=name)
+        form = DetailForm(request.POST, dynamic_placeholder=p, doc_key=name)
         # form.fields['Document_Name'] = name
         #print(form)
        
         if form.is_valid():
             form.save()
-            print(p, name)
+            print("SAVED")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         
           
@@ -229,3 +233,20 @@ def form_post(request):
             messages.error(request, 'The form is invalid.')
     
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    
+
+
+########################################################################
+
+from rest_framework import viewsets
+from .serializers import DocumentSerializer, DetailSerializer
+
+class DocumentViewset(viewsets.ModelViewSet):
+    queryset = Document.objects.all()
+    serializer_class = DocumentSerializer
+    
+
+
+class DetailViewset(viewsets.ModelViewSet):
+    queryset = Detail.objects.all()
+    serializer_class = DetailSerializer

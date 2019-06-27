@@ -87,7 +87,7 @@
     {% csrf_token %}
     {{ form|crispy }}
     
-    <input type="hidden" name="next" value="{{ request.path }}">
+    <!-- <input type="hidden" name="next" value="{{ request.path }}"> -->
     <button type="submit" class="btn btn-primary" >Submit</button>
   </form>
 {% endblock %}
