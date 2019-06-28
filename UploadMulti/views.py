@@ -37,8 +37,7 @@ files=[]
 from openpyxl import load_workbook
 
 wb =Workbook()
-list_values=[]
-list_values.append(('Employee Name', 'Address of Employee', 'Company Name', 'Address of Company', 'Role', 'Base Salary', 'Date of Agreement', 'Start Date', 'End Date', 'Supervisor Information', 'Bonus', 'Notice Period', 'Other Compensation', 'Non Monetary Benefits', 'Health Insurance', '401k', 'At will', 'Stock', 'Vacation'))
+
 filepath=os.path.join(BASE_DIR,'UploadMulti/static/Excel_Files/Features.xlsx')
 #sheet=wb.active
 #sheet.append(('Employee Name', 'Address of Employee', 'Company Name', 'Address of Company', 'Role', 'Base Salary', 'Date of Agreement', 'Start Date', 'End Date', 'Supervisor Information', 'Bonus', 'Notice Period', 'Other Compensation', 'Non Monetary Benefits', 'Health Insurance', '401k', 'At will', 'Stock', 'Vacation'))
@@ -103,35 +102,46 @@ def analysis(request, pk):
     doc_obj = get_object_or_404(Document, pk=pk)
     tup=[]
     form_ent=[]
+    form_ent.append(doc_obj.file.name)
     with open('media/'+doc_obj.file.name, 'r', encoding='UTF-8') as f:
         data2=f.read()
     data2 = data2.lstrip()
     data2 = data2.rstrip()
     doc=nlp(data2)
 
-    obj = Entities()
-    mapping = obj.results(doc)
+    #obj = Entities()
+    #mapping = obj.results(doc)
     #print(mapping.shape)
     #print(mapping)
-    df = obj.results_to_df(mapping)
-    entities=df.to_dict('dict')
-    if doc_obj.file.name not in files:
-        files.append(doc_obj.file.name)
-        for j in entities.values():
-            tup.append(j[0])
-        list_values.append(tuple(tup))
+    #df = obj.results_to_df(mapping)
+    #entities=df.to_dict('dict')
+    #if doc_obj.file.name not in files:
+    #    files.append(doc_obj.file.name)
+    #    for j in entities.values():
+     #       tup.append(j[0])
+      #  list_values.append(tuple(tup))
 
 
     # check here whether the file is already in db
     # if so take values from it and insert into form_ent
     # Changes to be made here.
 
-    for j in entities.values():
-        j[0] = str(j[0])
-        print(type(j[0]))
-        form_ent.append(j[0])
+    #for j in entities.values():
+    #    j[0] = str(j[0]) 
+    #    form_ent.append(j[0])
+    #print(form_ent)
     #print(files)
     #print(entities)
+    #---------------------------------------
+    d=Detail.objects.filter(Document_Name=doc_obj.file.name).values()
+    list_result = [entry for entry in d]
+    field=Detail._meta.get_fields()
+    
+    tup=[]
+    for f in field:
+         tup.append(list_result[0][f.name])
+
+    print(len(tup))
     d=display_attributes()
     color_scheme=d.color_table()
     
@@ -146,7 +156,7 @@ def analysis(request, pk):
 
 
     # if this doesnt work add the file and proceed.SSS
-    return render(request, 'UploadMulti/analysis.html', context={'Entity':entities,'File_Name':'doc{}.html'.format(pk),'color':color_scheme,'pk':pk,'form':DetailForm(dynamic_placeholder=form_ent,doc_key=str(pk))})
+    return render(request, 'UploadMulti/analysis.html', context={'File_Name':'doc{}.html'.format(pk),'color':color_scheme,'pk':pk,'form':DetailForm(dynamic_placeholder=tup)})
 
     # if this doesnt work add the file and proceed.
     #
@@ -165,10 +175,16 @@ def get_item(dictionary, key):
 def csv(request):
 
     book = load_workbook(filepath)
-    
+    list_values=[]
+    list_values.append(('Employee Name', 'Address of Employee', 'Company Name', 'Address of Company', 'Role', 'Base Salary', 'Date of Agreement', 'Start Date', 'End Date', 'Supervisor Information', 'Bonus', 'Notice Period', 'Other Compensation', 'Non Monetary Benefits', 'Health Insurance', '401k', 'At will', 'Stock', 'Vacation'))
+    val=Detail.objects.all().values()
+    for v in val:
+        value_list= [entry for entry in v.values()]
+        list_values.append(tuple(value_list))
     writer = pd.ExcelWriter(filepath, engine='openpyxl')
     writer.book = book
     writer.sheets = {ws.title: ws for ws in book.worksheets}
+
     df=pd.DataFrame(list(list_values))
     #print(df)
     for sheetname in writer.sheets:
@@ -193,6 +209,29 @@ def csv(request):
 
 def process(request):
     documents = Document.objects.all()
+    
+
+    for document in documents: # we can optimize here 
+        if Detail.objects.filter(Document_Name=document.file.name).exists()==False:
+            tup=[]
+            tup.append(document.file.name)
+            with open('media/'+document.file.name, 'r', encoding='UTF-8') as f:
+                data2=f.read()
+            data2 = data2.lstrip()
+            data2 = data2.rstrip()
+            doc=nlp(data2)
+
+            obj = Entities()
+            mapping = obj.results(doc)
+            df = obj.results_to_df(mapping)
+            entities=df.to_dict('dict')
+            for j in entities.values():
+                tup.append(j[0])
+            
+            tup=tuple(tup)
+            d=Detail(*tup)
+            d.save()
+
     return render(request, 'UploadMulti/basic_upload/index.html', {'documents':documents})
 
 def save_info(request):
@@ -210,28 +249,26 @@ def form_post(request):
     if request.method == "POST":
 
         p = list(request.POST.values())
-        p = p[1:]
-        name = p[0]
-        
+        instance=get_object_or_404(Detail,Document_Name=p[1])
 
-        print(p)
-        print(name)
-        # detail = Detail()
+        p = p[1:-1]
+        print(len(p))
+        name = p[-1]
+        #detail = Detail()
         # detail.Document_Name = name
         # detail.save()
-        form = DetailForm(request.POST, dynamic_placeholder=p, doc_key=name)
+        form = DetailForm(request.POST,dynamic_placeholder=p,instance=instance)
         # form.fields['Document_Name'] = name
         #print(form)
        
         if form.is_valid():
             form.save()
-            print("SAVED")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         
           
         else:
             messages.error(request, 'The form is invalid.')
-    
+            print(form.errors)
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     
 
