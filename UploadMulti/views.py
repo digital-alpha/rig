@@ -251,9 +251,9 @@ def form_post(request):
         p = list(request.POST.values())
         instance=get_object_or_404(Detail,Document_Name=p[1])
 
-        p = p[1:-1]
-        print(len(p))
-        name = p[-1]
+        p = p[1:]
+        print(p)
+        
         #detail = Detail()
         # detail.Document_Name = name
         # detail.save()

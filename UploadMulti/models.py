@@ -9,6 +9,9 @@ class Document(models.Model):
     file = models.FileField(upload_to='docs/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.file.name
+
 class Detail(models.Model):
     Document_Name = models.CharField(max_length=200, verbose_name='Document Name', primary_key=True)
     Employee_Name = models.CharField(null=True,max_length=200, verbose_name='Employee Name')
