@@ -18,12 +18,16 @@ class DocumentForm(forms.ModelForm):
 
 class DetailForm(forms.ModelForm):
 	
-
     """
+    
     Employee_Name = forms.CharField(
         label='Employee Name',
-        widget=forms.TextInput()
+        widget=forms.TextInput(attrs={
+            'style':"background-color: #72A4D2;"
+
+            })
     )
+    
     Address_of_Employee = forms.CharField(
         label='Address of Employee',
         widget=forms.TextInput()
@@ -224,21 +228,27 @@ class DetailForm(forms.ModelForm):
     #     fields = "__all__"
         
     def __init__(self, *args, **kwargs):
-
+        colors=[]
         entities=['Document_Name','Employee_Name', 'Address_of_Employee', 'Company_Name', 'Address_of_Company', 'Role', 'Base_Salary', 'Date_of_Agreement', 'Start_Date', 'End_Date', 'Supervisor_Information', 'Bonus', 'Notice_Period', 'Other_Compensation', 'Non_Monetary_Benefits', 'Health_Insurance', '_401k', 'At_will', 'Stock', 'Vacation']
         # entities = ['Employee_Name']
         placeholder1 = kwargs.pop("dynamic_placeholder")
         print(len(placeholder1))
         print(placeholder1)
+        try:            
+            colors = kwargs.pop("doc_color")
+        except:
+            print("No colors passed")
+        finally:
+            print(len(colors))
+            super(DetailForm, self).__init__(*args, **kwargs)
+            for field in entities:
 
-        #doc_key = kwargs.pop("doc_key")
-        super(DetailForm, self).__init__(*args, **kwargs)
-        for field in entities:
-
-            
-            #self.fields[field].widget.attrs['placeholder'] = placeholder1[entities.index(field)
-            self.fields[field].initial = placeholder1[entities.index(field)]
-
-        for field_name, field in self.fields.items():
-            field.required = True
+                
+                #self.fields[field].widget.attrs['placeholder'] = placeholder1[entities.index(field)
+                self.fields[field].initial = placeholder1[entities.index(field)]
+            if len(colors)==len(entities):
+                for field in entities:    
+                    self.fields[field].widget=forms.TextInput(attrs={'style':"background-color: {};".format(colors[entities.index(field)])})
+            for field_name, field in self.fields.items():
+                field.required = True
         

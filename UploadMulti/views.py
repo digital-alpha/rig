@@ -144,9 +144,11 @@ def analysis(request, pk):
     print(len(tup))
     d=display_attributes()
     color_scheme=d.color_table()
-    
+    color=[]
+    color.append('#ffffff')
+    color.extend(list(color_scheme.values()))
    # print(entities.keys())
-   # print(color_scheme)
+    print(color)
 
     html = displacy.render(doc, style="ent", page=True,options=d.color_dict())
     DISPLACY_DIR=os.path.join(BASE_DIR,'/UploadMulti/static/Displacy_html')
@@ -156,7 +158,7 @@ def analysis(request, pk):
 
 
     # if this doesnt work add the file and proceed.SSS
-    return render(request, 'UploadMulti/analysis.html', context={'File_Name':'doc{}.html'.format(pk),'color':color_scheme,'pk':pk,'form':DetailForm(dynamic_placeholder=tup)})
+    return render(request, 'UploadMulti/analysis.html', context={'File_Name':'doc{}.html'.format(pk),'color':color_scheme,'pk':pk,'form':DetailForm(dynamic_placeholder=tup,doc_color=color)})
 
     # if this doesnt work add the file and proceed.
     #
@@ -250,9 +252,9 @@ def form_post(request):
 
         p = list(request.POST.values())
         instance=get_object_or_404(Detail,Document_Name=p[1])
-
-        p = p[1:]
         print(p)
+        p = p[1:]
+        
         
         #detail = Detail()
         # detail.Document_Name = name
@@ -267,6 +269,7 @@ def form_post(request):
         
           
         else:
+            print("here")
             messages.error(request, 'The form is invalid.')
             print(form.errors)
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

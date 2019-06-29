@@ -9,7 +9,7 @@
 <form method="post" action="{% url 'UploadMulti:clear_database' %}">
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ request.path }}">
-        <button type="submit" class="btn btn-danger pull-right">
+        <button type="submit"  class="btn btn-danger pull-right">
             <span class="glyphicon glyphicon-trash"></span> Clear Database
         </button>
     </form>
@@ -17,7 +17,7 @@
     <form method="post" action="{% url 'UploadMulti:csv' %}">
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ request.path }}">
-        <button type="submit" class="btn btn-success pull-right" style="margin-left: 10px;">
+        <button type="submit" style='margin-right:10px' class="btn btn-success pull-right" style="margin-left: 10px;">
             TO-CSV
         </button>
     </form>
