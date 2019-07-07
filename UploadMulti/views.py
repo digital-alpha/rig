@@ -279,11 +279,39 @@ def form_post(request):
 ########################################################################
 
 from rest_framework import viewsets
+from rest_framework.decorators import action
 from .serializers import DocumentSerializer, DetailSerializer
 
 class DocumentViewset(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
+    
+    # @action(detail=True, method = ["post"])
+    def perform(self, request):
+        documents = Document.objects.all()
+        for document in documents: 
+            if Detail.objects.filter(Document_Name=document.file.name).exists()==False:
+                tup=[]
+                tup.append(document.file.name)
+                with open('media/'+document.file.name, 'r', encoding='UTF-8') as f:
+                    data2=f.read()
+                data2 = data2.lstrip()
+                data2 = data2.rstrip()
+                doc=nlp(data2)
+
+                obj = Entities()
+                mapping = obj.results(doc)
+                df = obj.results_to_df(mapping)
+                entities=df.to_dict('dict')
+                for j in entities.values():
+                    tup.append(j[0])
+                
+                tup=tuple(tup)
+                d=Detail(*tup)
+                d.save()
+
+        return Response({"queryset": queryset})
+
     
 
 
