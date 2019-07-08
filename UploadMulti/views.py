@@ -279,39 +279,62 @@ def form_post(request):
 ########################################################################
 
 from rest_framework import viewsets
-from rest_framework.decorators import action
+from rest_framework.views import APIView
+from rest_framework.parsers import FileUploadParser
+from rest_framework.response import Response
+from rest_framework import status
 from .serializers import DocumentSerializer, DetailSerializer
 
 class DocumentViewset(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
-    
-    # @action(detail=True, method = ["post"])
-    def perform(self, request):
-        documents = Document.objects.all()
-        for document in documents: 
-            if Detail.objects.filter(Document_Name=document.file.name).exists()==False:
-                tup=[]
-                tup.append(document.file.name)
-                with open('media/'+document.file.name, 'r', encoding='UTF-8') as f:
-                    data2=f.read()
-                data2 = data2.lstrip()
-                data2 = data2.rstrip()
-                doc=nlp(data2)
 
-                obj = Entities()
-                mapping = obj.results(doc)
-                df = obj.results_to_df(mapping)
-                entities=df.to_dict('dict')
-                for j in entities.values():
-                    tup.append(j[0])
-                
-                tup=tuple(tup)
-                d=Detail(*tup)
-                d.save()
+    def create(self, request):
+        tup=[]
+        tup.append(request.data["file"])
+        text = request.data['file'].read()
+        text = text.decode()
+        print(type(text))
+        
+        
+        data = text.lstrip()
+        data = data.rstrip()
+        doc=nlp(data)
+        obj = Entities()
+        mapping = obj.results(doc)
+        df = obj.results_to_df(mapping)
+        entities=df.to_dict('dict')
+        for j in entities.values():
+            tup.append(j[0])
+        
+        tup=tuple(tup)
+        d=Detail(*tup)
+        d.save()
+        return super().create(request)
 
-        return Response({"queryset": queryset})
 
+
+
+
+
+
+
+
+# class DocumentUploadView(APIView):
+#     parser_class =  (FileUploadParser,)
+#     def post(self, request, *args, **kwargs):
+#         document_serializer = DocumentSerializer(data = request.data)
+
+#         if document_serializer.is_valid():
+#             document_serializer.save()
+#             return Response(document_serializer.data, status=status.HTTP_201_CREATED)
+#         else:
+#             return Response(document_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#     def get(self, request, *args, **kwargs):
+#         documents = Document.objects.all()
+#         serializer_class = DocumentSerializer(documents)
+#         return Response(serializer_class.data)
     
 
 
