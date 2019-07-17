@@ -569,12 +569,19 @@ class Entities:
                 names=[(" ".join(x.split())).lower() for x in names]
                 names_set=set(names)
                 name_list=list(names_set)
-                if len(name_list)==1:
+                if len(name_list)==1: 
+                  
                     return(" ".join(x.title() for x in name_list[0].split()))
                 elif len(name_list)==0:
-                    return(None)
+                    
+                    return('None')
                 else:
+                    
                     return(", ".join(x.title() for x in name_list))
+
+            else:
+                
+                return('None')
         else:
             try:
                 if 'Name_employer' in val.keys():
