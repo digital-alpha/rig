@@ -58,23 +58,6 @@ class BasicUploadView(View):
             data = {'is_valid': False}
         return JsonResponse(data)
 
-
-# class ProgressBarUploadView(View):
-#     def get(self, request):
-#         documents_list = Document.objects.all()
-#         return render(self.request, 'UploadMulti/progress_bar_upload/index.html', {'documents': documents_list})
-
-#     def post(self, request):
-#         #time.sleep(3)  # You don't need this line. This is just to delay the process so you can see the progress bar testing locally.
-#         form = DocumentForm(self.request.POST, self.request.FILES)
-#         if form.is_valid():
-#             document = form.save()
-#             data = {'is_valid': True, 'name': document.file.name, 'url': document.file.url}
-#         else:
-#             data = {'is_valid': False}
-#         return JsonResponse(data)
-
-
 class DragAndDropUploadView(View):
     def get(self, request):
         documents_list = Document.objects.all()
@@ -108,31 +91,6 @@ def analysis(request, pk):
     data2 = data2.lstrip()
     data2 = data2.rstrip()
     doc=nlp(data2)
-
-    #obj = Entities()
-    #mapping = obj.results(doc)
-    #print(mapping.shape)
-    #print(mapping)
-    #df = obj.results_to_df(mapping)
-    #entities=df.to_dict('dict')
-    #if doc_obj.file.name not in files:
-    #    files.append(doc_obj.file.name)
-    #    for j in entities.values():
-     #       tup.append(j[0])
-      #  list_values.append(tuple(tup))
-
-
-    # check here whether the file is already in db
-    # if so take values from it and insert into form_ent
-    # Changes to be made here.
-
-    #for j in entities.values():
-    #    j[0] = str(j[0]) 
-    #    form_ent.append(j[0])
-    #print(form_ent)
-    #print(files)
-    #print(entities)
-    #---------------------------------------
     d=Detail.objects.filter(Document_Name=doc_obj.file.name).values()
     list_result = [entry for entry in d]
     field=Detail._meta.get_fields()
@@ -208,33 +166,18 @@ def csv(request):
    
     #return redirect(request.POST.get('next'))
 
-
+import requests
 def process(request):
     documents = Document.objects.all()
+    print(request)
+    if request.method == 'GET':
+        # r = requests.get('http://127.0.0.1:8000/api/process', params=request.GET)
+        # print(r)
+        processAPI(request)  
+    return render(request, 'UploadMulti/basic_upload/index.html', {'documents':documents})
+
     
 
-    for document in documents: # we can optimize here 
-        if Detail.objects.filter(Document_Name=document.file.name).exists()==False:
-            tup=[]
-            tup.append(document.file.name)
-            with open('media/'+document.file.name, 'r', encoding='UTF-8') as f:
-                data2=f.read()
-            data2 = data2.lstrip()
-            data2 = data2.rstrip()
-            doc=nlp(data2)
-
-            obj = Entities()
-            mapping = obj.results(doc)
-            df = obj.results_to_df(mapping)
-            entities=df.to_dict('dict')
-            for j in entities.values():
-                tup.append(j[0])
-            
-            tup=tuple(tup)
-            d=Detail(*tup)
-            d.save()
-
-    return render(request, 'UploadMulti/basic_upload/index.html', {'documents':documents})
 
 def save_info(request):
     documents = Document.objects.all()
@@ -284,57 +227,64 @@ from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import DocumentSerializer, DetailSerializer
+from rest_framework.decorators import api_view
 
 class DocumentViewset(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
 
-    def create(self, request):
-        tup=[]
-        tup.append(request.data["file"])
-        text = request.data['file'].read()
-        text = text.decode()
-        print(type(text))
-        
-        
-        data = text.lstrip()
-        data = data.rstrip()
-        doc=nlp(data)
-        obj = Entities()
-        mapping = obj.results(doc)
-        df = obj.results_to_df(mapping)
-        entities=df.to_dict('dict')
-        for j in entities.values():
-            tup.append(j[0])
-        
-        tup=tuple(tup)
-        d=Detail(*tup)
-        d.save()
-        return super().create(request)
 
-
-
-
-
-
-
-
-
-# class DocumentUploadView(APIView):
-#     parser_class =  (FileUploadParser,)
-#     def post(self, request, *args, **kwargs):
-#         document_serializer = DocumentSerializer(data = request.data)
-
-#         if document_serializer.is_valid():
-#             document_serializer.save()
-#             return Response(document_serializer.data, status=status.HTTP_201_CREATED)
-#         else:
-#             return Response(document_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-#     def get(self, request, *args, **kwargs):
+# class Process(APIView):
+#     def get(self, request):
 #         documents = Document.objects.all()
-#         serializer_class = DocumentSerializer(documents)
-#         return Response(serializer_class.data)
+#         for document in documents:
+#             if Detail.objects.filter(Document_Name=document.file.name).exists()==False:
+#                 tup=[]
+#                 tup.append(document.file.name)
+#                 with open('media/'+document.file.name, 'r', encoding='UTF-8') as f:
+#                     data2=f.read()
+#                 data2 = data2.lstrip()
+#                 data2 = data2.rstrip()
+#                 doc=nlp(data2)
+
+#                 obj = Entities()
+#                 mapping = obj.results(doc)
+#                 df = obj.results_to_df(mapping)
+#                 entities=df.to_dict('dict')
+#                 for j in entities.values():
+#                     tup.append(j[0])
+                
+#                 tup=tuple(tup)
+#                 d=Detail(*tup)
+#                 d.save()
+#                 print("IN api view")
+#         return Response(status=200)
+
+@api_view()
+def processAPI(request):
+    documents = Document.objects.all()
+    for document in documents:
+        if Detail.objects.filter(Document_Name=document.file.name).exists()==False:
+            tup=[]
+            tup.append(document.file.name)
+            with open('media/'+document.file.name, 'r', encoding='UTF-8') as f:
+                data2=f.read()
+            data2 = data2.lstrip()
+            data2 = data2.rstrip()
+            doc=nlp(data2)
+
+            obj = Entities()
+            mapping = obj.results(doc)
+            df = obj.results_to_df(mapping)
+            entities=df.to_dict('dict')
+            for j in entities.values():
+                tup.append(j[0])
+            
+            tup=tuple(tup)
+            d=Detail(*tup)
+            d.save()
+            print("IN api view")
+    return Response(status=200)
     
 
 
