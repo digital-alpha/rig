@@ -173,7 +173,8 @@ def process(request):
     if request.method == 'GET':
         # r = requests.get('http://127.0.0.1:8000/api/process', params=request.GET)
         # print(r)
-        processAPI(request)  
+        p=processAPI(request)  
+        print(p)
     return render(request, 'UploadMulti/basic_upload/index.html', {'documents':documents})
 
     
