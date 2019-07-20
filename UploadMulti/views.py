@@ -79,6 +79,8 @@ def clear_database(request):
         document.delete()
         wb=Workbook()
         wb.save(filepath)
+    for detail in Detail.objects.all():
+        detail.delete()
     return redirect(request.POST.get('next'))
 
 def analysis(request, pk):
@@ -284,6 +286,18 @@ def processAPI(request):
             d=Detail(*tup)
             d.save()
             print("IN api view")
+    return Response(status=200)
+
+@api_view()
+def clearAPI(request):
+    print(request.method)
+    for document in Document.objects.all():
+        document.file.delete()
+        document.delete()
+        wb=Workbook()
+        wb.save(filepath)
+    for detail in Detail.objects.all():
+        detail.delete()
     return Response(status=200)
     
 

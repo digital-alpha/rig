@@ -12,4 +12,5 @@ urlpatterns = [
     path('document/', include(router.urls)),
     path('detail/', include(router2.urls)),
     path('process/', processAPI),
+    path('clear/', clearAPI),
 ] 
