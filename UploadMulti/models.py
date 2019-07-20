@@ -13,7 +13,8 @@ class Document(models.Model):
         return self.file.name
 
 class Detail(models.Model):
-    Document_Name = models.CharField(max_length=200, verbose_name='Document Name', primary_key=True)
+    
+    Document_Name = models.CharField(max_length=200, verbose_name='Document Name')
     Employee_Name = models.CharField(null=True,max_length=200, verbose_name='Employee Name')
     Address_of_Employee = models.CharField(null=True,max_length=200, verbose_name='Address of Employee')
     Company_Name = models.CharField(null=True,max_length=200, verbose_name='Company Name')
@@ -33,6 +34,7 @@ class Detail(models.Model):
     At_will = models.CharField(null=True,max_length=200, verbose_name='At will')
     Stock = models.CharField(null=True,max_length=200, verbose_name='Stock')
     Vacation = models.CharField(null=True,max_length=200, verbose_name='Vacation')
+    doc_id= models.ForeignKey(Document,db_column='doc', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.Document_Name

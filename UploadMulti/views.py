@@ -53,6 +53,7 @@ class BasicUploadView(View):
         form = DocumentForm(self.request.POST, self.request.FILES)
         if form.is_valid():
             document = form.save()
+            print(document.id)
             data = {'is_valid': True, 'name': document.file.name, 'url': document.file.url}
         else:
             data = {'is_valid': False}
@@ -92,21 +93,27 @@ def analysis(request, pk):
     data2 = data2.rstrip()
     doc=nlp(data2)
     d=Detail.objects.filter(Document_Name=doc_obj.file.name).values()
+    print(d)
     list_result = [entry for entry in d]
     field=Detail._meta.get_fields()
-    
+    print(field)
     tup=[]
+    print(list_result)
     for f in field:
-         tup.append(list_result[0][f.name])
-
-    print(len(tup))
+        try:
+            tup.append(list_result[0][f.name])
+        except:
+            print(f.name)
+    print(tup)
+    tup=tup[1:]
+    print(tup)
     d=display_attributes()
     color_scheme=d.color_table()
     color=[]
     color.append('#ffffff')
     color.extend(list(color_scheme.values()))
    # print(entities.keys())
-    print(color)
+   
 
     html = displacy.render(doc, style="ent", page=True,options=d.color_dict())
     DISPLACY_DIR=os.path.join(BASE_DIR,'/UploadMulti/static/Displacy_html')
@@ -260,13 +267,20 @@ class DocumentViewset(viewsets.ModelViewSet):
 #                 d.save()
 #                 print("IN api view")
 #         return Response(status=200)
-
+from django.forms.models import model_to_dict
 @api_view()
 def processAPI(request):
     documents = Document.objects.all()
     for document in documents:
-        if Detail.objects.filter(Document_Name=document.file.name).exists()==False:
+        if Detail.objects.filter(doc_id=document.id).exists()==False:
             tup=[]
+            try:
+                id=Detail.objects.latest('id')
+                id=model_to_dict(id)['id']
+            except:
+                id=0
+
+            tup.append(int(id) + 1)
             tup.append(document.file.name)
             with open('media/'+document.file.name, 'r', encoding='UTF-8') as f:
                 data2=f.read()
@@ -280,10 +294,13 @@ def processAPI(request):
             entities=df.to_dict('dict')
             for j in entities.values():
                 tup.append(j[0])
-            
+
+            tup.append(document.id)
+            print(tup)
             tup=tuple(tup)
             d=Detail(*tup)
             d.save()
+
             print("IN api view")
     return Response(status=200)
     
