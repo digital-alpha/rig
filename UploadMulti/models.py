@@ -34,7 +34,7 @@ class Detail(models.Model):
     At_will = models.CharField(null=True,max_length=200, verbose_name='At will')
     Stock = models.CharField(null=True,max_length=200, verbose_name='Stock')
     Vacation = models.CharField(null=True,max_length=200, verbose_name='Vacation')
-    doc_id= models.ForeignKey(Document,db_column='doc', on_delete=models.CASCADE, null=True)
+    doc= models.ForeignKey(Document,db_column='doc', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.Document_Name

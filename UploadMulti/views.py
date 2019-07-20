@@ -317,7 +317,32 @@ def clearAPI(request):
     for detail in Detail.objects.all():
         detail.delete()
     return Response(status=200)
-    
+
+@api_view()
+def infoAPI(request,pk):
+    try:
+        info=Detail.objects.filter(doc_id=pk)
+
+    except Detail.DoesNotExist:
+
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    serializer = DetailSerializer(info, many=True)
+    return Response(serializer.data)
+
+
+@api_view() # deleteing only detail record. can include document record as well.
+def info_delete_API(request,pk):
+    try:
+        info=Detail.objects.filter(doc_id=pk)
+
+    except Detail.DoesNotExist:
+
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    info.delete()
+
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class DetailViewset(viewsets.ModelViewSet):
