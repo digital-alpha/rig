@@ -14,8 +14,7 @@ urlpatterns = [
     path('detail/', include(router2.urls)),
     path('process/', processAPI),
     path('clear/', clearAPI),
-    path('info/<int:pk>', infoAPI),
-    path('delete/<int:pk>', info_delete_API),
+    path('detail/<int:pk>', infoAPI),
 
 ] 
 
