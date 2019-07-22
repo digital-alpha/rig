@@ -318,31 +318,33 @@ def clearAPI(request):
         detail.delete()
     return Response(status=200)
 
+
 @api_view()
 def infoAPI(request,pk):
-    try:
-        info=Detail.objects.filter(doc_id=pk)
+    if request.method == "GET":
+        try:
+            info=Detail.objects.filter(doc_id=pk)
 
-    except Detail.DoesNotExist:
+        except Detail.DoesNotExist:
 
-        return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
-    serializer = DetailSerializer(info, many=True)
-    return Response(serializer.data)
+        serializer = DetailSerializer(info, many=True)
+        return Response(serializer.data)
+    if request.method == "DELETE":
+        try:
+            info=Detail.objects.filter(doc_id=pk)
+
+        except Detail.DoesNotExist:
+
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        info.delete()
+
+        return Response({"message": "details deleted"}, status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view() # deleteing only detail record. can include document record as well.
-def info_delete_API(request,pk):
-    try:
-        info=Detail.objects.filter(doc_id=pk)
 
-    except Detail.DoesNotExist:
-
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    info.delete()
-
-    return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class DetailViewset(viewsets.ModelViewSet):
