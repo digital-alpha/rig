@@ -16,93 +16,47 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.7/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-
-
-    <!-- <style>
-      tbody div {
-      overflow:scroll;
-      height:200px;
-      }
-    </style> -->
   </head>
   <body>
 
     
-      <div class="row">
+    <div class="row">
+        
+      <div class="col-md-6" >
+        <div style="margin-top: 15px; margin-right: 20px;">
+            <h3>Document</h3>
+        
+
           
-          <div class="col-md-6" >
-            <div style="margin-top: 15px; margin-right: 20px;">
-                <h3>Document</h3>
-            
-    
-              
-                <object >
-                  <iframe src= "{% static File_Name %}" width="550px" height="500px"  > </iframe>
-              
-                </object>
-                    
-            </div>
-      
-            </div>
-              
+            <object >
+              <iframe src= "{% static File_Name %}" width="550px" height="500px"  > </iframe>
           
-          <div class="col-md-6">
-            <div style="margin-left: 50px; margin-top: 20px;">
-                <h3>Extracted Features</h3>
-                <div style=" height:510px; width:520px; overflow:hidden; overflow-y:scroll; " >
-                    
-                    <!-- <table class="table table-hover  .h-auto" align="left" border="5">
-                        <thead>
-                          <tr height=10 width=10>
-                            <th ><font size="5"><b><u>Feature</u></b></font></th>
-                                  
-                            <th><font size="5"><b><u>Feature Values</u></b></font></th>
-                          </tr>
-                        </thead>
-                  
-                        <tbody>
-                          <div class="scrollit">
-                            {% for key, values in Entity.items %}
-                              <tr bgcolor={{ color|get_item:key }}>
-                              <td ><b>{{key}}</b></td>
-                                {% for key2,v in values.items %}
-                              
-                                        <td><b>{{v}}</b></td>
-                                    
-                                {% endfor %}
-                              </tr>
-                            {% endfor %}
-                          </div>
-                        </tbody>
+            </object>
                 
-                      </table>         -->
+        </div>
 
-   
-
-{% load crispy_forms_tags %}
-
-{% block content %}
-
-  <form method="POST" action="{% url 'UploadMulti:form_post' %}">
-    {% csrf_token %}
-    {{ form|crispy }}
-    
-    <!-- <input type="hidden" name="next" value="{{ request.path }}"> -->
-    <button type="submit" class="btn btn-primary" >Submit</button>
-  </form>
-{% endblock %}
-                </div>
-      
-      
-      
-      
-              </div>
+        </div>
           
-          
-            
-          </div>
-            
+      
+      <div class="col-md-6">
+        <div style="margin-left: 50px; margin-top: 20px;">
+            <h3>Extracted Features</h3>
+            <div style=" height:510px; width:520px; overflow:hidden; overflow-y:scroll; " >
+              {% load crispy_forms_tags %}
+
+              {% block content %}
+
+                <form method="POST" action="{% url 'UploadMulti:form_post' %}">
+                  {% csrf_token %}
+                  {{ form|crispy }}
+                  <button type="submit" class="btn btn-primary" >Submit</button>
+                </form>
+              {% endblock %}
             </div>
+          </div>  
+      </div>
+          
+    </div>
               
 
 

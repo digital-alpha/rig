@@ -187,31 +187,18 @@ def csv(request):
 
     raise Http404
    
-    #return redirect(request.POST.get('next'))
+
 
 import requests
 def process(request):
     documents = Document.objects.all()
     print(request)
     if request.method == 'GET':
-        # r = requests.get('http://127.0.0.1:8000/api/process', params=request.GET)
-        # print(r)
+
         p=processAPI(request)  
         print(p)
     return render(request, 'UploadMulti/basic_upload/index.html', {'documents':documents})
 
-    
-
-
-def save_info(request):
-    documents = Document.objects.all()
-    if request.method == "POST":
-        p_dict = {}
-        p_dict.update( {request.POST.get('title') : request.POST.get('input')} )
-        print(p_dict.items())
-        return render(request, 'UploadMulti/basic_upload/index.html', {'documents':documents})
-    else:
-        return render(request, 'UploadMulti/basic_upload/index.html', {'documents':documents})
 
 def form_post(request):
 

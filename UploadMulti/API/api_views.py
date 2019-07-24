@@ -82,6 +82,38 @@ def processAPI(request):
 
             print("IN api view")
     return Response(status=200)
+@api_view()
+def processApiSingle(request, pk):
+    document = get_object_or_404(Document, id=pk)
+    tup=[]
+    try:
+        id=Detail.objects.latest('id')
+        id=model_to_dict(id)['id']
+    except:
+        id=0
+
+    tup.append(int(id) + 1)
+    tup.append(document.file.name)
+    with open('media/'+document.file.name, 'r', encoding='UTF-8') as f:
+        data2=f.read()
+    data2 = data2.lstrip()
+    data2 = data2.rstrip()
+    doc=nlp(data2)
+
+    obj = Entities()
+    mapping = obj.results(doc)
+    df = obj.results_to_df(mapping)
+    entities=df.to_dict('dict')
+    for j in entities.values():
+        tup.append(j[0])
+
+    tup.append(document.id)
+    print(tup)
+    tup=tuple(tup)
+    d=Detail(*tup)
+    d.save()
+    print("In single api view")
+    return Response(status=200)
 
 @api_view()
 def clearAPI(request):

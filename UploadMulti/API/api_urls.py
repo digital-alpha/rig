@@ -13,6 +13,7 @@ urlpatterns = [
     path('document/', include(router.urls)),
     path('detail/', include(router2.urls)),
     path('process/', processAPI),
+    path('process/<int:pk>', processApiSingle),
     path('clear/', clearAPI),
     path('detail/<int:pk>', infoAPI),
 
