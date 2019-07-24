@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Document, Detail
+from UploadMulti.models import Document, Detail
 
 class DocumentSerializer(serializers.ModelSerializer):
     class Meta:

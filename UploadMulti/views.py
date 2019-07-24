@@ -16,25 +16,33 @@ from django.http import HttpResponseRedirect
 
 from .forms import DetailForm
 import time
-from Entity import Entities,convert_dataturks_to_spacy,Validate,check_validity,display_attributes
+from Source.Entity import Entities,display_attributes
 import spacy
 from spacy import displacy
 import pandas as pd
 from openpyxl import Workbook
 from openpyxl.styles import Font
+from UploadMulti.API.api_views import *
+
+
+import requests
+
+from django.template.defaulttags import register
 
 import os
+import pandas
+from openpyxl import load_workbook
 
 nlp = spacy.load('sample_work_model_300_drop_0.05')
 nlp2 = spacy.load("en_core_web_sm")
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 print(BASE_DIR)
-import pandas
+
 list_values=[]
 files=[]
 # Create your views here.
-from openpyxl import load_workbook
+
 
 wb =Workbook()
 
@@ -94,23 +102,25 @@ def analysis(request, pk):
     data2 = data2.lstrip()
     data2 = data2.rstrip()
     doc=nlp(data2)
+    obj = Entities()
+    mapping = obj.results(doc)
+    
     d=Detail.objects.filter(Document_Name=doc_obj.file.name).values()
-    print(d)
+    
     list_result = [entry for entry in d]
     field=Detail._meta.get_fields()
-    print(field)
+    print([f.name for f in field][1:-1])
+    
     tup=[]
-    print(list_result)
     for f in field:
         try:
             tup.append(list_result[0][f.name])
         except:
             print(f.name)
-    print(tup)
     tup=tup[1:]
     print(tup)
     d=display_attributes()
-    color_scheme=d.color_table()
+    color_scheme=d.color_table(list(mapping.keys()))
     color=[]
     color.append('#ffffff')
     color.extend(list(color_scheme.values()))
@@ -134,7 +144,6 @@ def analysis(request, pk):
    # return render(request, 'analysis.html', {'doc_obj':doc_obj})
 
 
-from django.template.defaulttags import register
 ...
 @register.filter
 def get_item(dictionary, key):
@@ -145,11 +154,16 @@ def csv(request):
 
     book = load_workbook(filepath)
     list_values=[]
-    list_values.append(('Employee Name', 'Address of Employee', 'Company Name', 'Address of Company', 'Role', 'Base Salary', 'Date of Agreement', 'Start Date', 'End Date', 'Supervisor Information', 'Bonus', 'Notice Period', 'Other Compensation', 'Non Monetary Benefits', 'Health Insurance', '401k', 'At will', 'Stock', 'Vacation'))
+    
     val=Detail.objects.all().values()
+    field=Detail._meta.get_fields()
+    field=[f.name for f in field]
+    list_values.append(tuple(field[1:-1]))
+
     for v in val:
         value_list= [entry for entry in v.values()]
-        list_values.append(tuple(value_list))
+        list_values.append(tuple(value_list[1:-1]))
+
     writer = pd.ExcelWriter(filepath, engine='openpyxl')
     writer.book = book
     writer.sheets = {ws.title: ws for ws in book.worksheets}
@@ -209,12 +223,9 @@ def form_post(request):
         p = p[1:]
         
         
-        #detail = Detail()
-        # detail.Document_Name = name
-        # detail.save()
+       
         form = DetailForm(request.POST,dynamic_placeholder=p,instance=instance)
-        # form.fields['Document_Name'] = name
-        #print(form)
+       
        
         if form.is_valid():
             form.save()
@@ -231,122 +242,3 @@ def form_post(request):
 
 ########################################################################
 
-from rest_framework import viewsets
-from rest_framework.views import APIView
-from rest_framework.parsers import FileUploadParser
-from rest_framework.response import Response
-from rest_framework import status
-from .serializers import DocumentSerializer, DetailSerializer
-from rest_framework.decorators import api_view
-
-class DocumentViewset(viewsets.ModelViewSet):
-    queryset = Document.objects.all()
-    serializer_class = DocumentSerializer
-
-
-# class Process(APIView):
-#     def get(self, request):
-#         documents = Document.objects.all()
-#         for document in documents:
-#             if Detail.objects.filter(Document_Name=document.file.name).exists()==False:
-#                 tup=[]
-#                 tup.append(document.file.name)
-#                 with open('media/'+document.file.name, 'r', encoding='UTF-8') as f:
-#                     data2=f.read()
-#                 data2 = data2.lstrip()
-#                 data2 = data2.rstrip()
-#                 doc=nlp(data2)
-
-#                 obj = Entities()
-#                 mapping = obj.results(doc)
-#                 df = obj.results_to_df(mapping)
-#                 entities=df.to_dict('dict')
-#                 for j in entities.values():
-#                     tup.append(j[0])
-                
-#                 tup=tuple(tup)
-#                 d=Detail(*tup)
-#                 d.save()
-#                 print("IN api view")
-#         return Response(status=200)
-from django.forms.models import model_to_dict
-@api_view()
-def processAPI(request):
-    documents = Document.objects.all()
-    for document in documents:
-        if Detail.objects.filter(doc_id=document.id).exists()==False:
-            tup=[]
-            try:
-                id=Detail.objects.latest('id')
-                id=model_to_dict(id)['id']
-            except:
-                id=0
-
-            tup.append(int(id) + 1)
-            tup.append(document.file.name)
-            with open('media/'+document.file.name, 'r', encoding='UTF-8') as f:
-                data2=f.read()
-            data2 = data2.lstrip()
-            data2 = data2.rstrip()
-            doc=nlp(data2)
-
-            obj = Entities()
-            mapping = obj.results(doc)
-            df = obj.results_to_df(mapping)
-            entities=df.to_dict('dict')
-            for j in entities.values():
-                tup.append(j[0])
-
-            tup.append(document.id)
-            print(tup)
-            tup=tuple(tup)
-            d=Detail(*tup)
-            d.save()
-
-            print("IN api view")
-    return Response(status=200)
-
-@api_view()
-def clearAPI(request):
-    print(request.method)
-    for document in Document.objects.all():
-        document.file.delete()
-        document.delete()
-        wb=Workbook()
-        wb.save(filepath)
-    for detail in Detail.objects.all():
-        detail.delete()
-    return Response(status=200)
-
-
-@api_view()
-def infoAPI(request,pk):
-    if request.method == "GET":
-        try:
-            info=Detail.objects.filter(doc_id=pk)
-
-        except Detail.DoesNotExist:
-
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-        serializer = DetailSerializer(info, many=True)
-        return Response(serializer.data)
-    if request.method == "DELETE":
-        try:
-            info=Detail.objects.filter(doc_id=pk)
-
-        except Detail.DoesNotExist:
-
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-        info.delete()
-
-        return Response({"message": "details deleted"}, status=status.HTTP_204_NO_CONTENT)
-
-
-
-
-
-class DetailViewset(viewsets.ModelViewSet):
-    queryset = Detail.objects.all()
-    serializer_class = DetailSerializer
