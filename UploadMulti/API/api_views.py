@@ -35,6 +35,8 @@ from openpyxl.styles import Font
 import requests
 
 from django.template.defaulttags import register
+from rest_framework.permissions import IsAuthenticated
+
 
 import os
 import pandas
@@ -42,6 +44,7 @@ nlp = spacy.load('sample_work_model_300_drop_0.05')
 nlp2 = spacy.load("en_core_web_sm")
 
 class DocumentViewset(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
 
@@ -49,6 +52,7 @@ class DocumentViewset(viewsets.ModelViewSet):
 from django.forms.models import model_to_dict
 @api_view()
 def processAPI(request):
+    permission_classes = (IsAuthenticated,)
     documents = Document.objects.all()
     for document in documents:
         if Detail.objects.filter(doc_id=document.id).exists()==False:
@@ -85,6 +89,7 @@ def processAPI(request):
 
 @api_view()
 def clearAPI(request):
+    permission_classes = (IsAuthenticated,)
     print(request.method)
     for document in Document.objects.all():
         document.file.delete()
@@ -98,6 +103,7 @@ def clearAPI(request):
 
 @api_view()
 def infoAPI(request,pk):
+    permission_classes = (IsAuthenticated,)
     if request.method == "GET":
         try:
             info=Detail.objects.filter(doc_id=pk)
@@ -125,5 +131,6 @@ def infoAPI(request,pk):
 
 
 class DetailViewset(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     queryset = Detail.objects.all()
     serializer_class = DetailSerializer
