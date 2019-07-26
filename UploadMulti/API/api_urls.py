@@ -16,6 +16,7 @@ urlpatterns = [
     path('process/<int:pk>', processApiSingle),
     path('clear/', clearAPI),
     path('detail/<int:pk>', infoAPI),
+    path('login', login),
 
 ] 
 

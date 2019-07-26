@@ -44,7 +44,7 @@ nlp = spacy.load('sample_work_model_300_drop_0.05')
 nlp2 = spacy.load("en_core_web_sm")
 
 class DocumentViewset(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+   
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
 
@@ -52,7 +52,7 @@ class DocumentViewset(viewsets.ModelViewSet):
 from django.forms.models import model_to_dict
 @api_view()
 def processAPI(request):
-    permission_classes = (IsAuthenticated,)
+   
     documents = Document.objects.all()
     for document in documents:
         if Detail.objects.filter(doc_id=document.id).exists()==False:
@@ -121,7 +121,7 @@ def processApiSingle(request, pk):
 
 @api_view()
 def clearAPI(request):
-    permission_classes = (IsAuthenticated,)
+
     print(request.method)
     for document in Document.objects.all():
         document.file.delete()
@@ -135,7 +135,7 @@ def clearAPI(request):
 
 @api_view()
 def infoAPI(request,pk):
-    permission_classes = (IsAuthenticated,)
+    
     if request.method == "GET":
         try:
             info=Detail.objects.filter(doc_id=pk)
@@ -163,6 +163,37 @@ def infoAPI(request,pk):
 
 
 class DetailViewset(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+ 
     queryset = Detail.objects.all()
     serializer_class = DetailSerializer
+
+
+from django.contrib.auth import authenticate
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.authtoken.models import Token
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.status import (
+    HTTP_400_BAD_REQUEST,
+    HTTP_404_NOT_FOUND,
+    HTTP_200_OK
+)
+from rest_framework.response import Response
+
+
+@csrf_exempt
+@api_view(["POST"])
+@permission_classes((AllowAny,))
+def login(request):
+    username = request.data.get("username")
+    password = request.data.get("password")
+    if username is None or password is None:
+        return Response({'error': 'Please provide both username and password'},
+                        status=HTTP_400_BAD_REQUEST)
+    user = authenticate(username=username, password=password)
+    if not user:
+        return Response({'error': 'Invalid Credentials'},
+                        status=HTTP_404_NOT_FOUND)
+    token, _ = Token.objects.get_or_create(user=user)
+    return Response({'token': token.key},
+                    status=HTTP_200_OK)
