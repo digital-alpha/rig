@@ -4,8 +4,8 @@ from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import DocumentSerializer, DetailSerializer
-from rest_framework.decorators import api_view
-
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
@@ -38,16 +38,20 @@ from django.template.defaulttags import register
 
 import os
 import pandas
+
+
 nlp = spacy.load('sample_work_model_300_drop_0.05')
 nlp2 = spacy.load("en_core_web_sm")
 
 class DocumentViewset(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
+    permission_classes = [IsAuthenticated]
 
 
 from django.forms.models import model_to_dict
-@api_view()
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def processAPI(request):
     documents = Document.objects.all()
     for document in documents:
@@ -82,7 +86,8 @@ def processAPI(request):
 
             print("IN api view")
     return Response(status=200)
-@api_view()
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def processApiSingle(request, pk):
     document = get_object_or_404(Document, id=pk)
     tup=[]
@@ -115,7 +120,8 @@ def processApiSingle(request, pk):
     print("In single api view")
     return Response(status=200)
 
-@api_view()
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def clearAPI(request):
     print(request.method)
     for document in Document.objects.all():
@@ -129,6 +135,7 @@ def clearAPI(request):
 
 
 @api_view()
+@permission_classes([IsAuthenticated])
 def infoAPI(request,pk):
     if request.method == "GET":
         try:
@@ -159,3 +166,4 @@ def infoAPI(request,pk):
 class DetailViewset(viewsets.ModelViewSet):
     queryset = Detail.objects.all()
     serializer_class = DetailSerializer
+    permission_classes = [IsAuthenticated]
