@@ -4,8 +4,8 @@ from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import DocumentSerializer, DetailSerializer
-from rest_framework.decorators import api_view
-
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
@@ -40,6 +40,8 @@ from rest_framework.permissions import IsAuthenticated
 
 import os
 import pandas
+
+
 nlp = spacy.load('sample_work_model_300_drop_0.05')
 nlp2 = spacy.load("en_core_web_sm")
 
@@ -47,10 +49,12 @@ class DocumentViewset(viewsets.ModelViewSet):
    
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
+    permission_classes = [IsAuthenticated]
 
 
 from django.forms.models import model_to_dict
-@api_view()
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def processAPI(request):
    
     documents = Document.objects.all()
@@ -86,7 +90,8 @@ def processAPI(request):
 
             print("IN api view")
     return Response(status=200)
-@api_view()
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def processApiSingle(request, pk):
     document = get_object_or_404(Document, id=pk)
     tup=[]
@@ -119,7 +124,8 @@ def processApiSingle(request, pk):
     print("In single api view")
     return Response(status=200)
 
-@api_view()
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def clearAPI(request):
 
     print(request.method)
@@ -134,6 +140,7 @@ def clearAPI(request):
 
 
 @api_view()
+@permission_classes([IsAuthenticated])
 def infoAPI(request,pk):
     
     if request.method == "GET":
@@ -167,33 +174,5 @@ class DetailViewset(viewsets.ModelViewSet):
     queryset = Detail.objects.all()
     serializer_class = DetailSerializer
 
+    permission_classes = [IsAuthenticated]
 
-from django.contrib.auth import authenticate
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.authtoken.models import Token
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
-from rest_framework.status import (
-    HTTP_400_BAD_REQUEST,
-    HTTP_404_NOT_FOUND,
-    HTTP_200_OK
-)
-from rest_framework.response import Response
-
-
-@csrf_exempt
-@api_view(["POST"])
-@permission_classes((AllowAny,))
-def login(request):
-    username = request.data.get("username")
-    password = request.data.get("password")
-    if username is None or password is None:
-        return Response({'error': 'Please provide both username and password'},
-                        status=HTTP_400_BAD_REQUEST)
-    user = authenticate(username=username, password=password)
-    if not user:
-        return Response({'error': 'Invalid Credentials'},
-                        status=HTTP_404_NOT_FOUND)
-    token, _ = Token.objects.get_or_create(user=user)
-    return Response({'token': token.key},
-                    status=HTTP_200_OK)
