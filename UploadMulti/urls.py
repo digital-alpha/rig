@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^csv/$', views.csv, name='csv'),
     url(r'^form_post/$', views.form_post, name='form_post'),
     path('process/', views.process, name='process'),
-    path('save/', views.save_info, name='save_info'),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

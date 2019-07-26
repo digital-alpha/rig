@@ -4,7 +4,7 @@ from UploadMulti.models import Document, Detail
 class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
-        fields = ('file',)
+        fields = ('file','id')
 
 class DetailSerializer(serializers.ModelSerializer):
     class Meta:
