@@ -28,6 +28,7 @@ from UploadMulti.API.api_views import *
 import requests
 
 from django.template.defaulttags import register
+from rest_framework.authtoken.models import Token
 
 import os
 import pandas
@@ -94,6 +95,7 @@ def clear_database(request):
 
 def analysis(request, pk):
     doc_obj = get_object_or_404(Document, pk=pk)
+    
     tup=[]
     form_ent=[]
     form_ent.append(doc_obj.file.name)
@@ -109,7 +111,6 @@ def analysis(request, pk):
     
     list_result = [entry for entry in d]
     field=Detail._meta.get_fields()
-    print([f.name for f in field][1:-1])
     
     tup=[]
     for f in field:
@@ -118,7 +119,9 @@ def analysis(request, pk):
         except:
             print(f.name)
     tup=tup[1:]
+    print("TUP")
     print(tup)
+    print(len(tup))
     d=display_attributes()
     color_scheme=d.color_table(list(mapping.keys()))
     color=[]
@@ -160,6 +163,7 @@ def csv(request):
     field=[f.name for f in field]
     list_values.append(tuple(field[1:-1]))
 
+
     for v in val:
         value_list= [entry for entry in v.values()]
         list_values.append(tuple(value_list[1:-1]))
@@ -192,11 +196,19 @@ def csv(request):
 import requests
 def process(request):
     documents = Document.objects.all()
-    print(request)
-    if request.method == 'GET':
+    tokens=Token.objects.filter(user=request.user).values()
+    list_result = [entry for entry in tokens]
+    token=list_result[0]['key']
+    myurl = "http://localhost:8000/api/process/"
+    response = requests.get(myurl, headers={'Authorization': 'Token {}'.format(token)})
+   
+    print(response)
+    #if request.method == 'GET':
 
-        p=processAPI(request)  
-        print(p)
+    #    p=processAPI(request)  
+    #    print(p)
+
+
     return render(request, 'UploadMulti/basic_upload/index.html', {'documents':documents})
 
 

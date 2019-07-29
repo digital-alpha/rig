@@ -48,18 +48,13 @@ INSTALLED_APPS = [
     'silk',
     'UploadMulti',
     'crispy_forms',
-     'rest_framework.authtoken', 
 ]
 
-
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated', )
+    ],
 }
-
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
