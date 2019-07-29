@@ -13,6 +13,7 @@ from django.contrib import messages
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import DetailForm
 import time
@@ -52,7 +53,7 @@ filepath=os.path.join(BASE_DIR,'UploadMulti/static/Excel_Files/Features.xlsx')
 #sheet.append(('Employee Name', 'Address of Employee', 'Company Name', 'Address of Company', 'Role', 'Base Salary', 'Date of Agreement', 'Start Date', 'End Date', 'Supervisor Information', 'Bonus', 'Notice Period', 'Other Compensation', 'Non Monetary Benefits', 'Health Insurance', '401k', 'At will', 'Stock', 'Vacation'))
 wb.save(filepath)
 
-class BasicUploadView(View):
+class BasicUploadView(LoginRequiredMixin,View):
     def get(self, request):
         documents_list = Document.objects.all()
         return render(self.request, 'UploadMulti/basic_upload/index.html', {'documents': documents_list})
