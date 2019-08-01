@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from Coal import settings
 from django.views.generic import TemplateView
+from UploadMulti.views import CountryAutocomplete
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -28,3 +29,12 @@ urlpatterns = [
 urlpatterns += [url(r'^silk/', include('silk.urls', namespace='silk'))]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+urlpatterns += [
+    url(
+        r'^country-autocomplete/$',
+        CountryAutocomplete.as_view(),
+        name='country-autocomplete',
+    ),
+]

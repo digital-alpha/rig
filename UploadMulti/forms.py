@@ -1,6 +1,7 @@
 from django import forms
 
 from .models import Document, Detail
+from dal import autocomplete
 
 
 class DocumentForm(forms.ModelForm):
@@ -120,12 +121,19 @@ class DetailForm(forms.ModelForm):
     )
 
     """
+    from django.utils.html import format_html
+ 
 
     class Meta():
         model = Detail
         fields = ['Document_Name','Employee_Name', 'Address_of_Employee', 'Company_Name', 'Address_of_Company', 'Role', 'Base_Salary', 'Date_of_Agreement', 'Start_Date', 'End_Date', 'Supervisor_Information', 'Bonus', 'Notice_Period', 'Other_Compensation', 'Non_Monetary_Benefits', 'Health_Insurance', '_401k', 'At_will', 'Stock', 'Vacation']
         # widgets = {'Document_Name': forms.HiddenInput()}
-
+        widgets = {
+            'Role': autocomplete.ModelSelect2(
+                url='country-autocomplete',
+                attrs={'data-html': True}
+            )
+        }
 
     # Employee_Name = forms.CharField(
     #     label='Employee Name',

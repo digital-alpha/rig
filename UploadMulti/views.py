@@ -236,6 +236,25 @@ def form_post(request):
             messages.error(request, 'The form is invalid.')
             print(form.errors)
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+
+from dal import autocomplete
+
+
+
+class CountryAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        # Don't forget to filter out results depending on the visitor !
+        if not self.request.user.is_authenticated():
+            return Detail.objects.none()
+
+        qs = Detail.objects.all()
+
+        if self.q:
+            qs = qs.filter(Role=self.q)
+
+        return qs
     
 
 

@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'silk',
     'UploadMulti',
     'crispy_forms',
+    'dal',
+    'dal_select2',
 ]
 
 REST_FRAMEWORK = {
