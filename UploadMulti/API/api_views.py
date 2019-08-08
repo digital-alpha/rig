@@ -12,7 +12,7 @@ from django.http import JsonResponse
 from django.views import View
 import time
 from UploadMulti.forms import DocumentForm
-from UploadMulti.models import Document, Detail
+from UploadMulti.models import Document, Detail,Role
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.views import View
@@ -79,8 +79,28 @@ def processAPI(request):
             mapping = obj.results(doc)
             df = obj.results_to_df(mapping)
             entities=df.to_dict('dict')
-            for j in entities.values():
-                tup.append(j[0])
+            print(type(entities['Role']))
+            
+            role=entities['Role'][0]
+           # role_tup.append(role)
+            try:
+                r=Role(Role_Name=role)
+                r.save()
+            except:
+                print("Role already exist")
+
+            role_queryset=Role.objects.filter(Role_Name=role)
+            
+            role_id=list(role_queryset.values('id'))
+
+            #entities['Role']={0:}
+            #print(entities['Role'][0])
+
+            for key,value in entities.items():
+                if key=='Role':
+                    tup.append(role_id[0]['id'])
+                else:
+                    tup.append(value[0])
 
             tup.append(document.id)
             print(tup)
@@ -113,6 +133,8 @@ def processApiSingle(request, pk):
     mapping = obj.results(doc)
     df = obj.results_to_df(mapping)
     entities=df.to_dict('dict')
+    
+
     for j in entities.values():
         tup.append(j[0])
 

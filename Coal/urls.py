@@ -15,14 +15,18 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from django.contrib import admin
+from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import path
 from django.conf.urls.static import static
 from Coal import settings
 from django.views.generic import TemplateView
-from UploadMulti.views import CountryAutocomplete
+#from UploadMulti.views import CountryAutocomplete
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
+    # url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('', LoginView.as_view(template_name = 'home.html'), name='home'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     url(r'^UploadMulti/',include('UploadMulti.urls',namespace='UploadMulti')),
     url(r'api/', include('UploadMulti.API.api_urls')),
 ]
@@ -31,10 +35,10 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
-urlpatterns += [
-    url(
-        r'^country-autocomplete/$',
-        CountryAutocomplete.as_view(),
-        name='country-autocomplete',
-    ),
-]
+# urlpatterns += [
+#     url(
+#         r'^country-autocomplete/$',
+#         CountryAutocomplete.as_view(),
+#         name='country-autocomplete',
+#     ),
+# ]

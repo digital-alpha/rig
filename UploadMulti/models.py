@@ -1,8 +1,16 @@
 from __future__ import unicode_literals
 
 from django.db import models
-
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
 # Create your models here.
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
+
 
 class Document(models.Model):
     title = models.CharField(max_length=255, blank=True)
@@ -12,6 +20,13 @@ class Document(models.Model):
     def __str__(self):
         return self.file.name
 
+class Role(models.Model):
+   
+    Role_Name = models.CharField(null=True,max_length=200, verbose_name='Role_Name',unique=True)
+
+    def __str__(self):
+        return self.Role_Name
+
 class Detail(models.Model):
     
     Document_Name = models.CharField(max_length=200, verbose_name='Document Name')
@@ -19,7 +34,7 @@ class Detail(models.Model):
     Address_of_Employee = models.CharField(null=True,max_length=200, verbose_name='Address of Employee')
     Company_Name = models.CharField(null=True,max_length=200, verbose_name='Company Name')
     Address_of_Company = models.CharField(null=True,max_length=200, verbose_name='Address of Company')
-    Role = models.CharField(null=True,max_length=200, verbose_name='Role')
+    Role_ref = models.ForeignKey(Role,db_column='Role_ref', on_delete=models.CASCADE, null=True)
     Base_Salary = models.CharField(null=True,max_length=200, verbose_name='Base Salary')
     Date_of_Agreement = models.CharField(null=True,max_length=200, verbose_name='Date of Agreement')
     Start_Date = models.CharField(null=True,max_length=200, verbose_name='Start Date')
@@ -38,4 +53,5 @@ class Detail(models.Model):
 
     def __str__(self):
         return self.Document_Name
-    
+
+

@@ -15,7 +15,16 @@ urlpatterns = [
     url(r'^csv/$', views.csv, name='csv'),
     url(r'^form_post/$', views.form_post, name='form_post'),
     path('process/', views.process, name='process'),
+    url(
+        r'^client-autocomplete/$',
+        views.ClientAutocomplete.as_view(),
+        name='client',
+    ),
 
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
+

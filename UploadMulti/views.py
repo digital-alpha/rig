@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.views import View
 import time
 from .forms import DocumentForm
-from .models import Document, Detail
+from .models import Document, Detail,Role
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.views import View
@@ -13,6 +13,7 @@ from django.contrib import messages
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import DetailForm
 import time
@@ -52,7 +53,7 @@ filepath=os.path.join(BASE_DIR,'UploadMulti/static/Excel_Files/Features.xlsx')
 #sheet.append(('Employee Name', 'Address of Employee', 'Company Name', 'Address of Company', 'Role', 'Base Salary', 'Date of Agreement', 'Start Date', 'End Date', 'Supervisor Information', 'Bonus', 'Notice Period', 'Other Compensation', 'Non Monetary Benefits', 'Health Insurance', '401k', 'At will', 'Stock', 'Vacation'))
 wb.save(filepath)
 
-class BasicUploadView(View):
+class BasicUploadView(LoginRequiredMixin,View):
     def get(self, request):
         documents_list = Document.objects.all()
         return render(self.request, 'UploadMulti/basic_upload/index.html', {'documents': documents_list})
@@ -107,21 +108,20 @@ def analysis(request, pk):
     obj = Entities()
     mapping = obj.results(doc)
     
-    d=Detail.objects.filter(Document_Name=doc_obj.file.name).values()
+    d=Detail.objects.select_related().filter(Document_Name=doc_obj.file.name).values()
     
     list_result = [entry for entry in d]
     field=Detail._meta.get_fields()
+    role_query=Role.objects.filter(id=list_result[0]['Role_ref_id'])
+    role=list(role_query.values('Role_Name'))
+    list_result[0]['Role_ref_id']=role[0]['Role_Name']
+    value_dict=list_result[0]
+    value_list=list(value_dict.values())
+    value_list=value_list[1:-1]
+    print(value_list)
+    print(len(value_list))
+    tup=value_list
     
-    tup=[]
-    for f in field:
-        try:
-            tup.append(list_result[0][f.name])
-        except:
-            print(f.name)
-    tup=tup[1:]
-    print("TUP")
-    print(tup)
-    print(len(tup))
     d=display_attributes()
     color_scheme=d.color_table(list(mapping.keys()))
     color=[]
@@ -239,24 +239,42 @@ def form_post(request):
 
 
 
-from dal import autocomplete
+# from dal import autocomplete
 
 
 
-class CountryAutocomplete(autocomplete.Select2QuerySetView):
-    def get_queryset(self):
-        # Don't forget to filter out results depending on the visitor !
-        if not self.request.user.is_authenticated():
-            return Detail.objects.none()
+# class CountryAutocomplete(autocomplete.Select2ListView):
 
-        qs = Detail.objects.all()
+#     def create(self, text):
+#         return text
 
-        if self.q:
-            qs = qs.filter(Role=self.q)
+#     def get_list(self):
+#         result_list = []
+#         if self.q:
+#             data = Detail.objects.all().filter(Role__icontains=self.q)[:10]
 
-        return qs
-    
+#             result_list = [x.name for x in data]
+#             print(result_list)
+#             print("Herer")
+#         return result_list
 
 
 ########################################################################
 
+
+from dal import autocomplete
+#from your_countries_app.models import Country
+
+
+class ClientAutocomplete(autocomplete.Select2QuerySetView):
+    def get(self):
+        # Don't forget to filter out results depending on the visitor !
+        print("here")
+        qs = Role.objects.all()
+
+        if self.q:
+            
+            qs = qs.filter(Role_Name__istartswith=self.q)
+            print(qs)
+
+        return qs

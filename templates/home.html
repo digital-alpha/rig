@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<form method="POST"  action="{% url 'home'%}">
+    {% csrf_token %}
+    
+    {{form.as_p}}
 
-<label for="name">Name:</label>
-<input type="text" name='name'>
-<label for="password">Password:</label>
-<input type="password" name='password'>
+    {{form.errors}}
 
-<form action="{% url 'UploadMulti:basic_upload'%}">
-    <input type="submit">
+    <input type="submit" value='Login'>
+
 </form>
 
 

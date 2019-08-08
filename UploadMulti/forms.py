@@ -1,7 +1,9 @@
 from django import forms
 
-from .models import Document, Detail
+from .models import Document, Detail,Role
 from dal import autocomplete
+#from django.contrib.auth.models import Role
+
 
 
 class DocumentForm(forms.ModelForm):
@@ -44,11 +46,7 @@ class DetailForm(forms.ModelForm):
         widget=forms.TextInput()
     )
 
-    Role = forms.CharField(
-        label='Role',
-        widget=forms.TextInput()
-    )
-
+    
     Base_Salary = forms.CharField(
         label='Base Salary',
         widget=forms.TextInput()
@@ -122,18 +120,23 @@ class DetailForm(forms.ModelForm):
 
     """
     from django.utils.html import format_html
+
+   
+    
+
+
+    Role = forms.ModelChoiceField(
+            queryset=Role.objects.all(),
+            widget=autocomplete.ModelSelect2(url='UploadMulti:client')
+    )
+
  
 
     class Meta():
         model = Detail
-        fields = ['Document_Name','Employee_Name', 'Address_of_Employee', 'Company_Name', 'Address_of_Company', 'Role', 'Base_Salary', 'Date_of_Agreement', 'Start_Date', 'End_Date', 'Supervisor_Information', 'Bonus', 'Notice_Period', 'Other_Compensation', 'Non_Monetary_Benefits', 'Health_Insurance', '_401k', 'At_will', 'Stock', 'Vacation']
+        fields = ['Document_Name','Employee_Name', 'Address_of_Employee', 'Company_Name', 'Address_of_Company', 'Role_ref', 'Base_Salary', 'Date_of_Agreement', 'Start_Date', 'End_Date', 'Supervisor_Information', 'Bonus', 'Notice_Period', 'Other_Compensation', 'Non_Monetary_Benefits', 'Health_Insurance', '_401k', 'At_will', 'Stock', 'Vacation']
         # widgets = {'Document_Name': forms.HiddenInput()}
-        widgets = {
-            'Role': autocomplete.ModelSelect2(
-                url='country-autocomplete',
-                attrs={'data-html': True}
-            )
-        }
+        
 
     # Employee_Name = forms.CharField(
     #     label='Employee Name',
@@ -237,7 +240,7 @@ class DetailForm(forms.ModelForm):
         
     def __init__(self, *args, **kwargs):
         colors=[]
-        entities=['Document_Name','Employee_Name', 'Address_of_Employee', 'Company_Name', 'Address_of_Company', 'Role', 'Base_Salary', 'Date_of_Agreement', 'Start_Date', 'End_Date', 'Supervisor_Information', 'Bonus', 'Notice_Period', 'Other_Compensation', 'Non_Monetary_Benefits', 'Health_Insurance', '_401k', 'At_will', 'Stock', 'Vacation']
+        entities=['Document_Name','Employee_Name', 'Address_of_Employee', 'Company_Name', 'Address_of_Company', 'Role_ref', 'Base_Salary', 'Date_of_Agreement', 'Start_Date', 'End_Date', 'Supervisor_Information', 'Bonus', 'Notice_Period', 'Other_Compensation', 'Non_Monetary_Benefits', 'Health_Insurance', '_401k', 'At_will', 'Stock', 'Vacation']
         # entities = ['Employee_Name']
         placeholder1 = kwargs.pop("dynamic_placeholder")
         print(len(placeholder1))
