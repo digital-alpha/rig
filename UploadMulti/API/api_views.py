@@ -29,17 +29,12 @@ from Source.Entity import Entities,display_attributes
 import spacy
 from spacy import displacy
 import pandas as pd
-from openpyxl import Workbook
-from openpyxl.styles import Font
+
 
 import requests
 
 from django.template.defaulttags import register
-from rest_framework.permissions import IsAuthenticated
-
-
 import os
-import pandas
 
 
 nlp = spacy.load('sample_work_model_300_drop_0.05')
@@ -79,10 +74,11 @@ def processAPI(request):
             mapping = obj.results(doc)
             df = obj.results_to_df(mapping)
             entities=df.to_dict('dict')
-            print(type(entities['Role']))
             
+            # role insertion
+
             role=entities['Role'][0]
-           # role_tup.append(role)
+          
             try:
                 r=Role(Role_Name=role)
                 r.save()
@@ -93,9 +89,8 @@ def processAPI(request):
             
             role_id=list(role_queryset.values('id'))
 
-            #entities['Role']={0:}
-            #print(entities['Role'][0])
-
+            
+            # role insertion
             for key,value in entities.items():
                 if key=='Role':
                     tup.append(role_id[0]['id'])
@@ -103,7 +98,6 @@ def processAPI(request):
                     tup.append(value[0])
 
             tup.append(document.id)
-            print(tup)
             tup=tuple(tup)
             d=Detail(*tup)
             d.save()

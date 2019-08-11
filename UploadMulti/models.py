@@ -34,7 +34,7 @@ class Detail(models.Model):
     Address_of_Employee = models.CharField(null=True,max_length=200, verbose_name='Address of Employee')
     Company_Name = models.CharField(null=True,max_length=200, verbose_name='Company Name')
     Address_of_Company = models.CharField(null=True,max_length=200, verbose_name='Address of Company')
-    Role_ref = models.ForeignKey(Role,db_column='Role_ref', on_delete=models.CASCADE, null=True)
+    Role = models.ForeignKey(Role,db_column='Role', on_delete=models.CASCADE, null=True)
     Base_Salary = models.CharField(null=True,max_length=200, verbose_name='Base Salary')
     Date_of_Agreement = models.CharField(null=True,max_length=200, verbose_name='Date of Agreement')
     Start_Date = models.CharField(null=True,max_length=200, verbose_name='Start Date')

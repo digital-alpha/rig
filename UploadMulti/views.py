@@ -112,9 +112,12 @@ def analysis(request, pk):
     
     list_result = [entry for entry in d]
     field=Detail._meta.get_fields()
-    role_query=Role.objects.filter(id=list_result[0]['Role_ref_id'])
+
+    # getting correponding role before displaying
+    role_query=Role.objects.filter(id=list_result[0]['Role_id'])
     role=list(role_query.values('Role_Name'))
-    list_result[0]['Role_ref_id']=role[0]['Role_Name']
+    list_result[0]['Role_id']=role[0]['Role_Name']
+    
     value_dict=list_result[0]
     value_list=list(value_dict.values())
     value_list=value_list[1:-1]
@@ -218,13 +221,28 @@ def form_post(request):
 
         p = list(request.POST.values())
         instance=get_object_or_404(Detail,Document_Name=p[1])
-        print(p)
         p = p[1:]
+        field=Detail._meta.get_fields()
+        field=[f.name for f in field ]
         
+        print(len(p))
+        dict_info = dict(zip(field[1:-1], p))
+        print(dict_info)
+        
+        
+        # getting the corresponding role_id before insertion 
+
+        role_query=Role.objects.filter(Role_Name=dict_info['Role'])
+        role_id=list(role_query.values('id'))
+        role_id=role_id[0]['id']
+        dict_info['Role']=role_id
+
+        p=list(dict_info.values())
+        print(p)
+
         
        
         form = DetailForm(request.POST,dynamic_placeholder=p,instance=instance)
-       
        
         if form.is_valid():
             form.save()
