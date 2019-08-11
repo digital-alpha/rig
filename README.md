@@ -8,11 +8,12 @@ Pipeline for unstructured data processing
 1.git clone https://github.com/rdamarapati/rig.git
 2.cd rig
 3.Set up a virtual environment
-4.pip install -r requirements.txt
-5.python manage.py makemigrations
-6.python manage.py migrate
-7.python manage.py createsuperuser
-8.python manage.py runserver
+4.Install Postgresq
+5.pip install -r requirements.txt
+6.python manage.py makemigrations
+7.python manage.py migrate
+8.python manage.py createsuperuser
+9.python manage.py runserver
 ```
 
 After these steps the project should be up at [http://localhost:8000/](http://localhost:8000/)
