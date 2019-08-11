@@ -19,6 +19,7 @@ Pipeline for unstructured data processing
 ###Postgresql 
 ```
 Start Server -  pg_ctl -D /usr/local/var/postgres start 
+```
 
 After these steps the project should be up at [http://localhost:8000/](http://localhost:8000/)
 
