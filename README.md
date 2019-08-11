@@ -5,14 +5,14 @@ Pipeline for unstructured data processing
 
 ### Follow these steps to setup the project locally
 ```
-git clone https://github.com/rdamarapati/rig.git
-cd rig
-Set up a virtual environment
-pip install -r requirements.txt
-python manage.py makemigrations
-python manage.py migrate
-python manage.py createsuperuser
-python manage.py runserver
+1.git clone https://github.com/rdamarapati/rig.git
+2.cd rig
+3.Set up a virtual environment
+4.pip install -r requirements.txt
+5.python manage.py makemigrations
+6.python manage.py migrate
+7.python manage.py createsuperuser
+8.python manage.py runserver
 ```
 
 After these steps the project should be up at [http://localhost:8000/](http://localhost:8000/)
