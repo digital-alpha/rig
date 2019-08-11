@@ -11,8 +11,8 @@ Pipeline for unstructured data processing
 4.Install Postgresql
    a) create a database - "rig" 
 5.pip install -r requirements.txt
-  > Download and Unzip en_core_web_sm-2.0.0 from https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.0.0/en_core_web_sm-2.0.0.tar.gz
-  > Run Pip install . inside the unziped folder 
+  a) Download and Unzip en_core_web_sm-2.0.0 from https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-      2.0.0/en_core_web_sm-2.0.0.tar.gz
+  b) Run "Pip install ." inside the unziped folder 
 6.Update .env config file with the DB_NAME, HOST,USERNAME and PASSWORD
 7.python manage.py makemigrations
 7.python manage.py migrate
