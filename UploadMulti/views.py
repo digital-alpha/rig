@@ -64,10 +64,15 @@ class BasicUploadView(LoginRequiredMixin,View):
         if form.is_valid():
             document = form.save()
             print(document.id)
-            data = {'is_valid': True, 'name': document.file.name, 'url': document.file.url}
+            name = document.file.name
+            name = name.replace('docs/', '')
+            name = name.replace('.txt', '')
+            data = {'is_valid': True, 'name': name, 'uploaded_at': document.uploaded_at}
         else:
             data = {'is_valid': False}
         return JsonResponse(data)
+        # documents_list = Document.objects.all()
+        # return render(self.request, 'UploadMulti/basic_upload/index.html', {'documents': documents_list})
 
 class DragAndDropUploadView(View):
     def get(self, request):
