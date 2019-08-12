@@ -67,7 +67,10 @@ class BasicUploadView(LoginRequiredMixin,View):
             name = document.file.name
             name = name.replace('docs/', '')
             name = name.replace('.txt', '')
-            data = {'is_valid': True, 'name': name, 'uploaded_at': document.uploaded_at}
+            date = document.uploaded_at
+            print(date)
+            print(name)
+            data = {'is_valid': True, 'name': name, 'uploaded_at': date}
         else:
             data = {'is_valid': False}
         return JsonResponse(data)
