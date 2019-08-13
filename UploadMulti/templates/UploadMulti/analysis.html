@@ -40,16 +40,29 @@
       
       <div class="col-md-6">
         <div style="margin-left: 50px; margin-top: 20px;">
-            <h3>Extracted Features</h3>
+            
             <div style=" height:510px; width:520px; overflow:hidden; overflow-y:scroll; " >
               {% load crispy_forms_tags %}
 
               {% block content %}
-
+              
                 <form method="POST" action="{% url 'UploadMulti:form_post' %}">
+                  <div style="position: absolute; background: gray; width: 505px;">
+                    
+                      <h3 style="float: left">&nbsp Extracted Features</h3>
+                      <br>
+                      <button type="submit" class="btn btn-primary" style="float:right; margin-right: 10px;">Submit</button>
+                      
+
+                  
+                  </div>
+                  
+                  <br>
+                  <br>
+                  <br>
                   {% csrf_token %}
                   {{ form|crispy }}
-                  <button type="submit" class="btn btn-primary" >Submit</button>
+                  
                 </form>
               {% endblock %}
 

@@ -95,8 +95,11 @@ $(document).ready(function() {
     </thead>
     <tbody>
          {% for document in documents %}
+
             <tr>
-                <td onmousedown="toggleBorderColor(this);"><a href="{% url 'UploadMulti:analysis' pk=document.pk %}" >{{ document.file.name }}</a></td>
+                <td onmousedown="toggleBorderColor(this);"><a href="{% url 'UploadMulti:analysis' pk=document.pk %}" >{{ document }}</a>
+                    <br><strong>Uploaded Date:</strong> {{document.uploaded_at}}
+                </td>
             </tr>
         {% endfor %}
     </tbody>

@@ -18,7 +18,10 @@ class Document(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.file.name
+        name = self.file.name
+        name = name.replace('docs/', '')
+        name = name.replace('.txt', '')
+        return name
 
 class Role(models.Model):
    
