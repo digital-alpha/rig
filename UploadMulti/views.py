@@ -117,7 +117,7 @@ def analysis(request, pk):
     role_query=Role.objects.filter(id=list_result[0]['Role_id'])
     role=list(role_query.values('Role_Name'))
     list_result[0]['Role_id']=role[0]['Role_Name']
-    
+
     value_dict=list_result[0]
     value_list=list(value_dict.values())
     value_list=value_list[1:-1]
@@ -220,21 +220,35 @@ def form_post(request):
     if request.method == "POST":
 
         p = list(request.POST.values())
+
         instance=get_object_or_404(Detail,Document_Name=p[1])
         p = p[1:]
+        print(p)
         field=Detail._meta.get_fields()
         field=[f.name for f in field ]
+        field.remove('Role')
+        field.remove('doc')
+        field.append('Role')
         
-        print(len(p))
-        dict_info = dict(zip(field[1:-1], p))
-        print(dict_info)
+       
+        dict_info = dict(zip(field[1:], p))
+        #print(dict_info)
         
         
         # getting the corresponding role_id before insertion 
+        try:
+            role_query=Role.objects.filter(Role_Name=dict_info['Role'])
+            role_id=list(role_query.values('id'))
+            role_id=role_id[0]['id']
+        except:
+            r=Role(Role_Name=dict_info['Role'])
+            r.save()
+            role_query=Role.objects.filter(Role_Name=dict_info['Role'])
+            role_id=list(role_query.values('id'))
+            role_id=role_id[0]['id']
 
-        role_query=Role.objects.filter(Role_Name=dict_info['Role'])
-        role_id=list(role_query.values('id'))
-        role_id=role_id[0]['id']
+
+
         dict_info['Role']=role_id
 
         p=list(dict_info.values())
@@ -243,8 +257,10 @@ def form_post(request):
         
        
         form = DetailForm(request.POST,dynamic_placeholder=p,instance=instance)
+      
        
         if form.is_valid():
+            print("Form save")
             form.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         
