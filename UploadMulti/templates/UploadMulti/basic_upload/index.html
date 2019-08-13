@@ -21,7 +21,7 @@
 }
 
 $(document).ready(function() {
-         $('td a').click(function(e) {
+         $('td #analysis').click(function(e) {
           e.preventDefault();
           $('#content').load($(this).attr('href'));
          });
@@ -97,9 +97,11 @@ $(document).ready(function() {
          {% for document in documents %}
 
             <tr>
-                <td onmousedown="toggleBorderColor(this);"><a href="{% url 'UploadMulti:analysis' pk=document.pk %}" >{{ document }}</a>
+                <td onmousedown="toggleBorderColor(this);"><a href="{% url 'UploadMulti:analysis' pk=document.pk %}" id="analysis" >{{ document }}</a>
                     <br><strong>Uploaded Date:</strong> {{document.uploaded_at}}
+                    <a href="{% url 'UploadMulti:clearSingleDoc' pk=document.pk %}"} style="float: right">Delete</a>
                 </td>
+                
             </tr>
         {% endfor %}
     </tbody>
