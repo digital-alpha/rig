@@ -65,7 +65,14 @@ class Entities:
                             final_base_salary.append('{} {}'.format(money[0],"per " + suffix))
                         else:
                             final_base_salary.append('{}'.format(money[0]))
-                return(final_base_salary[0])
+
+                if(len(final_base_salary)):
+                    return(final_base_salary[0])
+                elif(len(base_salary_list)):
+                    base_salary_list=[x.title() for x in base_salary_list]
+                    return(base_salary_list)
+                else:
+                    return("None")
             else:
                 return (None)
         else:
@@ -285,7 +292,7 @@ class Entities:
                     text = ix.replace("\xa0", " ")
                     return text
             else:
-                return(None)
+                return("No")
         else:
             try:
                 if 'Stock_options' in val.keys():
@@ -317,9 +324,11 @@ class Entities:
                 if(len(benefit_list)==1):
                     return(benefit_list[0])
                 elif(len(benefit_list)==0):
-                    return(None)
+                    return("No")
                 else:
                     return(", ".join(x for x in benefit_list))
+            else:
+                return("None")
         else:
             try:
                 if 'Non_monetary_benefits' in val.keys():
@@ -434,8 +443,13 @@ class Entities:
                     if(ent.label_=="CARDINAL"):
                         suffix=self.reference(notice_list[0])
                         if(suffix):
+                       
                             return(ent.text+ " " + suffix)
+                else:
+                    print(notice_list)
+                    return(notice_list[0])        
             else:
+                
                 return ("None")
         else:
             try:
@@ -726,14 +740,25 @@ class Entities:
                 vacation = [x.lower() for x in vacation]
                 vacation_set = set(vacation)
                 vacation_list = set(vacation_set)
-                if "vacation" in vacation_list:
-                    flag = True
-                if len(vacation_list) == 1 and flag:
-                    return ("Yes")
-                for ix in vacation_list:
-                    if ix == "vacation":
-                        continue
-                    return ix.title()
+
+                if (len(vacation_list))>0:
+
+                    if "vacation" in vacation_list:
+                        flag = True
+
+
+                    if len(vacation_list) == 1 and flag:
+                        return ("Yes")
+                    else:
+                        vacation_list=[ix.title() for ix in vacation_list]
+                        return(vacation_list)
+
+                    
+
+                else:
+                    print("here in the vacation")
+                    return("None")               
+              
         else:
             
             try:
@@ -780,7 +805,7 @@ class Entities:
             "Vacation": self.vacation(doc,val)
             }
          
-        
+        print(mapping)
         
         return mapping
         
@@ -873,9 +898,9 @@ class Entities:
 
 
 class display_attributes:
-    entities=['NAME_EMPLOYEE','ADDRESS_EMPLOYEE', 'NAME_EMPLOYER',  'ADDRESS_EMPLOYER','ROLE', 'BASE_SALARY','DATE_AGGREMENT','START_DATE', 'END_DATE', 'SUPERVISOR_INFO','BONUS','NOTICE_PERIOD','OTHER_COMPENSATION', 'NON_MONETARY_BENEFITS', 'HEALTH_INSURANCE','401K','AT_WILL_NOT','STOCK_OPTIONS','VACATION']
+    entities=['NAME_EMPLOYEE','ADDRESS_EMPLOYEE', 'NAME_EMPLOYER',  'ADDRESS_EMPLOYER','ROLE', 'BASE_SALARY','DATE_AGREEMENT','START_DATE', 'END_DATE', 'SUPERVISOR_INFO','BONUS','NOTICE_PERIOD','OTHER_COMPENSATION', 'NON_MONETARY_BENEFITS', 'HEALTH_INSURANCE','401K','AT_WILL_NOT','STOCK_OPTIONS','VACATION']
     def color(self):
-        color=["#d6cbd3", "#eca1a6","#bdcebe","#f7786b","#80ced6","#b5e7a0","#f7935f","#c1946a","#c94c4c","#b1cbbb","#80ced6","#4040a1","#c1502e","#e06377","#b34f90","#ffcc5c","#588c7e","#738ce3","#f278b9"]
+        color=["#d6cbd3", "#eca1a6","#bdcebe","#f7786b","#80ced6","#b5e7a0","#f7935f","#c1946a","#c94c4c","#b1cbbb","#80ced6","#c1cfa5","#c1502e","#e06377","#b34f90","#ffcc5c","#588c7e","#738ce3","#f278b9"]
         i=0
         colors={}
         for e in self.entities:
@@ -886,7 +911,7 @@ class display_attributes:
         options = {"ents": self.entities, "colors": self.color()}
         return(options)
     def color_table(self,entities):
-        colors=["#d6cbd3", "#eca1a6","#bdcebe","#f7786b","#80ced6","#b5e7a0","#f7935f","#c1946a","#c94c4c","#b1cbbb","#80ced6","#4040a1","#c1502e","#e06377","#b34f90","#ffcc5c","#588c7e","#738ce3","#f278b9"]
+        colors=["#d6cbd3", "#eca1a6","#bdcebe","#f7786b","#80ced6","#b5e7a0","#f7935f","#c1946a","#c94c4c","#b1cbbb","#80ced6","#c1cfa5","#c1502e","#e06377","#b34f90","#ffcc5c","#588c7e","#738ce3","#f278b9"]
         i=0
         colors_dict={}
         for e in entities:

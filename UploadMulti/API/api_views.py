@@ -92,12 +92,11 @@ def processAPI(request):
             
             # role insertion
             for key,value in entities.items():
-                if key=='Role':
-                    tup.append(role_id[0]['id'])
-                else:
-                    tup.append(value[0])
+                tup.append(value[0])
 
+            
             tup.append(document.id)
+            tup.append(role_id[0]['id'])
             tup=tuple(tup)
             d=Detail(*tup)
             d.save()

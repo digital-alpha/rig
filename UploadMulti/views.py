@@ -113,8 +113,16 @@ def analysis(request, pk):
     data2 = data2.lstrip()
     data2 = data2.rstrip()
     doc=nlp(data2)
+
     obj = Entities()
     mapping = obj.results(doc)
+
+    if doc.ents:
+        for ent in doc.ents:
+            if ent.label_=="Date_aggrement":
+                print(type(ent.label))
+                print(type(ent))
+                
     
     d=Detail.objects.select_related().filter(Document_Name=doc_obj.file.name).values()
     
@@ -122,13 +130,13 @@ def analysis(request, pk):
     field=Detail._meta.get_fields()
 
     # getting correponding role before displaying
-    role_query=Role.objects.filter(id=list_result[0]['Role_id'])
-    role=list(role_query.values('Role_Name'))
-    list_result[0]['Role_id']=role[0]['Role_Name']
+    #role_query=Role.objects.filter(id=list_result[0]['Role_id'])
+    #role=list(role_query.values('Role_Name'))
+    #list_result[0]['Role_id']=role[0]['Role_Name']
 
     value_dict=list_result[0]
     value_list=list(value_dict.values())
-    value_list=value_list[1:-1]
+    value_list=value_list[1:-2]
     print(value_list)
     print(len(value_list))
     tup=value_list
@@ -234,9 +242,9 @@ def form_post(request):
         print(p)
         field=Detail._meta.get_fields()
         field=[f.name for f in field ]
-        field.remove('Role')
+        print(field)
         field.remove('doc')
-        field.append('Role')
+        field.remove('Role_ref')
         
        
         dict_info = dict(zip(field[1:], p))
@@ -245,22 +253,22 @@ def form_post(request):
         
         # getting the corresponding role_id before insertion 
         try:
-            role_query=Role.objects.filter(Role_Name=dict_info['Role'])
+            role_query=Role.objects.filter(Role_Name=dict_info['Roles'])
             role_id=list(role_query.values('id'))
             role_id=role_id[0]['id']
         except:
-            r=Role(Role_Name=dict_info['Role'])
+            r=Role(Role_Name=dict_info['Roles'])
             r.save()
-            role_query=Role.objects.filter(Role_Name=dict_info['Role'])
+            role_query=Role.objects.filter(Role_Name=dict_info['Roles'])
             role_id=list(role_query.values('id'))
             role_id=role_id[0]['id']
 
 
 
-        dict_info['Role']=role_id
+        
 
         p=list(dict_info.values())
-        print(p)
+        #print(p)
 
         
        
@@ -269,12 +277,13 @@ def form_post(request):
        
         if form.is_valid():
             print("Form save")
-            form.save()
+            p=form.save()
+            p.Role_ref_id=role_query=Role.objects.get(Role_Name=dict_info['Roles']).id
+            p.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         
           
         else:
-            print("here")
             messages.error(request, 'The form is invalid.')
             print(form.errors)
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
