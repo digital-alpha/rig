@@ -230,6 +230,15 @@ def process(request):
 
     return render(request, 'UploadMulti/basic_upload/index.html', {'documents':documents})
 
+def clearSingleDoc(request, pk):
+    print("In clearSIngleDoc view")
+    tokens=Token.objects.filter(user=request.user).values()
+    list_result = [entry for entry in tokens]
+    token=list_result[0]['key']
+    myurl = "http://localhost:8000/api/clear/" + str(pk)
+    response = requests.get(myurl, headers={'Authorization': 'Token {}'.format(token)}, )
+    documents = Document.objects.all()
+    return render(request, 'UploadMulti/basic_upload/index.html', {'documents':documents})
 
 def form_post(request):
 

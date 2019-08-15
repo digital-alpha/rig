@@ -142,7 +142,6 @@ def processApiSingle(request, pk):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def clearAPI(request):
-
     print(request.method)
     for document in Document.objects.all():
         document.file.delete()
@@ -151,6 +150,14 @@ def clearAPI(request):
         wb.save(filepath)
     for detail in Detail.objects.all():
         detail.delete()
+    return Response(status=200)
+
+def clearSingleApi(request, pk):
+    print("in clearSingleApi")
+    doc = get_object_or_404(Document, id=pk)
+    doc.delete()
+    detail = get_object_or_404(Detail, doc_id=pk)
+    detail.delete()
     return Response(status=200)
 
 

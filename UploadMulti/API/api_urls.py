@@ -16,6 +16,7 @@ urlpatterns = [
     path('process/', processAPI),
     path('process/<int:pk>', processApiSingle),
     path('clear/', clearAPI),
+    path('clear/<int:pk>', clearSingleApi),
     path('detail/<int:pk>', infoAPI),
 
     path('api-token-auth/', obtain_auth_token, name='api_token_auth')
