@@ -597,7 +597,7 @@ class Entities:
 
                 name_list=list(names_set)
 
-                if len(name_list)==1:
+                if len(name_list)>=1:
                     return(name_list[0].title())
                 elif len(name_list)==0:
                     return(None)

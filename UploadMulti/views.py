@@ -133,7 +133,7 @@ def analysis(request, pk):
     #role_query=Role.objects.filter(id=list_result[0]['Role_id'])
     #role=list(role_query.values('Role_Name'))
     #list_result[0]['Role_id']=role[0]['Role_Name']
-
+    print(len(list_result))
     value_dict=list_result[0]
     value_list=list(value_dict.values())
     value_list=value_list[1:-2]
