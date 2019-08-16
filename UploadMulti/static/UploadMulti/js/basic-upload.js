@@ -12,7 +12,7 @@ $(function () {
                 var options = { year: 'numeric', month: 'short', day: 'numeric' ,hour:'numeric', minute: 'numeric', timezone: 'America/New_York'};
                 
                 $("#gallery tbody").prepend(
-                    "<tr><td>" + data.result.name + "<br><strong>Uploaded Date: </strong>" + today.toLocaleDateString("en-US", options)+", " + "</td></tr>"
+                    "<tr><td>" + data.result.name + "<br><strong>Uploaded Date: </strong>" + today.toLocaleDateString("en-US", options)+", "+"<br>"+"<strong>Uploaded By : </strong>" + data.result.user + "</td></tr>"
                 )
             }
         }

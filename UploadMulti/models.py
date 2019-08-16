@@ -11,11 +11,14 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
 
-
+from django.contrib.auth import get_user_model
+User = get_user_model()
 class Document(models.Model):
+    
     title = models.CharField(max_length=255, blank=True)
     file = models.FileField(upload_to='docs/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         name = self.file.name
