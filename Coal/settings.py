@@ -59,6 +59,7 @@ REST_FRAMEWORK = {
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CORS_ORIGIN_ALLOW_ALL = True
 
 MIDDLEWARE = [
     
@@ -71,6 +72,8 @@ MIDDLEWARE = [
     'silk.middleware.SilkyMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     
 ]
 
