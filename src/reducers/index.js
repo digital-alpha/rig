@@ -1,10 +1,15 @@
-import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
-import counter from './counter';
+import { combineReducers } from 'redux'
+
+import AuthReducer from './auth'
+import CommonReducer from './common'
+import DocumentReducer from './document'
+import counter from './counter'
 
 const rootReducer = combineReducers({
-  routing: routerReducer,
-  counter
-});
+	auth: AuthReducer,
+	common: CommonReducer,
+	counter: counter,
+	document: DocumentReducer
+})
 
-export default rootReducer;
+export default rootReducer

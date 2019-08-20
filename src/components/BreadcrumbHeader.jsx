@@ -13,7 +13,7 @@ const BreadcrumbHeader = withRouter((props) => {
     return (
       <Breadcrumb.Item key={url}>
         <Link to={url}>
-          {BREADCRUMB_NAMES[url]}
+          {(BREADCRUMB_NAMES[url])?BREADCRUMB_NAMES[url]:(url!='/home'?pathSnippets[pathSnippets.length-1]:'')}
         </Link>
       </Breadcrumb.Item>
     );
@@ -25,7 +25,7 @@ const BreadcrumbHeader = withRouter((props) => {
   )].concat(extraBreadcrumbItems);
   return (
     <div className="demo">
-      <Breadcrumb>
+      <Breadcrumb style={{ margin: '16px 0' }}>
         {breadcrumbItems}
       </Breadcrumb>
     </div>
