@@ -58,9 +58,7 @@ REST_FRAMEWORK = {
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-CORS_ORIGIN_WHITELIST = (
-         'localhost:3000/'
-     )
+
 
 MIDDLEWARE = [
     
@@ -77,6 +75,10 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     
 ]
+
+CORS_ORIGIN_WHITELIST = (
+         'localhost:3000/'
+     )
 
 ROOT_URLCONF = 'Coal.urls'
 
