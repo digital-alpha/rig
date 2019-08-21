@@ -77,7 +77,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = (
-         'localhost:3000/'
+         u'http://127.0.0.1:8000',
      )
 
 ROOT_URLCONF = 'Coal.urls'

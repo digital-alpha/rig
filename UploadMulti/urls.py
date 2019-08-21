@@ -16,11 +16,6 @@ urlpatterns = [
     url(r'^form_post/$', views.form_post, name='form_post'),
     path('process/', views.process, name='process'),
     path('clearSingleDoc/<int:pk>', views.clearSingleDoc, name='clearSingleDoc'),
-    url(
-        r'^client-autocomplete/$',
-        views.ClientAutocomplete.as_view(),
-        name='client',
-    ),
 
 ]
 if settings.DEBUG:

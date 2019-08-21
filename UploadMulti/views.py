@@ -324,19 +324,3 @@ def form_post(request):
 ########################################################################
 
 
-from dal import autocomplete
-#from your_countries_app.models import Country
-
-
-class ClientAutocomplete(autocomplete.Select2QuerySetView):
-    def get(self):
-        # Don't forget to filter out results depending on the visitor !
-        print("here")
-        qs = Role.objects.all()
-
-        if self.q:
-            
-            qs = qs.filter(Role_Name__istartswith=self.q)
-            print(qs)
-
-        return qs
