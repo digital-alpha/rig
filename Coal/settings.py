@@ -48,8 +48,7 @@ INSTALLED_APPS = [
     'silk',
     'UploadMulti',
     'crispy_forms',
-    'dal',
-    'dal_select2',
+    'corsheaders', 
 ]
 
 REST_FRAMEWORK = {
@@ -59,7 +58,9 @@ REST_FRAMEWORK = {
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+         'localhost:3000/'
+     )
 
 MIDDLEWARE = [
     

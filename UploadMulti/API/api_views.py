@@ -29,7 +29,7 @@ from Source.Entity import Entities,display_attributes
 import spacy
 from spacy import displacy
 import pandas as pd
-
+from openpyxl import load_workbook
 
 import requests
 
@@ -140,14 +140,12 @@ def processApiSingle(request, pk):
     return Response(status=200)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def clearAPI(request):
     print(request.method)
     for document in Document.objects.all():
         document.file.delete()
         document.delete()
-        wb=Workbook()
-        wb.save(filepath)
     for detail in Detail.objects.all():
         detail.delete()
     return Response(status=200)
