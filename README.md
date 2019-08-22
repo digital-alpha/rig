@@ -20,6 +20,12 @@ Pipeline for unstructured data processing
 9.python manage.py runserver
 ```
 
+### Running React App
+```
+Install nodejs from https://nodejs.org/en/
+```
+
+
 ###Postgresql 
 ```
 Start/Stop Server -  pg_ctl -D /usr/local/var/postgres start\stop 
