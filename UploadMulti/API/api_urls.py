@@ -2,7 +2,7 @@ from django.urls import path, include
 from .api_views import *
 
 from rest_framework import routers
-from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework_jwt.views import obtain_jwt_token	
 
 router = routers.DefaultRouter()
 router.register('', DocumentViewset)
@@ -18,8 +18,8 @@ urlpatterns = [
     path('clear/', clearAPI),
     path('clear/<int:pk>', clearSingleApi),
     path('detail/<int:pk>', infoAPI),
-
-    path('api-token-auth/', obtain_auth_token, name='api_token_auth')
+    path('current_user/', current_user),
+    path('api-token-auth/', obtain_jwt_token, name='api_token_auth')
 
 ] 
 

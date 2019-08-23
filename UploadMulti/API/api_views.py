@@ -7,6 +7,8 @@ from .serializers import DocumentSerializer, DetailSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
+
+
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.views import View
@@ -36,9 +38,21 @@ import requests
 from django.template.defaulttags import register
 import os
 
+from UploadMulti.serializers import UserSerializer
+
 
 nlp = spacy.load('sample_work_model_300_drop_0.05')
 nlp2 = spacy.load("en_core_web_sm")
+
+
+@api_view(['GET'])
+def current_user(request):
+    """
+    Determine the current user by their token, and return their data
+    """
+    
+    serializer = UserSerializer(request.user)
+    return Response(serializer.data)
 
 class DocumentViewset(viewsets.ModelViewSet):
    
@@ -150,17 +164,16 @@ def clearAPI(request):
         detail.delete()
     return Response(status=200)
 
+@api_view(['GET'])
 def clearSingleApi(request, pk):
     print("in clearSingleApi")
     doc = get_object_or_404(Document, id=pk)
     doc.delete()
-    detail = get_object_or_404(Detail, doc_id=pk)
-    detail.delete()
     return Response(status=200)
 
 
 @api_view()
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def infoAPI(request,pk):
     
     if request.method == "GET":
@@ -194,5 +207,5 @@ class DetailViewset(viewsets.ModelViewSet):
     queryset = Detail.objects.all()
     serializer_class = DetailSerializer
 
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 

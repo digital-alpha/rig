@@ -1,0 +1,183 @@
+
+https://us-central1-changeflow-9f86f.cloudfunctions.net/app/process
+https://pilot.cards/
+https://yoga.cards/ 
+https://sasensei.com/ 										// PWA
+https://roomsie.com/
+
+https://github.com/simba999/flipfolio
+https://github.com/simba999/react-realtime-table
+https://github.com/simba999/react-schema-form
+https://github.com/simba999/react_redux_sagas
+
+Map:
+https://itunes.apple.com/us/app/followmee-gps-location-tracker/id640133448?mt=8
+
+https://www.dropbox.com/s/vsj2sbf8f4ub4um/GLYPH_integration%20video_v35.mov?dl=0
+
+
+https://dashboards.cxjs.io/6lxniyc
+huntsmansavilerow.com
+
+
++++++++++++++++++++++++===== gatsby ===================
+https://scrubs-dev.netlify.com/
+https://indicadoractual.com/
+
+===================================================================================
+https://sasensei.com/ is the biggest PWA I've worked on with a team the main challenge was to make the code modular so we can spawn new instance easily with minimal configuration. 
+I've been successful mostly and have launched a number of similar sites 
+
+https://projectsforgood.com/ . It's a crowdfunding marketplace. I've created a matching system, chatting feature, personal accounts, 3 users role, a payment gateway - a Stripe API
+========================================================
+Hello.
+
+Thank you for your job posting!
+I am reaching out to you because I think I can provide you high quality code and crazy idea.
+I have rich experience in SPA and server side rendering projects using React and Javascript.
+
+Especially:
+- I am familiar with advanced stacks like lazy loading, style components, hook, saga and so forth.
+- I have deep understanding in best practice structure and good quality and testable code using ESLint, JEST, Jasmine and babel.
+- I have strong experience in building REST and GraphQL API
+
+Please check the following projects:
+
+1) https://www.gowago.ch/ 
+- GOWAGO is ​a ​platform that ​gives ​an ​overview ​of ​the ​cars ​in ​the ​market ​based ​on ​the ​monthly budget ​of ​the ​customer. This data-driven, machine learning enhanced platform enables customers to do trade-offs between billions ​of ​possible ​car ​configurations ​in ​real-time. 
+
+Technologies: (React, Redux, Typescript, Node.js, Feathers, MongoDB)
+
+2) https://thenightsky.com
+- Night sky is a service that create star maps of night sky at a specific date and a given location. Then they make customized the gift cards and paints with the star map.
+
+Technologies: (React, Redux, Node.js, Express, MongoDB, Webpack)
+
+Thank you for your consideration, and I hope to talk soon.
+=================*********************************************************=====================
+Hi,
+
+I'd like to introduce myself and explain why I think I am good fit for your job.
+
+I’m a senior software engineer with 7+ years experience working professionally; I’m well known for my work with & on Node.js and React.js.
+
+I enjoy working on projects where I can have full-stack autonomy.
+
+I have recently worked a lot with performance analysis, multiple databases (postgresql, mongodb, etc), GraphQL (an alternative to REST APIs which speeds up product development and stability), and service based architectures (generally partitioned at data/product verticals), rather than micro services.
+
+Please check the following projects:
+
+1) https://www.gowago.ch/ 
+- GOWAGO is ​a ​platform that ​gives ​an ​overview ​of ​the ​cars ​in ​the ​market ​based ​on ​the ​monthly budget ​of ​the ​customer. This data-driven, machine learning enhanced platform enables customers to do trade-offs between billions ​of ​possible ​car ​configurations ​in ​real-time. 
+
+Technologies: (React, Redux, Typescript, Node.js, Feathers, MongoDB)
+
+2) https://thenightsky.com
+- Night sky is a service that create star maps of night sky at a specific date and a given location. Then they make customized the gift cards and paints with the star map.
+
+Technologies: (React, Redux, Node.js, Express, MongoDB, Webpack)
+
+I’ve a vast history of working for a multitude of startups, from infrastructure/platform as a service, to social networks, to music streaming services and advertisements coordination platforms. I’ve also worked successfully as a contractor for several years.
+
+After finishing previous project a week ago, I’m looking for my next role in a diverse and inclusive team.
+I want to discuss more about the project.
+
+Look forward to hearing from you soon.
+
+Yours kindly,
+
+
+==========================================================================
+Hello,
+I am a react developer who has strong experience and relevant skill for your project.
+
+My skill set:
+
+- State management using Mobx / Redux (Redux-saga, Redux-thunk)
+- Building HOC & reusable component
+- Unit testing / TDD / BDD (Jasmine, JEST, Enzyme, Mocha, Chai, Cypress)
+- Best practice and high performance structure
+- Webpack / Gulp / Grunt
+
+
+Please check the following projects:
+
+1) https://www.gowago.ch/ 
+- GOWAGO is ​a ​platform that ​gives ​an ​overview ​of ​the ​cars ​in ​the ​market ​based ​on ​the ​monthly budget ​of ​the ​customer. This data-driven, machine learning enhanced platform enables customers to do trade-offs between billions ​of ​possible ​car ​configurations ​in ​real-time. 
+
+Technologies: (React, Redux, Typescript, Node.js, Feathers, MongoDB)
+
+2) https://thenightsky.com
+- Night sky is a service that create star maps of night sky at a specific date and a given location. Then they make customized the gift cards and paints with the star map.
+
+Technologies: (React, Redux, Node.js, Express, MongoDB, Webpack)
+
+About me:
+I’m a senior software engineer with 7+ years experience working professionally; I’m well known for my work with & on Node.js and React.js.
+
+I enjoy working on projects where I can have full-stack autonomy.
+
+I have recently worked a lot with performance analysis, multiple databases (postgresql, mongodb, etc), GraphQL (an alternative to REST APIs which speeds up product development and stability), and service based architectures (generally partitioned at data/product verticals), rather than micro services.
+
+I’ve a vast history of working for a multitude of startups, from infrastructure/platform as a service, to social networks, to music streaming services and advertisements coordination platforms. I’ve also worked successfully as a contractor for several years.
+
+After finishing previous project a week ago, I’m looking for my next role in a diverse and inclusive team.
+
+Look forward to hearing from you soon.
+
+Yours kindly,
+
+####################################### React Native #####################################
+ 
+Hello.
+I am reaching out to you because I am quite interesting in your job and have relevant skills in your requirements.
+
+Especially:
+- React and React Native are my strong suits.
+- I have strong experience in building REST and GraphQL API.
+- I have deep understanding in best practice structure and good quality code.
+
+Please check the projects below:
+
+1) Glyph KYC app 
+https://itunes.apple.com/us/app/glyph-id/id1370148914?mt=8
+
+I have played an full stack developer.
+Glyph team used gitlab and followed Airbnb & Code climate convention.
+We used JWT, Firebase, Google Cloud Platform and Docker.
+
+2) https://itunes.apple.com/us/app/recipe-keeper/id974683711
+Recipe Keeper is the easy to use, all in one recipe organizer, shopping list and meal planner that's available across all of your devices.
+
+This is the first app that connects anyone who wants to learn to the people who can teach them, in real-time. Learn anything with the tap of a button, online through instant video calling or in-person
+
+As you can see my cover letter, I have relevant skills and experience in react native.
+
+Thank you for your consideration, and I hope to talk soon.
+#######################################################################################################
+I am a senior developer with 3 years experience in React.
+Hello.
+I have rich experiences of working with various teams as a react developer and acquired & provided techniques.
+
+Especially:
+- Redux-saga, redux-thunk and Mobx
+- GraphQL & Apollo
+- Postgres, Mysql, and MongoDB
+- 3rd party api integration
+- Responsive design and Html5, Css3/Sass/Scss, Twitter Bootstrap, jQuery
+- Webpack/Gulp/Bower
+- Git
+
+Please check the following samples similar to your project and feel free to ask me.
+
+1) https://thenightsky.com
+git repo: https://github.com/simba999/mapper
+It is a website that generates a map of stars over a specific place by date.
+
+2) http://beta.trustio.in
+P2P lending and borrowing platform for trusted alumni network.
+I was responsible for the overall product development. I developed Trustio's front end using React and used NodeJs, Express, and MongoDB for backend development.
+
+Thank you for your consideration.
+Looking forward to hearing from you.
+
