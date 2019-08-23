@@ -1,15 +1,13 @@
 import React from 'react';
-import { Form, Row, Col, Input, Button, Icon, DatePicker, Select, Affix} from 'antd';
+import { Form, Row, Col, Input, Button, DatePicker, Select, Affix} from 'antd';
 import moment from 'moment';
-import $ from 'jquery';
 
 import './DocEditForm.css'
+import { API_ROOT_URL } from '../../actions/config'
 
-const { MonthPicker, RangePicker } = DatePicker;
 const { Option } = Select;
 
-const dateFormat = 'YYYY/MM/DD';
-const monthFormat = 'YYYY/MM';
+const dateFormat = 'DD-MM-YYYY';
 
 const formItemLayout = {
   labelCol: {
@@ -40,7 +38,6 @@ class BasicForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
 
-
       if (!err) {
         console.log('Received values of form: ', values);
       }
@@ -53,6 +50,11 @@ class BasicForm extends React.Component {
     let formVisible = this.props.formVisible;
 
     const { getFieldDecorator } = this.props.form;
+    let data = this.props.data || {}
+
+    let htmlSrc = ''
+    if(data['doc'])
+      htmlSrc = API_ROOT_URL + '/static/doc' + data['doc'] + '.html'
 
     return (
       <Row gutter={10} style={{marginTop: 10}}>
@@ -60,14 +62,14 @@ class BasicForm extends React.Component {
             docVisible && formVisible &&
             <Col span={12}>
                 <Affix offsetTop={80}>
-                  <iframe className="preview-doc" src="http://localhost:8001/static/doc116.html"></iframe>
+                  <iframe className="preview-doc" src={htmlSrc}></iframe>
                 </Affix>
             </Col>
           }
           {
             docVisible && !formVisible &&
             <Col span={24}>
-                <iframe className="preview-doc vh-100" height="100%" src="http://localhost:8001/static/doc116.html"></iframe>
+                <iframe className="preview-doc vh-100" height="100%" src={htmlSrc}></iframe>
             </Col>
           }
           {
@@ -76,6 +78,7 @@ class BasicForm extends React.Component {
                   <Form {...formItemLayout} onSubmit={this.handleSubmit} className="doc-edit-form">
                     <Form.Item label={'Document Title'}>
                       {getFieldDecorator('document', {
+                        initialValue: data.Document_Name,
                         rules: [
                           {
                             required: true,
@@ -86,6 +89,7 @@ class BasicForm extends React.Component {
                     </Form.Item>
                     <Form.Item label={'Employee Name'}>
                       {getFieldDecorator('employee', {
+                        initialValue: data.Employee_Name,
                         rules: [
                           {
                             required: true,
@@ -96,6 +100,7 @@ class BasicForm extends React.Component {
                     </Form.Item>
                      <Form.Item label={'Address of Employee'}>
                       {getFieldDecorator('address', {
+                        initialValue: data.Address_of_Company,
                         rules: [
                           {
                             required: true,
@@ -106,6 +111,7 @@ class BasicForm extends React.Component {
                     </Form.Item>
                     <Form.Item label={'Company Name'}>
                       {getFieldDecorator('company', {
+                        initialValue: data.Company_Name,
                         rules: [
                           {
                             required: true,
@@ -136,6 +142,7 @@ class BasicForm extends React.Component {
 
                         <Form.Item label={'Date of Agreement'}>
                           {getFieldDecorator('agreement', {
+                            initialValue: (data.Date_of_Agreement !== 'None' && data.Date_of_Agreement !== undefined)? moment(new Date(data.Date_of_Agreement), dateFormat): null,
                             rules: [
                               {
                                 required: true,
@@ -147,6 +154,7 @@ class BasicForm extends React.Component {
 
                           <Form.Item label={'Start Date'}>
                             {getFieldDecorator('start', {
+                              initialValue: (data.Start_Date !== 'None' && data.Start_Date !== undefined)? moment(new Date(data.Start_Date), dateFormat): null,
                               rules: [
                                 {
                                   required: true,
@@ -158,6 +166,7 @@ class BasicForm extends React.Component {
 
                           <Form.Item label={'End Date'}>
                             {getFieldDecorator('end', {
+                              initialValue: (data.End_Date !== 'None' && data.End_Date !== undefined)? moment(new Date(data.Start_Date), dateFormat): null,
                               rules: [
                                 {
                                   required: true,
@@ -169,6 +178,7 @@ class BasicForm extends React.Component {
 
                         <Form.Item label={'Base Salary'}>
                           {getFieldDecorator('salary', {
+                            initialValue: data.Base_Salary,
                             rules: [
                               {
                                 required: true,
@@ -180,6 +190,7 @@ class BasicForm extends React.Component {
 
                         <Form.Item label={'Bonus'}>
                           {getFieldDecorator('bonus', {
+                            initialValue: data.Bonus,
                             rules: [
                               {
                                 required: true,
@@ -191,6 +202,7 @@ class BasicForm extends React.Component {
 
                         <Form.Item label={'Other Compensation'}>
                           {getFieldDecorator('other', {
+                            initialValue: data.Other_Compensation,
                             rules: [
                               {
                                 required: true,
@@ -202,6 +214,7 @@ class BasicForm extends React.Component {
 
                         <Form.Item label={'Supervisor Information'}>
                           {getFieldDecorator('supervisor', {
+                            initialValue: data.Supervisor_Information,
                             rules: [
                               {
                                 required: true,
@@ -213,19 +226,19 @@ class BasicForm extends React.Component {
 
                         <Form.Item label={'Notice Period'} className="notice-datepicker">
                           {getFieldDecorator('notice', {
+                            initialValue: data.Notice_Period,
                             rules: [
                               {
                                 required: true,
                                 message: 'Input something!',
                               },
                             ],
-                          })(<RangePicker  
-                                format={dateFormat}
-                              />)}
+                          })(<Input style={{background: '#c1cfa5'}}  />)}
                         </Form.Item>
 
                         <Form.Item label={'Non Monetary Benefits'}>
                           {getFieldDecorator('monetary', {
+                            initialValue: data.Non_Monetary_Benefits,
                             rules: [
                               {
                                 required: true,
@@ -237,6 +250,7 @@ class BasicForm extends React.Component {
 
                         <Form.Item label={'Health Insuarance'}>
                           {getFieldDecorator('health', {
+                            initialValue: data.Health_Insurance,
                             rules: [
                               {
                                 required: true,
@@ -248,6 +262,7 @@ class BasicForm extends React.Component {
 
                         <Form.Item label={'401k'}>
                           {getFieldDecorator('401k', {
+                            initialValue: data._401k,
                             rules: [
                               {
                                 required: true,
@@ -259,6 +274,7 @@ class BasicForm extends React.Component {
 
                         <Form.Item label={'At will'}>
                           {getFieldDecorator('will', {
+                            initialValue: data.At_will,
                             rules: [
                               {
                                 required: true,
@@ -270,6 +286,7 @@ class BasicForm extends React.Component {
        
                         <Form.Item label={'Stock'}>
                           {getFieldDecorator('stock', {
+                            initialValue: data.Stock,
                             rules: [
                               {
                                 required: true,
@@ -281,6 +298,7 @@ class BasicForm extends React.Component {
 
                         <Form.Item label={'Vacation'}>
                           {getFieldDecorator('vacation', {
+                            initialValue: data.Vacation,
                             rules: [
                               {
                                 required: true,

@@ -1,17 +1,20 @@
 import axios from 'axios'
-import config from './config'
+import {API_ROOT_URL} from './config'
+
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
 
 const AUTHAPI = axios.create({
-  baseURL: config.API_ROOT_URL,
+  baseURL: API_ROOT_URL,
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('token')}`
   }
 })
 
 AUTHAPI.interceptors.request.use(
   config => {
-    config.headers.Authorization = `${window.localStorage.getItem('tokenType')} 
-                  ${window.localStorage.getItem('accessToken')}`
+    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
     return config
   },
   error => {
@@ -24,6 +27,8 @@ AUTHAPI.interceptors.response.use(
     return response
   },
   error => {
+    if(error.response.statusText === 'Unauthorized')
+      localStorage.removeItem('token');
     return Promise.reject(error.response)
   },
 )

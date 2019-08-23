@@ -1,5 +1,5 @@
 import { DOCUMENT } from '../../reducers/type'
-import API from '../API'
+import AUTHAPI from '../AUTHAPI'
 import moment from 'moment';
 import { message } from 'antd'
 
@@ -11,7 +11,7 @@ export const getUploadedDocuments = () => {
       url: 'api/document/',
     }
 
-    return API(data).then(res => {
+    return AUTHAPI(data).then(res => {
       res.data = res.data.map((obj, index) => {
         return {
           'key': index,
@@ -29,6 +29,23 @@ export const getUploadedDocuments = () => {
   }
 }
 
+
+export const getDetailDocument = (doc_id) => {
+  return (dispatch) => {
+    let data = {
+      method: 'get',
+      url: 'api/detail/' + doc_id,
+    }
+
+    return AUTHAPI(data).then(res => {
+      return dispatch({ type: DOCUMENT.DETAIL_INFO, payload: res.data[0] })
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+
 export const saveToCSV = () => {  
   return (dispatch) => {
     let data = {
@@ -36,7 +53,7 @@ export const saveToCSV = () => {
       url: 'UploadMulti/csv/'
     }
 
-    return API(data).then(res => {
+    return AUTHAPI(data).then(res => {
       
     }).catch(err => {
       throw err
@@ -51,7 +68,7 @@ export const clearDB = () => {
       url: 'api/clear/'
     }
 
-    return API(data).then(res => {
+    return AUTHAPI(data).then(res => {
       message.success('Database is cleared successfully!');
       return dispatch({ type: DOCUMENT.DOC_ALL, payload: []})
     }).catch(err => {
@@ -68,9 +85,9 @@ export const deleteDocument = (doc_id) => {
       url: 'api/clear/'+doc_id
     }
 
-    return API(data).then(res => {
+    return AUTHAPI(data).then(res => {
       message.success('Document is deleted successfully!');
-      return dispatch({ type: DOCUMENT.DOC_ALL, payload: []})
+      return dispatch({ type: DOCUMENT.DOC_DELETED, payload: {'doc_id': doc_id}})
     }).catch(err => {
       throw err
     })
@@ -84,9 +101,9 @@ export const processDocument = () => {
       url: 'api/process/'
     }
 
-    return API(data).then(res => {
+    return AUTHAPI(data).then(res => {
       message.success('Documents are processed successfully!');
-      return dispatch({ type: DOCUMENT.DOC_ALL, payload: []})
+      
     }).catch(err => {
       throw err
     })

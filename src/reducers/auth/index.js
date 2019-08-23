@@ -2,8 +2,7 @@
 import { USER } from '../type'
 
 
-let user = JSON.parse(localStorage.getItem('user'));
-const initState = user ? { is_authed: true, user } : {};
+const initState = { is_authed: localStorage.getItem('token') ? true : false, user: '' };
 
 
 const AuthReducer = (state = initState, action) => {
@@ -12,16 +11,19 @@ const AuthReducer = (state = initState, action) => {
   switch(type){
 
     case USER.SIGNED_IN:
+      state.is_authed  = true;
+      state.user = payload;
+
       return {
         ...state,
-        is_authed: true,
-        user: payload
       }
 
     case USER.SIGNED_OUT:
+      state.is_authed = false;
+
       return {
         ...state,
-        is_authed: false
+        
       }
 
     default:

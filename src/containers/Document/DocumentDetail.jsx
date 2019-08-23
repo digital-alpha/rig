@@ -1,10 +1,10 @@
 import React from 'react'
-import { Form, Icon, Input, Button, Row} from 'antd';
+import { Button, Row} from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
-  signin
-} from '../../actions/auth'
+  getDetailDocument
+} from '../../actions/document'
 import DocEditForm from "../../components/Form/DocEditForm";
 
 
@@ -24,7 +24,12 @@ class DocumentDetail extends React.Component {
   		this.setState({formVisible: !this.state.formVisible})
   }
 
+  componentWillMount(){
+    this.props.getDetailDocument(this.props.match.params.id)
+  }
+
   render() {
+
     return (
       <div>
       	<Row type="flex" align="middle" justify="space-between">
@@ -37,18 +42,18 @@ class DocumentDetail extends React.Component {
 		      	</Button.Group>
 	      	</div>
 	    </Row>
-      	<DocEditForm docVisible={this.state.docVisible} formVisible={this.state.formVisible}/>
+      	<DocEditForm docVisible={this.state.docVisible} formVisible={this.state.formVisible} data={this.props.detail_info}/>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  detail_info: state.document.detail_info
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  signin
+  getDetailDocument
 }, dispatch);
 
 

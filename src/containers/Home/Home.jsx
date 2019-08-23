@@ -10,7 +10,7 @@ import {
   clearDB
 } from '../../actions/document'
 
-import { Table, Input, Button, Icon, Row, Col, Tag} from 'antd';
+import { Table, Input, Button, Icon, Row, Col} from 'antd';
 import Highlighter from 'react-highlight-words';
 
 import Toolbar from "../../components/Toolbar/Toolbar";
@@ -25,7 +25,8 @@ class Home extends React.Component {
     searchText: '',
     visibleModal: false,
     visibleDrawer: false,
-    placement: 'left' 
+    placement: 'left' ,
+    loading: false,
   };
 
   showModal = () => {
@@ -116,8 +117,25 @@ class Home extends React.Component {
     this.showModal()
   }
 
+  async processDocument () {
+      this.setState({
+        loading: true
+      })
+
+      await this.props.processDocument();
+
+       this.setState({
+        loading: false
+      })
+  }
+
   componentWillMount(){
     this.props.getUploadedDocuments()
+  }
+
+  clearDB(){
+
+      this.props.clearDB()
   }
 
 
@@ -181,7 +199,7 @@ class Home extends React.Component {
         <UploadDrawer visible={this.state.visibleDrawer} onClose={() => this.onClose()} callback={() => this.props.getUploadedDocuments()}/>
         <Row gutter={30}>
           <Col sm={24} md={24}>
-              <Toolbar showDrawer={() => this.showDrawer()} saveToCSV={() => this.props.saveToCSV()} clearDB={() => this.props.clearDB()} processDocs = {() => this.props.processDocument()}/>
+              <Toolbar loading={this.state.loading} showDrawer={() => this.showDrawer()} saveToCSV={() => this.props.saveToCSV()} clearDB={() => this.clearDB()} processDocs = {() => this.processDocument() }/>
               <DocModal visible={this.state.visibleModal} hideModal={() => this.hideModal()} />
               <Table columns={columns} 
               dataSource={documents} onChange={this.handleChange} bordered={true} scroll={{ x: 1300}}/>

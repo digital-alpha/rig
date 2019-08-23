@@ -6,7 +6,7 @@ import {
   signout
 } from '../../actions/auth'
 
-import { Layout, Menu, Avatar, Affix } from 'antd';
+import { Layout, Menu, Avatar, Affix, Drawer, Button } from 'antd';
 
 import Home from '..//Home/Home';
 import DocumentDetail from '../Document/DocumentDetail';
@@ -19,10 +19,26 @@ const { SubMenu } = Menu
 
 
 class App extends React.Component{
+  state = {
+    visible: false
+  }
+
+  showDrawer = () => {
+    this.setState({
+      visible: true,
+    });
+  }
+
+  onClose = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
   componentWillMount(){
-    // if(!localStorage.getItem('user')){
-    //   this.props.history.push('/login')
-    // }
+     if(!localStorage.getItem('token')){
+       this.props.history.push('/login')
+     }
   }
 
   render() {
@@ -61,8 +77,36 @@ class App extends React.Component{
                       <Link to="/login" onClick={() => this.props.signout()}>Sign out</Link>
                     </Menu.Item>
                   </SubMenu>
-                </Menu>,
+                </Menu>
+                <Button className="barsMenu" type="primary" onClick={this.showDrawer} icon='menu' style={{display: 'none'}}>
+                </Button>
               </div>
+              <Drawer
+                title="Menus"
+                placement="right"
+                closable={false}
+                onClose={this.onClose}
+                visible={this.state.visible}
+              >
+                <Menu 
+                  mode="vertical"
+                  defaultSelectedKeys={['1']}
+                  style={{ lineHeight: '64px' }}
+                >
+                  <Menu.Item key="1"><Link to="/">Home</Link></Menu.Item>
+                  <Menu.Item key="2"><Link to="/users">Tab2</Link></Menu.Item>
+                  <Menu.Item key="3"><Link to="/users">Tab3</Link></Menu.Item>
+                </Menu>
+                <Menu 
+                  mode="vertical"
+                  defaultSelectedKeys={['1']}
+                  style={{ lineHeight: '64px' }}
+                >
+                  <Menu.Item key="SignOut">
+                    <Link to="/login" onClick={() => this.props.signout()}>Sign out</Link>
+                  </Menu.Item>
+                </Menu>
+              </Drawer>
             </Header>
           </Affix>
         <Content style={{ padding: '0 50px' }}>

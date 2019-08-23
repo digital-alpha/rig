@@ -29,8 +29,8 @@ const Toolbar = (props) => {
         <Row type="flex" align="middle" justify="space-between">
           <div></div>
           <div> 
-            <Button type="primary" onClick={props.processDocs}>
-              <Icon type="build" /> Process Documents
+            <Button type="primary" onClick={props.processDocs} loading={props.loading}>
+               Process Documents
             </Button>
             <Button type="dashed" onClick={props.showDrawer}>
                 <Icon type="upload" /> Add Document 

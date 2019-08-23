@@ -13,7 +13,7 @@ const BreadcrumbHeader = withRouter((props) => {
     return (
       <Breadcrumb.Item key={url}>
         <Link to={url}>
-          {(BREADCRUMB_NAMES[url])?BREADCRUMB_NAMES[url]:(url!='/home'?pathSnippets[pathSnippets.length-1]:'')}
+          {(BREADCRUMB_NAMES[url])?BREADCRUMB_NAMES[url]:(url!=='/home'?pathSnippets[pathSnippets.length-1]:'')}
         </Link>
       </Breadcrumb.Item>
     );
