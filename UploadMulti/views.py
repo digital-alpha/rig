@@ -30,6 +30,8 @@ import requests
 
 from django.template.defaulttags import register
 from rest_framework.authtoken.models import Token
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 import os
 import pandas
@@ -53,13 +55,10 @@ filepath=os.path.join(BASE_DIR,'UploadMulti/static/Excel_Files/Features.xlsx')
 #sheet.append(('Employee Name', 'Address of Employee', 'Company Name', 'Address of Company', 'Role', 'Base Salary', 'Date of Agreement', 'Start Date', 'End Date', 'Supervisor Information', 'Bonus', 'Notice Period', 'Other Compensation', 'Non Monetary Benefits', 'Health Insurance', '401k', 'At will', 'Stock', 'Vacation'))
 wb.save(filepath)
 
-class BasicUploadView(LoginRequiredMixin,View):
-    def get(self, request):
-        documents_list = Document.objects.all()
-        return render(self.request, 'UploadMulti/basic_upload/index.html', {'documents': documents_list})
-        # return redirect('UploadMulti:basic_upload', {'documents': documents_list})
-
+@method_decorator(csrf_exempt, name='dispatch')
+class BasicUploadView(View):
     def post(self, request):
+
         form = DocumentForm(self.request.POST, self.request.FILES)
         if form.is_valid():
             document = form.save()
@@ -68,14 +67,19 @@ class BasicUploadView(LoginRequiredMixin,View):
             name = name.replace('docs/', '')
             name = name.replace('.txt', '')
             date = document.uploaded_at
-            user = request.user.username
-            print(user)
             print(date)
             print(name)
-            data = {'is_valid': True, 'name': name, 'uploaded_at': date, 'user':user}
+            data = {'is_valid': True, 'name': name, 'uploaded_at': date}
         else:
             data = {'is_valid': False}
         return JsonResponse(data)
+
+    def get(self, request):
+        documents_list = Document.objects.all()
+        return render(self.request, 'UploadMulti/basic_upload/index.html', {'documents': documents_list})
+        # return redirect('UploadMulti:basic_upload', {'documents': documents_list})
+
+    
         # documents_list = Document.objects.all()
         # return render(self.request, 'UploadMulti/basic_upload/index.html', {'documents': documents_list})
 
@@ -174,7 +178,7 @@ def analysis(request, pk):
 def get_item(dictionary, key):
     return dictionary.get(key)
 
-
+@csrf_exempt
 def csv(request):
 
     book = load_workbook(filepath)

@@ -8,6 +8,8 @@ from rest_framework.decorators import api_view, permission_classes,renderer_clas
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import StaticHTMLRenderer
 
+
+
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.views import View
@@ -40,14 +42,29 @@ import requests
 from django.template.defaulttags import register
 import os
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 wb =Workbook()
 filepath=os.path.join(BASE_DIR,'static/Excel_Files/Features.xlsx')
 wb.save(filepath)
 
+from UploadMulti.serializers import UserSerializer
+
+
+
 nlp = spacy.load('sample_work_model_300_drop_0.05')
 nlp2 = spacy.load("en_core_web_sm")
+
+
+@api_view(['GET'])
+def current_user(request):
+    """
+    Determine the current user by their token, and return their data
+    """
+    
+    serializer = UserSerializer(request.user)
+    return Response(serializer.data)
 
 class DocumentViewset(viewsets.ModelViewSet):
    
@@ -197,12 +214,11 @@ def excelAPI(request):
             return response
 
 
+
 def clearSingleApi(request, pk):
     print("in clearSingleApi")
     doc = get_object_or_404(Document, id=pk)
     doc.delete()
-    detail = get_object_or_404(Detail, doc_id=pk)
-    detail.delete()
     return Response(status=200)
 
 
@@ -262,7 +278,7 @@ class DetailViewset(viewsets.ModelViewSet):
     queryset = Detail.objects.all()
     serializer_class = DetailSerializer
 
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
 class RoleViewset(viewsets.ModelViewSet):
  

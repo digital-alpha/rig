@@ -1,0 +1,25 @@
+React | React Native Developer
+Here is a quick look at fields of expertise: 
+- react / react-native
+- redux-saga/redux-thunk
+- Next.js/PReact
+- Ionic /vue/angular
+- graphQL/Apollo
+- Firebase, AWS/DigitalOcean
+- antdesign /HTML5/CSS3/Bootstrap4
+- node / express / python
+- aws / heroku / Git
+
+
+
+
+
+<Switch>	
+			    		<Route path="/faq" render={(props) => <Footer style={styles.footer} className="ant-footer">
+			        		<p className="hint">Did you find your answer?</p>
+		          			<p className="links">Feel free to contact us at&nbsp;
+		          			<a className='contact-link' href="mailto: support@janio.asia">support@janio.asia</a></p>
+	          			</Footer>} />
+				  	  	<Route path="/" render={(props) => <Footer style={styles.footer} className="ant-footer">
+		        		<Link className="links" to="/faq">Need Help? Click Here!</Link></Footer>} />
+					</Switch>

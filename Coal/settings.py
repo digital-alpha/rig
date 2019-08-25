@@ -14,6 +14,7 @@ import os
 import django_heroku
 import dj_database_url
 from decouple import config
+import datetime
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -30,7 +31,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1:8000', 'https://co-al.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1:8001', 'https://co-al.herokuapp.com']
 
 
 # Application definition
@@ -52,9 +53,21 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-    ],
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+
+JWT_AUTH = {
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'Coal.utils.my_jwt_response_handler'
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -76,9 +89,7 @@ MIDDLEWARE = [
     
 ]
 
-CORS_ORIGIN_WHITELIST = (
-         u'http://127.0.0.1:8000',
-     )
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'Coal.urls'
 
