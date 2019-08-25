@@ -3,9 +3,10 @@ from rest_framework.views import APIView
 from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import DocumentSerializer, DetailSerializer
-from rest_framework.decorators import api_view, permission_classes
+from .serializers import DocumentSerializer, DetailSerializer,RoleSerializer
+from rest_framework.decorators import api_view, permission_classes,renderer_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.renderers import StaticHTMLRenderer
 
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
@@ -29,13 +30,21 @@ from Source.Entity import Entities,display_attributes
 import spacy
 from spacy import displacy
 import pandas as pd
+from openpyxl import Workbook
 from openpyxl import load_workbook
+from openpyxl.styles import Font
+
 
 import requests
 
 from django.template.defaulttags import register
 import os
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+wb =Workbook()
+filepath=os.path.join(BASE_DIR,'static/Excel_Files/Features.xlsx')
+wb.save(filepath)
 
 nlp = spacy.load('sample_work_model_300_drop_0.05')
 nlp2 = spacy.load("en_core_web_sm")
@@ -140,7 +149,7 @@ def processApiSingle(request, pk):
     return Response(status=200)
 
 @api_view(['GET'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def clearAPI(request):
     print(request.method)
     for document in Document.objects.all():
@@ -149,6 +158,44 @@ def clearAPI(request):
     for detail in Detail.objects.all():
         detail.delete()
     return Response(status=200)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def excelAPI(request):
+    book = load_workbook(filepath)
+    list_values=[]
+    
+    val=Detail.objects.all().values()
+    field=Detail._meta.get_fields()
+    field=[f.name for f in field]
+    list_values.append(tuple(field[1:-1]))
+
+
+    for v in val:
+        value_list= [entry for entry in v.values()]
+        list_values.append(tuple(value_list[1:-1]))
+
+    writer = pd.ExcelWriter(filepath, engine='openpyxl')
+    writer.book = book
+    writer.sheets = {ws.title: ws for ws in book.worksheets}
+
+    df=pd.DataFrame(list(list_values))
+    #print(df)
+    for sheetname in writer.sheets:
+        df.to_excel(writer,sheet_name=sheetname,  index = False,header= False)
+
+    ws = book[sheetname]
+    black_font = Font(bold=True)
+    for cell in ws["1:1"]:
+        cell.font = black_font
+
+    writer.save()
+    if os.path.exists(filepath):
+        with open(filepath, 'rb') as fh:
+            response = HttpResponse(fh, content_type="application/vnd.ms-excel")
+            response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(filepath)
+            return response
+
 
 def clearSingleApi(request, pk):
     print("in clearSingleApi")
@@ -186,7 +233,28 @@ def infoAPI(request,pk):
         return Response({"message": "details deleted"}, status=status.HTTP_204_NO_CONTENT)
 
 
-
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@renderer_classes([StaticHTMLRenderer])
+def DisplacyAPI(request, pk):
+    doc_obj = get_object_or_404(Document, pk=pk)
+    tup=[]
+    form_ent=[]
+    form_ent.append(doc_obj.file.name)
+    with open('media/'+doc_obj.file.name, 'r', encoding='UTF-8') as f:
+        data2=f.read()
+    data2 = data2.lstrip()
+    data2 = data2.rstrip()
+    doc=nlp(data2)
+    obj = Entities()
+    mapping = obj.results(doc)
+    d=display_attributes()
+    color_scheme=d.color_table(list(mapping.keys()))
+    color=[]
+    color.append('#ffffff')
+    color.extend(list(color_scheme.values()))
+    html = displacy.render(doc, style="ent", page=True,options=d.color_dict())
+    return Response(html)
 
 
 class DetailViewset(viewsets.ModelViewSet):
@@ -196,3 +264,9 @@ class DetailViewset(viewsets.ModelViewSet):
 
     permission_classes = [IsAuthenticated]
 
+class RoleViewset(viewsets.ModelViewSet):
+ 
+    queryset = Role.objects.all()
+    serializer_class = RoleSerializer
+
+    permission_classes = [IsAuthenticated]

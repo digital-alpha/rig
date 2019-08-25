@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from UploadMulti.models import Document, Detail
+from UploadMulti.models import Document, Detail,Role
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -21,3 +21,9 @@ class DetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Detail
         fields = "__all__"
+
+class RoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Role
+        fields = "__all__"
+
