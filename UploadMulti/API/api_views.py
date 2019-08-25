@@ -278,7 +278,7 @@ class DetailViewset(viewsets.ModelViewSet):
     queryset = Detail.objects.all()
     serializer_class = DetailSerializer
 
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 class RoleViewset(viewsets.ModelViewSet):
  
