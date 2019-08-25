@@ -23,6 +23,8 @@ Pipeline for unstructured data processing
 ### Running React App
 ```
 Install nodejs from https://nodejs.org/en/
+Run npm install
+Run npm start
 ```
 
 
