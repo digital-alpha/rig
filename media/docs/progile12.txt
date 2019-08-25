@@ -1,0 +1,224 @@
+https://blog.pusher.com/real-time-apps-angular-2/
+
+difference between take and have
+
+birthday:
+
+	1988.3.3
+address: 
+
+	1038 Canada Pl, Vancouver, BC V6C 0B9 
+
+education:
+	2006~2010
+	Ryerson University School of Chan
+
+	Master of Computer Applications (M.C.A.)
+
+	Diploma, Advanced HTML/CSS
+
+	2010~2012
+	International Academy of Design
+	
+	Digital Media Design course
+
+	Bachelor of Engineering (B.Eng.)
+employment:
+
+	Web Developer | CBC
+	May 2012 - August 2015
+	 Worked as a part of the CBC Media Solutions team. I provided development and design to support to marketing based initiatives. Projects included work for CBC Music, CBC Sports and various co 	branded micro-sites and campaigns.
+
+
+Hello, Sir!  
+
+Thank you for your job posting.  
+
+My name is Chris Brown and I am a Senior Javascript developer.  
+
+As you can see from my profile I am very familiar with ReactJS and redux as well as express (mvc framework) based on nodejs for backend and then I have rich experience with them over the 5 years.  
+
+Also I am very qualified in es6/es7 and I have a great sense in front end.  
+
+If you are interesting in my work below you can see my portfolios with reactJS and projects in my github.  
+
+https://www.beerlabelizer.com 
+ - Originally built in Flash, I recently rewrote this app from scratch using Node and React.  
+
+https://www.angieslist.com 
+ - React/Redux based frontend development is my major advantage.  
+
+https://github.com/ITSolution-git  
+
+I am very confident to implement to complete this job and I can work full time for this project development.  
+
+I hope to work with you and I look forward to hearing from you.  
+
+Thank you,  
+
+Kind regards,  
+
+Chris Brown
+
+
+
+
+
+
+
+======================================================================
+Dear, Sir!
+
+Thank you for your job posting.
+
+The 5 things made me different from other upwork contractors.
+
+1. I feel I am the best fit for this job, because I am a good MEAN Stack developer, very energetic.
+
+2. I’m an Expert, Honest, Sincere and Responsible worker as I’m taking my work like my Responsibility.
+
+3. Great communication with my Clients.
+
+4. I love to juggle multiple tasks; will go the extra mile to get the job done.
+
+5. 100% GURANTEED Satisfaction.
+
+I have read your requirements and I’m pretty confident that I will be able to get your work done within the given time you will give me.
+
+I am very keen to discuss further. You can reach me at any time on online but make sure you notify me. I have also a few clarifying questions on the project:
+
+* How much time will need to end this project?
+
+* I would be glad to talk about this project with you. I am really interested to know more about your project. What are the other things that I can do to satisfy you for your project?
+
+:: Quick Catch ::
+
+1. My upwork Profile: https://www.upwork.com/freelancers/~01d8cf1328c1b544d4
+
+2. My Portfolio: 
+               www.afterclasse.fr,
+               https://www.shaken.com
+               http://www.bedandbreakfastnationwide.com
+
+3. Email: dana850511@aol.com
+
+I would love to build an awesome working relationship with you by my Expertise, Honesty, Sincerity and Hard Work.
+
+Looking for soonest reply from you.
+
+Thanks Indeed
+
+Dan Abramov
+=========================================================================
+Dear, Sir!
+
+Thank you for your job posting.
+
+I read with interest your posting for Senior Javascript developer on this job description.
+I believe I posses the necessary skills and experience you are seeking and would make a valuable addition to you.
+
+As my profile, I posses more than 5 years progressive experience in the ReactJs and MeteorJs.
+My professional history includes positions such as rydite-education system at rydite company as well as Health-Care at Steven company.
+
+Most recently, my responsibilites as rydite-education system match the qualifications you are seeking.
+This app was built on Meteor 1.4 and ReactJS as well as React Material design.
+
+As the Custom post package for Telescope (Meteor + React), my responsibilities included Meteor and ReactJS as well as TelescopeJS
+I have a good knowledge about TelescopeJS and I have experience with this skills.
+Telescope Nova is a free, open-source app platform built with React and powered by Meteor on the back-end.
+
+My supervisor also relied on my ability to skills such as testing like BDD and excellent communication skills.
+
+I look forward to speaking with you further regarding your available position.
+
+Sincerely,
+Dan Abramov,
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+Dear, Sir!
+
+Thank you for your job posting.
+
+After looking through this job description I believe I can complete this job perfectly.
+
+This job require mainly the following skills from me;
+  - signup/login and search engine,
+  - email/sms sending, 
+  - restful API,
+
+So I am a Senior NodeJS expert and then I will say about the skill sets above
+  - I am very familiar with passport module based on Nodejs.
+    Passport module is NodeJS authentication middleware and support the social login like facebook, twitter, and more as well
+    I have rich experience with this module and I will send you my code with attachment.
+    As for the search engine, there are lots of earch engine based on nodeJS and then normally I have experience with Norch module.
+
+ - I'd like to use the twilio for sending email/ sms and then I have good experience with this one.
+
+ - I am a MEAN Stack ( Mongo Express Angular Node) so I am also very qualified in REST API using expressJS.
+
+And then I will provide my recent work similar that url.
+  https://www.angieslist.com 
+  https://shopboltnow.com/
+  https://paytm.com
+
+I look forward to hearing back from you and hope we can work together.
+
+Thank you,
+
+Chris Brown
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+Thank you for your job posting. 
+
+I am a talented python developer with rich experience of data scrapping and web programming(django) for 8+ years.
+
+About your task: After reading your job posting, I feel I am good fit for your project. 
+
+- I am very good at python web scrapping framework like python scrapy framework, selenium scrapy and lxml. 
+- I have lots of experience using postgresql/mysql/sqlite and Mongodb. 
+- I have good experience of scraping data in javascript 
+
+My recent scrapy projects: 
+
+1. I scraped all product data from three ecommerce site and saved them into MonogoDB. 4
+http://uae.souq.com/ae-en/ 
+https://en-ae.wadi.com/ 
+https://en-ae.namshi.com/ 
+
+2. I just finished one scrapy project that scraped data from shopganz.com. 
+   It needs to login for scraping data. 
+
+3. I developed scraping program which scraped person information including images from the dating web site(www.okcupid.com) by using python scrapy1.1.0. 
+
+The program scraped 1000 people(you can change the number) at once by default. 
+
+I am fast worker and i'd like to work on various of challenges. Looking forward to your response soon.
+
+===============================================================================================
+
+Hi.
+Thank you for your job posting. I am a talented Node.js developer with 3 years experience.
+I am familiar with node modules like passport for  authentication, norch for search engine, twilio for email/sms, striptags and paypal-node-sdk for payment method.
+
+Please check the following samples similiar to your project and feel free to ask me.
+
+- http://www.clock.co.uk/ 
+- http://picturelife.com/home
+
+I can show you more complex and elegant websites by screensharing because it needs authentication.
+
+My skill set:
+- JS frameworks like Node.js, Express.js, Knex, Sequelize, React, Angular
+- Firebase / Vue.js / Immutable.js
+- KendoUI / Semantic UI / Material Design
+- responsive design using bootstrap, css3/sass/less, html5, jQuery
+- data visualization using D3.js, highchart, armchart, chart.js and so forth
+- jest for testing
+- Scrum and JIRA
+- AWS, Heroku
+
+Thank you for your consideration.
+Looking forward to hearing from you.
