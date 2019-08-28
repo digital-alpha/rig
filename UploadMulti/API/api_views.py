@@ -41,7 +41,7 @@ import requests
 
 from django.template.defaulttags import register
 import os
-
+from datetime import datetime
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -126,9 +126,9 @@ def processAPI(request):
             tup=tuple(tup)
             d=Detail(*tup)
             d.save()
-
+            processed_date = datetime.now()
             print("IN api view")
-    return Response(status=200)
+    return Response({'processed_date': processed_date}, status=200)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def processApiSingle(request, pk):
@@ -162,8 +162,9 @@ def processApiSingle(request, pk):
     tup=tuple(tup)
     d=Detail(*tup)
     d.save()
+    processed_date = datetime.now()
     print("In single api view")
-    return Response(status=200)
+    return Response({'processed_date':processed_date}, status=200)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
