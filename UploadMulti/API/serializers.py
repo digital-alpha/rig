@@ -48,9 +48,10 @@ class DocumentSerializer(serializers.ModelSerializer):
     # # Use this method for the custom field
     # def _user(self, obj):
     #     return self.context['request'].user.username
+    Uploaded_user=serializers.CharField(source='uploaded_by', read_only=True)
     class Meta:
         model = Document
-        fields = ('file','id', 'uploaded_at', 'uploaded_by', 'processed_date')
+        fields = ('file','id', 'uploaded_at', 'processed_date','Uploaded_user')
 
 
 class DetailSerializer(serializers.ModelSerializer):

@@ -32,6 +32,7 @@ from django.template.defaulttags import register
 from rest_framework.authtoken.models import Token
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.contrib.auth.models import User
 
 import os
 import pandas
@@ -67,13 +68,14 @@ class BasicUploadView(View):
             name = name.replace('docs/', '')
             name = name.replace('.txt', '')
             date = document.uploaded_at
-            document.uploaded_by = request.user.username
+            document.uploaded_by=User.objects.get(id=request.user.id)
             document.save()
-            uploaded_by = document.uploaded_by
+            uploaded_by=document.uploaded_by
+            print(uploaded_by.username)
             print(date)
             print(name)
             print(uploaded_by)
-            data = {'is_valid': True, 'name': name, 'uploaded_at': date, 'uploaded_by': uploaded_by}
+            data = {'is_valid': True, 'name': name, 'uploaded_at': date, 'uploaded_by':uploaded_by.username}
         else:
             data = {'is_valid': False}
         return JsonResponse(data)

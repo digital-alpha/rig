@@ -17,9 +17,10 @@ class Document(models.Model):
     
     title = models.CharField(max_length=255, blank=True)
     file = models.FileField(upload_to='docs/')
-    uploaded_by = models.CharField(max_length=255, blank=True)
+    #uploaded_by = models.CharField(max_length=255, blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     processed_date = models.DateTimeField(null=True)
+    uploaded_by=models.ForeignKey(User,on_delete=models.CASCADE, blank=True,null=True,db_column='username')
 
     def __str__(self):
         name = self.file.name
@@ -27,10 +28,7 @@ class Document(models.Model):
         name = name.replace('.txt', '')
         return name
     
-    def save_model(self, request, obj, form, change):
-        if not obj.pk:
-            obj.uploaded_by = request.user.username
-        super().save_model(request, obj, form, change)
+
 
 class Role(models.Model):
    

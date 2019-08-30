@@ -99,7 +99,7 @@ $(document).ready(function() {
             <tr>
                 <td onmousedown="toggleBorderColor(this);"><a href="{% url 'UploadMulti:analysis' pk=document.pk %}" id="analysis" >{{ document }}</a>
                     <br><strong>Uploaded Date:</strong> {{document.uploaded_at}}
-                    <br><strong>Uploaded Date:</strong> {{user.username}}
+                    <br><strong>Uploaded User:</strong> {{document.uploaded_by.username}}
                     <a href="{% url 'UploadMulti:clearSingleDoc' pk=document.pk %}"} style="float: right">Delete</a>
                 </td>
                 
