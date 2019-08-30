@@ -67,9 +67,13 @@ class BasicUploadView(View):
             name = name.replace('docs/', '')
             name = name.replace('.txt', '')
             date = document.uploaded_at
+            document.uploaded_by = request.user.username
+            document.save()
+            uploaded_by = document.uploaded_by
             print(date)
             print(name)
-            data = {'is_valid': True, 'name': name, 'uploaded_at': date}
+            print(uploaded_by)
+            data = {'is_valid': True, 'name': name, 'uploaded_at': date, 'uploaded_by': uploaded_by}
         else:
             data = {'is_valid': False}
         return JsonResponse(data)

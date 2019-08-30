@@ -42,15 +42,15 @@ class UserSerializerWithToken(serializers.ModelSerializer):
 
 
 class DocumentSerializer(serializers.ModelSerializer):
-        # Create a custom method field
-    uploaded_by = serializers.SerializerMethodField('_user')
+    #     # Create a custom method field
+    # uploaded_by = serializers.SerializerMethodField('_user')
 
-    # Use this method for the custom field
-    def _user(self, obj):
-        return self.context['request'].user.username
+    # # Use this method for the custom field
+    # def _user(self, obj):
+    #     return self.context['request'].user.username
     class Meta:
         model = Document
-        fields = ('file','id', 'uploaded_at', 'uploaded_by')
+        fields = ('file','id', 'uploaded_at', 'uploaded_by', 'processed_date')
 
 
 class DetailSerializer(serializers.ModelSerializer):

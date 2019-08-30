@@ -79,7 +79,12 @@ from django.forms.models import model_to_dict
 def processAPI(request):
    
     documents = Document.objects.all()
+    processed_date = datetime.now()
+
     for document in documents:
+        document.processed_date = processed_date
+        document.save()
+        print(document.processed_date, processed_date)
         if Detail.objects.filter(doc_id=document.id).exists()==False:
             tup=[]
             try:
@@ -126,13 +131,14 @@ def processAPI(request):
             tup=tuple(tup)
             d=Detail(*tup)
             d.save()
-            processed_date = datetime.now()
+            
             print("IN api view")
     return Response({'processed_date': processed_date}, status=200)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def processApiSingle(request, pk):
     document = get_object_or_404(Document, id=pk)
+    processed_date = datetime.now()
     tup=[]
     try:
         id=Detail.objects.latest('id')
@@ -162,7 +168,7 @@ def processApiSingle(request, pk):
     tup=tuple(tup)
     d=Detail(*tup)
     d.save()
-    processed_date = datetime.now()
+    
     print("In single api view")
     return Response({'processed_date':processed_date}, status=200)
 
