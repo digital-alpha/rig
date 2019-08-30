@@ -67,7 +67,7 @@ def current_user(request):
     return Response(serializer.data)
 
 class DocumentViewset(viewsets.ModelViewSet):
-   
+    
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
     permission_classes = [IsAuthenticated]
@@ -82,10 +82,11 @@ def processAPI(request):
     processed_date = datetime.now()
 
     for document in documents:
-        document.processed_date = processed_date
-        document.save()
+
         print(document.processed_date, processed_date)
         if Detail.objects.filter(doc_id=document.id).exists()==False:
+            document.processed_date = processed_date
+            document.save()
             tup=[]
             try:
                 id=Detail.objects.latest('id')
@@ -281,7 +282,7 @@ def DisplacyAPI(request, pk):
 
 
 class DetailViewset(viewsets.ModelViewSet):
- 
+    
     queryset = Detail.objects.all()
     serializer_class = DetailSerializer
 
