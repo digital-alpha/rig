@@ -1,0 +1,242 @@
+Title
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+------------------------------------------------------------------------------------
+
+Senior System Engineer, Developer
+
+Overview Description
+
+- Native English speaker
+- Proficient in Linux and Unix System Administration
+- Proficient in C++, Python, shell, MySQL, Go/Golang, Ruby
+- Experienced with iOS and Android platform development
+- Experienced with Ngnix, Apache
+- Experienced with cloud platform hosting and deployment
+
+I have built and maintained financial reporting, risk, recovery and historical data systems at a professional level for 6+ years. 
+
+I can solve your technical problem with a quick-and-dirty solution, or I can build you an upgradable, modular, fault-tolerant system.
+____________________________________________________________________________________________
+//////////////////////////////////////////////////////////////////////////////////////////
+
+category:
+IT & Networking -> Information Security
+
+skills:
+information security
+
+Level: Expert Level
+
+English Level: Native or Fluent Level
+
+Countries:
+Western Europe ( UK is not available) 
+
+Attention please.
+If you face the resbumit immediately after creating profile, it’s failure on it. you need to create new profile again.
+Please remove the education history and resubmit when upwork needs to submit your profile again after reviewing yours. then you will get the profile passed by upwork.
+so you could go into your business on upwork
+WAY TO GO!!!
+Rising Talent Profile.
+
+Title
+
+
+////////////////////////////////////////////////////////////////////
+Senior JavaScript | Python Dev
+
+Overview
+
+
+Core skills and strengths:
+
+Python
+- Django  
+- DRF  
+- Scrapy  
+- Flask
+
+Javascript
+- MEAN, MERN Stack (MongoDB, ExpressJS, AngularJS, ReactJS, NodeJS) 
+- Vue.js, Vuex 
+- JWT, e2e, test, Protractor
+- EM5, EM6, TypeScript, Webpack, Gulp, Grunt
+
+Other:
+- Mobile Responsive, Html5, CSS3, LESS, SASS
+- MySQL, PostgreSQL, MongoDB, CouchDB
+- Amazon Web Service(AWS), EC2, S3, Digitalocean, Heroku, Firebase
+- git, bitbucket
+- SEO, Elastic Search  
+- Trello, JIRA 
+
+//////////////////////////////////////////////////////////////////////////////////
+----------------------------------------------------------------------------------
+
+Full stack Developer & PHP & Node & Javascript & Python
+
+I am a Senior Web developer with a Bachelors in Information Technology and 7 years of software development experience.
+
+As a full-stack developer, I love working with PHP, Node, Ruby, Python, Golang for backend and Vue, React, Angular for frontend.
+Also I love working with Wordpress, especially Wordpress Site Optimization.
+
+Frameworks I love:
+- Laravel, Codeigniter, Ruby on Rails, Django
+- Wordpress, Shopify
+- React, Vue, Angular
+- DevOps, CI/CD
+
+When working on new projects, I like discussing with my clients in details so that I can have a clear understanding of their needs and version of the project. 
+
+Thank you in advance for your time and consideration. 
+
+I look forward to working with you. 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Skill Sets
+
+JavaScript 
+Node.js 
+AngularJS 
+Angular 5 
+React.js 
+React Native 
+Vue.js 
+Vuex 
+Python 
+Django
+
+
+Category
+
+Web Developement
+Scripts & Utilities
+Web & Mobile Design
+
+Other Experiences
+UI Design
+
+Please make sure to include a portfolio.
+
+----------------------------portfolio--------------------------------
+1111111111
+//////////////////////////////////////////////////////////////
+Kaliningrad Hleb
+
+Web Development python, jquery, css3, django-framework, html5
+Website for russian bakery company.
+Only desktop version was made.
+
+https://kaliningradhleb.ru/
+
+////////////////////////////////////////////////////////////////////
+
+Django/GAE Blog
+
+Project about Blog using Google App Engine and Django framework
+I build backend using Python2.7/Django 1.8 and frontend with JQuery/Twitter Bootsrap.
+
+
+http://the-alchemy.appspot.com/blog/
+
+////////////////////////////////////////////////////////////////////////
+
+Cubertin - Social Network for sportsmen  (Djanog, angular, python)
+
+I've developed a lot of new functionality working in the team
+
+http://cubertin.com/
+
+
+////////////////////////////////////////////////////////////////////
+
+Outpost
+
+Outpost is cloud based business system that contains cutting-edge set of modules and features for effective tracking of Clients & Contacts, Sales Leads, Quotes/Estimates, Customer Sites/Locations, Jobs/Work Orders, Invoices, Recurring Jobs/Tasks, Scheduling/Calendar, Customer Support, Rostering, Timesheets, Staff, Progress Tracking, Maps/Diagrams, Projects, Tasks/Todos, Inventory/Items, Depots, Purchase Orders, Fleet Management, Suppliers, Stocktake, Deliveries, Bookings, Appointments, Emails, Reports, Graphs & Charts. Outpost enables us to enter core information once, saving vast amounts of time. That core information is then used for various modules that are tailored specifically to the business needs. This highly customizable solution allows to create versions of features you've seen in other software packages.
+
+http://www.demo.getoutpost.com/
+
+////////////////////////////////////////////////////////////////////
+
+Eqvola - website (worked in a team)
+
+
+Eqvola company develops software for brokers, creates everything that is necessary for comfortable trading and accounting. The official website is aimed at selling and luring customers for forex trading or the development of websites, applications
+
+Technologies: 
+WordPress, Bootstrap 3, jQuery, CSS3, HTML5, PHP
+
+What has been done: 
+Based on a simple wordpress theme:
+- the functionality has been expanded and added
+- customization of the pages, which the initial theme did not have
+- almost everything visible on the site can be changed from the admin panel
+- Implemented adaptive layout and its adaptation to the WordPress engine
+
+a special highlight is the Products page (https://eqvola.com/ru/products/ or https://eqvola.com/products/) because on it:
+- implemented the withdrawal of all services of the company
+- a convenient timeline is made for a quick transition to the product of interest
+- in the mobile view, it takes on a different look, user-friendly.
+
+
+https://eqvola.com
+
+//////////////////////////////////////////////////////////////////
+
+
+Oshop
+
+This is a simple shop application where two roles are implemented: user and administrator.
+
+Technologies: 
+For building this project, I used Angular 4 framework, Bootstrap for CSS, Rxjs library for
+asynchronous functions, Git and firebase for the backend.
+
+Done:
+- implementation of basic features (responsive web design, form validation)
+- implementation of Angular’s features such as routes, services, guards, components.
+- Implementation services for working with Firebase like authorization, order, product
+services and other.
+- UI tasks
+- performance optimization tasks
+- bug fixing
+
+https://oshop-d7cf5.firebaseapp.com
+
+
+
+
+
+Python(Flask/Django/Rest Framework) Developer | Unit Test Expert
+
+With over 4+ years of experience I've expertise in following areas :
+
+- Programming anything from your imagination to a solution.
+- Web application development with Python/Django/Flask/Angular | PHP/Laravel
+- Unit Test Coverage
+- Creating scripts to automate, develops, web scraping and a lot more..
+
+Languages I know :: Python, Javascript, Golang
+
+Backend Frameworks : Django, Flask, Falcon, NodeJs, ExpressJs, Beego, Laravel, Lumen, Sprint Boot, Google Scripts
+
+Frontend/JS : Bootstrap, Jquery, AngularJs, Angular6, VueJS, Web3, ReactJS, Redux, Bootstrap
+
+Database : MySQL, PostgresSQL, MongoDB
+
+Unit Testing : I do unit test coverage via rspec and UI test coverage via selenium and cucumber.
+
+System :- Apache, Nginx, Bash Scripting, iptables, tc, Database administration & performance tuning, Digitalocean, Rackspace, Amazon AWS , Docker, Heroku, Git.
+
+Security :- Source Code Review & Vulnerability Assessment.
+
+Extra libraries/API :- Beautiful Soup, Requests, Selenium, Grab, npm, pm2, Social Login, Braintree, Stripe, P-pal, slak-bot, Mailchimp, Soap wsdl service, netsuite, google drive api, 
+
+Allow me for initial conversation to explain better why I will be the best fit for your requirement. 
+
+Looking forward to your response.
+
+Thanks & Regards. 

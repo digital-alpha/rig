@@ -1,0 +1,8 @@
+Hello.
+I am a senior Full Stack developer with rich experience in back-end development.
+I can easily translate clients' needs and business logic into project and have rich experience in building REST APIs and integrating 3rd party APIs.
+
+I am well-versed in PHP, MySQL and JavaScript as well as Java.
+
+Thank you for your consideration and hope to talk soon.
+Yours kindly

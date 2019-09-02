@@ -1,0 +1,95 @@
+Hello!
+
+I read your job post and I was quite interested in your project.
+Firstly, as a senior web developer, I am well versed in ReactJS frameworks. While I was developing many react projects I gained a lot experience of MEAN Stack and I used many modules to solve different issues. 
+Secondly, I used to built smart and convenient web pages using HTML5 and other techs such as Bootstrap, Jquery and so on.
+
+So I think that I have most of skills you want and I am sure I can make you happy in your project.
+I hope we will see in near future and if you want call me at any time. Thank you! 
+
+
+-------------------shopify--------------------------------
+Hello!
+
+I was very excited about your job post and I want to work for you.
+As you know, shopify is a kind of e-commerce it's a little difficult and it requires many features.
+In addition, developing the shopify with MERN Stack(Mongo,  Express, React, Node) requires a lot modules and experience for them.
+I have been working as javascript developer so far and I gained a lot knowledge and experience developing many kinds of e-commerce sites. 
+So I think that I would make you happy by developing the project more smart and more fast and more convenient for users.
+
+I hope we will meet soon and good luck! Thanks! 
+
+
+------------------wordpress---------------------------------
+Hello client!
+
+I read your job post and I thought I was just a person who you were looking for.
+I have a lot experience with Wordpress through developing many themes and plugins for 4 years.
+
+In detail: 
+- I am very good at developing the theme from scratch. In your case, I just need to customize the project so that I can finish it in a short time.
+- Please visit https://www.77infotech.com/ this is the simplest one of my projects I've done.
+
+And I am sure that I will build your project in a week!
+I look forward to hearing from you.
+Thank you!
+
+
+------------------python--------------------------------
+Hello, sir.
+
+Thank you for your job posting. 
+
+After reading your job post, I am interested in your project because I think my skill set is a good fit for your job.
+
+I am proficient in API consuming, REST API, session & cookie, security, and optimization, unit testing, end-to-end testing, authentication, and payment gateways like Stripe using Python.
+
+Now I am growing rates of upwork because I got into upwork a few months ago.
+
+Thank you for your consideration.
+Looking forward to hearing from you.
+Best Regards less
+
+
+------------------python Exception Process---------------
+Hello. 
+
+I read your job post and I am quite interested in your project.
+I have been working as python developer for 3 years, I implemented many exception processes in every projects. 
+Especially, sns in aws may occur some errors related to Sync, Async process and in this case we should use special functions such as try, catch and so on.
+
+I think that I can set this part using python properly and you would be satisfied with clean and perfect project.
+
+I look forward to hearing from you.
+Thank you.
+
+
+
+--------------------------django(back), React(front)----------
+
+Hello,
+
+I read your job post and I am quite interested in your project.
+While I was developing many projects using Python and React, I have built many smart and beautiful web pages using CSS3 or theme.
+In addition, if I use React for front-end, your project will be more reactive and interactive so that it would be very good fit for students.
+And then Django is very good for it's back-end because of django's advanced security.
+
+I believe that I would make you happy by delivering the beautiful and perfect project.
+Just let me know when is the best time.
+Thank you. less
+
+
+
+------------------------scrapy------------------------
+Hello, 
+
+Hello, 
+
+I read your job post and I am quite interested in your project.
+Well, as I am working for scraper, I gained a lot of experience and I am sure that I would make you happy delivering the perfect project.
+
+I will send the some of my project I have just finished. This project has functionality that scrap data from api and store them to csv file.
+I guess that I could finish that in 3 days.
+
+Thank you.
+ parseAPI-Spider-master.zip (8.54 KB)
