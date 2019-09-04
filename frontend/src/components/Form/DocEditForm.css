@@ -2,14 +2,86 @@
 	/*margin-bottom: 0 !important;*/
 }
 
-.preview-doc {
+.doc-edit-form {
+	padding: 0 20px !important;
 	height: 500px;
+	overflow-y: auto;
+	padding-top: 60px !important;
+}
+
+
+.repeating-linear {
+  color: black;
+  border: 6px solid pink;
+  border-image: repeating-linear-gradient( 45deg, white, white 0.5%, #4b646c 1%, #0c0c0c 8%) 10
+}
+
+.repeating-linear:hover {
+  border-image: repeating-linear-gradient( 45deg, purple, purple 0.5%, pink 1%, pink 8%) 10;
+  color: purple;
+}
+/* styling for Pen, unrelated to border-image */
+
+
+.paper {
+  	padding: 20px;
+  	background-color: #eee;
+  	height: 500px;
 	width: 100%;
 	overflow-y: auto;
-    overflow-x: hidden;
+	overflow-x: hidden;
+	padding: 20px;
+}
+
+
+.fulid-paper {
+  	background-color: #eee;
+    width: 100%;
+    margin: 0 auto;
     padding: 20px;
-	border: 1px solid #eee;
-	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12) !important;
+}
+
+
+.preview-doc {
+  background: #fff;
+  padding: 30px;
+  position: relative;
+}
+
+.preview-small {
+	width: 70%;
+	margin: 0 auto;
+}
+
+.preview-doc,
+.preview-doc::before,
+.preview-doc::after {
+  /* Styles to distinguish sheets from one another */
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.25);
+  border: 1px solid #bbb;
+}
+
+.preview-doc::before,
+.preview-doc::after {
+  content: "";
+  position: absolute;
+  height: 95%;
+  width: 99%;
+  background-color: #eee;
+}
+
+.preview-doc::before {
+  right: 15px;
+  top: 0;
+  transform: rotate(-1deg);
+  z-index: -1;
+}
+
+.preview-doc::after {
+  top: 5px;
+  right: -5px;
+  transform: rotate(1deg);
+  z-index: -2;
 }
 
 .border-doc {

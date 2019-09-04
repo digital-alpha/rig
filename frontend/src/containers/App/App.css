@@ -66,7 +66,7 @@
 ::-webkit-scrollbar
 {
   width: 8px;
-  min-height: 50px;
+  height: 8px;
   background-color: #F5F5F5;
 }
 
@@ -82,6 +82,28 @@
 {
   background-color: rgba(0,0,0,0.3);
   min-height: 50px;
+}
+
+.submit-row {
+    position: absolute !important;
+    z-index: 100;
+    top: 0px;
+    width:97%;
+    left: 10px;
+}
+
+.submit-row:hover .ant-col{
+  background-color: rgba(96, 99, 102, 0.92);
+}
+
+.toggle-view .ant-btn {
+  width: 50px;
+}
+
+.submit-col .ant-col {
+  padding: 7px 10px;
+  background-color: rgba(24, 144, 255, 0.2);
+  border-radius: 5px;
 }
 
 

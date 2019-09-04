@@ -3,12 +3,6 @@ import { Menu, Dropdown, Button, Icon, message, Row } from 'antd';
 import './Toolbar.css'
 
 
-function handleMenuClick(e) {
-  message.info('Click on menu item.');
-  console.log('click', e);
-}
-
-
 const Toolbar = (props) => {
 
   const menu = (

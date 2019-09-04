@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Row} from 'antd';
+import { Button, Row, Icon} from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
@@ -33,11 +33,12 @@ class DocumentDetail extends React.Component {
 
     return (
       <div>
-      	<Row type="flex" align="middle" justify="space-between">
+      	<Row type="flex" align="middle">
 	      	<h1>Edit Document</h1>
-	      	<div className="toggle-view">
-	      	View:&nbsp;&nbsp;
-	      		<Button.Group>
+	      	<div className="toggle-view" style={{margin: '0 auto'}}>
+            
+	      		<Button.Group style={{marginLeft: '-65px'}}>
+              View:&nbsp;&nbsp;
 		      		<Button type={this.state.docVisible?'primary':'light'} icon="file-text" onClick={this.changeDocView}/>
 		      		<Button type={this.state.formVisible?'primary':'light'}  icon="form" onClick={this.changeFormView}/>
 		      	</Button.Group>

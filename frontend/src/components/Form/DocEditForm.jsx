@@ -74,20 +74,36 @@ class BasicForm extends React.Component {
             docVisible && formVisible &&
             <Col span={12}>
                 <Affix offsetTop={80}>
-                  <div className="preview-doc" dangerouslySetInnerHTML={{__html: htmlSrc}}></div>
+                    <div className="paper repeating-linear">
+                      <div className="preview-doc" dangerouslySetInnerHTML={{__html: htmlSrc}}></div>
+                    </div>
                 </Affix>
             </Col>
           }
           {
             docVisible && !formVisible &&
             <Col span={24}>
-                <div className='border-doc' dangerouslySetInnerHTML={{__html: htmlSrc}}></div>
+                <div className="fulid-paper">
+                  <div className="preview-doc preview-small" dangerouslySetInnerHTML={{__html: htmlSrc}}></div>
+                </div>
             </Col>
           }
           {
             docVisible && formVisible &&
               <Col span={12}>
                 <Form {...formItemLayout} onSubmit={this.handleSubmit} className="doc-edit-form">
+                  <Row className="submit-row">
+                    <Affix offsetTop={80} className="submit-col">
+                      <Col span={24} style={{ textAlign: 'center' }}>
+                        <Button type="primary" htmlType="submit">
+                          Submit
+                        </Button>
+                        <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
+                          Clear
+                        </Button>
+                      </Col>
+                    </Affix>
+                  </Row>
                   <Form.Item label={'Document Title'}>
                     {getFieldDecorator('document', {
                       initialValue: data.Document_Name,
@@ -325,24 +341,25 @@ class BasicForm extends React.Component {
                           ],
                         })(<Input  style={{background: '#f278b9'}}/>)}
                       </Form.Item>
-
-                  <Row style={{marginTop: 20}}>
-                    <Col span={24} style={{ textAlign: 'right' }}>
-                      <Button type="primary" htmlType="submit">
-                        Submit
-                      </Button>
-                      <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
-                        Clear
-                      </Button>
-                    </Col>
-                  </Row>
                 </Form>
               </Col>
           }
 
           {
             !docVisible && formVisible && 
-              <Form {...formItemLayout} onSubmit={this.handleSubmit} className="doc-edit-form">
+              <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+                <Row style={{marginBottom: 10}}>
+                    <Affix offsetTop={80} className="submit-col">
+                      <Col span={24} style={{ textAlign: 'center' }}>
+                        <Button type="primary" htmlType="submit">
+                          Submit
+                        </Button>
+                        <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
+                          Clear
+                        </Button>
+                      </Col>
+                    </Affix>
+                  </Row>
                 <Row gutter={30}>
                   <Col xs={24} sm={12}>
                     <Form.Item label={'Document Title'}>
@@ -581,16 +598,6 @@ class BasicForm extends React.Component {
                         ],
                       })(<Input  style={{background: '#f278b9'}}/>)}
                     </Form.Item>
-                  </Col>
-                </Row>
-                <Row style={{marginTop: 20}}>
-                  <Col span={24} style={{ textAlign: 'right' }}>
-                    <Button type="primary" htmlType="submit">
-                      Submit
-                    </Button>
-                    <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
-                      Clear
-                    </Button>
                   </Col>
                 </Row>
               </Form>
