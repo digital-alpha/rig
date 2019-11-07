@@ -131,6 +131,7 @@ def processAPI(request):
             print(record.title)
             record.save()
             f.close()
+            os.remove(os.path.splitext('media/'+document.file.name)[0].split('/')[-1] + ".txt")
             
 
             
