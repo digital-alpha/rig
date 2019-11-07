@@ -19,13 +19,14 @@ class Document(models.Model):
     file = models.FileField(upload_to='docs/')
     #uploaded_by = models.CharField(max_length=255, blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
-    processed_date = models.DateTimeField(null=True, blank=True)
+    processed_date = models.DateTimeField(null=True)
     uploaded_by=models.ForeignKey(User,on_delete=models.CASCADE, blank=True,null=True,db_column='username')
 
     def __str__(self):
         name = self.file.name
         name = name.replace('docs/', '')
         name = name.replace('.txt', '')
+        print("Name: " + name)
         return name
     
 
@@ -35,6 +36,8 @@ class Role(models.Model):
     Role_Name = models.CharField(null=True,max_length=200, verbose_name='Role_Name',unique=True)
 
     def __str__(self):
+        if self.Role_Name==None:
+            return " "
         return self.Role_Name
 
 class Detail(models.Model):
@@ -63,6 +66,8 @@ class Detail(models.Model):
     Role_ref = models.ForeignKey(Role,db_column='Role_ref', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
+        if self.Document_Name==None:
+            return ' '    
         return self.Document_Name
 
 

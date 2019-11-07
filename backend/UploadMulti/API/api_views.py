@@ -7,9 +7,9 @@ from .serializers import DocumentSerializer, DetailSerializer,RoleSerializer
 from rest_framework.decorators import api_view, permission_classes,renderer_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import StaticHTMLRenderer
+import subprocess
 
-
-
+from django.core.files.base import File
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.views import View
@@ -29,18 +29,21 @@ from django.http import HttpResponseRedirect
 from UploadMulti.forms import DetailForm
 import time
 from Source.Entity import Entities,display_attributes
+from Source.ingestion import Interface
 import spacy
 from spacy import displacy
 import pandas as pd
 from openpyxl import Workbook
 from openpyxl import load_workbook
 from openpyxl.styles import Font
+import magic
 
 
 import requests
 
 from django.template.defaulttags import register
 import os
+import shutil
 from datetime import datetime
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -62,6 +65,7 @@ def current_user(request):
     """
     Determine the current user by their token, and return their data
     """
+    
     serializer = UserSerializer(request.user)
     return Response(serializer.data)
 
@@ -70,6 +74,13 @@ class DocumentViewset(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
     permission_classes = [IsAuthenticated]
+
+def ingestion(document_path,Formatfile):
+    i=Interface()
+    if Formatfile=='PDF':
+        i.get_text(i.get_instance("PDF"),document_path)
+    else:
+        i.get_text(i.get_instance("IMG"),document_path)
 
 
 from django.forms.models import model_to_dict
@@ -81,8 +92,57 @@ def processAPI(request):
     processed_date = datetime.now()
 
     for document in documents:
+        orginal_path="media/"+document.file.name
+        Formatfile=magic.from_file(orginal_path,mime=True)
+        print(Formatfile)
 
-        print(document.processed_date, processed_date)
+        if (Formatfile!= 'text/plain'):
+            
+            cmd = ['pdffonts', "media/"+document.file.name]
+            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, bufsize=0,  shell=False)
+            out, err = proc.communicate()
+
+            scanned = True
+
+            for idx, line in enumerate(out.splitlines()):
+                if idx == 2:
+                    scanned = False
+
+            if scanned:
+                form='IMG'
+            else:
+                form='PDF'
+
+
+
+            ingestion('media/'+document.file.name,form)
+            #Document.objects.filter(id=document.id).delete()
+            path=os.path.splitext(document.file.name)[0].split('/')[-1] + ".txt"
+            #print(path)
+            f=open(path)
+
+            record=Document.objects.get(id=document.id)
+            
+            record.file=File(f)
+            record.title=path
+            record.save()
+            record=Document.objects.get(id=document.id)
+            print(record.file)
+            print(record.title)
+            record.save()
+            f.close()
+            
+
+            
+            shutil.move(orginal_path, "media/Original_docs/"+document.file.name)
+    
+
+
+    documents = Document.objects.all()
+    processed_date = datetime.now()
+
+    for document in documents:
+
         if Detail.objects.filter(doc_id=document.id).exists()==False:
             document.processed_date = processed_date
             document.save()
@@ -94,9 +154,11 @@ def processAPI(request):
                 id=0
 
             tup.append(int(id) + 1)
-            tup.append(document.file.name)
-            with open('media/'+document.file.name, 'r', encoding='UTF-8') as f:
+            tup.append(os.path.splitext(document.file.name)[0] + ".txt")
+            print('media/'+os.path.splitext(document.file.name)[0] + ".txt")
+            with open('media/'+os.path.splitext(document.file.name)[0] + ".txt", 'r',encoding="utf8", errors='ignore') as f:
                 data2=f.read()
+            
             data2 = data2.lstrip()
             data2 = data2.rstrip()
             doc=nlp(data2)
@@ -129,6 +191,8 @@ def processAPI(request):
             tup.append(document.id)
             tup.append(role_id[0]['id'])
             tup=tuple(tup)
+            print("\nTup\n")
+            print(tup)
             d=Detail(*tup)
             d.save()
             
@@ -221,8 +285,7 @@ def excelAPI(request):
             return response
 
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
+
 def clearSingleApi(request, pk):
     print("in clearSingleApi")
     doc = get_object_or_404(Document, id=pk)
@@ -294,7 +357,6 @@ class RoleViewset(viewsets.ModelViewSet):
     serializer_class = RoleSerializer
 
     permission_classes = [IsAuthenticated]
-
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

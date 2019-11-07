@@ -700,7 +700,10 @@ class Entities:
                         matches = datefinder.find_dates(date_list[i])
                         for match in matches:
                             final_date_list.append(match.strftime("%d-%m-%Y"))
-                    return(list(set(final_date_list))[0])
+                    if len(list(set(final_date_list))): 
+                        return(list(set(final_date_list))[0])
+                    else:
+                        return(None)
         else:
             try:
                 dates=[]
